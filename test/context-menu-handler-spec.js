@@ -33,6 +33,8 @@ describe('Context menu handler', function () {
 	});
 	it('sets the input text value if triggered on an input element', function () {
 		triggerContextMenu(input);
+		handler({'type': 'literal', 'value': 'xyz'});
 
+		expect(input.value).toBe('xyz');
 	});
 });

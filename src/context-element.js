@@ -8,6 +8,9 @@
 	}, true);
 
 	chrome.runtime.onMessage.addListener(function(request /*, sender, sendResponse */) {
+		if (!clickedEl) {
+			return;
+		}
 		if(request.type === 'literal') {
 			console.log('setting context value');
 			clickedEl.value = request.value;

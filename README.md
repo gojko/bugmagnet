@@ -29,12 +29,12 @@ You can add your own values to the right-click menu by modifying
 
 ###Running tests
 
-Install Grunt, Node and NPM (instructions are in (GruntFile.js)). Then run tests
+Install Grunt, Node and NPM (instructions are in [GruntFile.js](GruntFile.js)). Then run tests
 from the command line using
 
     grunt jasmine
 
 ###Running from a local setup
 
-Load (manifest.json) from the (src) folder in Chrome as an [unpacked
+Load [manifest.json](src/manifest.json) from the **src** folder in Chrome as an [unpacked
 extension](https://developer.chrome.com/extensions/getstarted#unpacked).

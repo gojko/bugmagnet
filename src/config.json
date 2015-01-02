@@ -13,6 +13,41 @@
 		"GoVeg.com",
 		"田中太郎"
 	],
+	"E-mail addresses": {
+		"Valid" :{ 
+			"Simple": "email@domain.com",
+			"Dot in the address": "firstname.lastname@domain.com",
+			"Subdomain": "email@subdomain.domain.com",
+			"Plus in address": "firstname+lastname@domain.com",
+			"Numeric domain": "email@123.123.123.123",
+			"Square bracket around IP address": "email@[123.123.123.123]",
+			"Quotes around address": "\"email\"@domain.com",
+			"Numeric address": "1234567890@domain.com",
+			"Dash in domain": "email@domain-one.com",
+			"Underscore": "_______@domain.com",
+			">3 char TLD": "email@domain.name",
+			"2 char TLD": "email@domain.co.jp",
+			"Dash in address": "firstname-lastname@domain.com",
+			"Intranet": "name@localhost"
+		},
+		"Invalid": {
+			"No @ or domain": "plainaddress",
+			"Missing @": "email.domain.com",
+			"Missing address": "@domain.com",
+			"Garbage": "#@%^%#$@#$@#.com",
+			"Copy/paste from address book with name": "Joe Smith <email@domain.com>",
+			"Superfluous text": "email@domain.com (Joe Smith)",
+			"Two @": "email@domain@domain.com",
+			"Leading dot in address": ".email@domain.com",
+			"Trailing dot in address": "email.@domain.com",
+			"Multiple dots": "email..email@domain.com",
+			"Unicode chars in address": "あいうえお@domain.com",
+			"Leading dash in domain": "email@-domain.com",
+			"Leading dot in domain": "email@.domain.com",
+			"Invalid IP format": "email@111.222.333.44444",
+			"Multiple dots in the domain": "email@domain..com"
+		}
+	},
 	"Whitespace": {
 		"Tabs and newlines": "Contains\tTabs\nAnd\tNewlines",
 		"Leading spaces": "  leading spaces",

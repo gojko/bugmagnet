@@ -38,3 +38,12 @@ from the command line using
 
 Load [manifest.json](src/manifest.json) from the **src** folder in Chrome as an [unpacked
 extension](https://developer.chrome.com/extensions/getstarted#unpacked).
+
+##Resources for more info
+
+* [E-mail address test cases](http://blogs.msdn.com/b/testing123/archive/2009/02/05/email-address-test-cases.aspx)
+  * [Dot atoms in e-mail](http://serverfault.com/questions/395766/are-two-periods-allowed-in-the-local-part-of-an-email-address)
+  * [Interactive RFC e-mail validation](http://isemail.info/)
+* [Falsehoods Programmers Believe About Names](http://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/)
+* [Elisabeth Hendrickson's test heuristics cheat sheet](http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf)
+

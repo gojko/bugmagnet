@@ -11,5 +11,9 @@
 		"js": ["context-element.js"],
 		"run_at": "document_idle"
 	}],
-	"manifest_version": 2
+	"manifest_version": 2,
+	"icons": {
+		"128": "magnet.png",
+		"16": "magnet-16.png"
+	}
 }

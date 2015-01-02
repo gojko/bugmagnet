@@ -1,19 +1,21 @@
-/* global chrome, console */
+/* global chrome */
 (function(){
 	'use strict';
-	var clickedEl = null;
-
-	document.addEventListener('contextmenu', function(event){
-		clickedEl = event.target;
-	}, true);
-
 	chrome.runtime.onMessage.addListener(function(request /*, sender, sendResponse */) {
-		if (!clickedEl) {
+		var activeElement = document.activeElement;
+		if (!activeElement) {
 			return;
 		}
+		while (activeElement.contentDocument) {
+			activeElement = activeElement.contentDocument.activeElement;
+		}
 		if(request.type === 'literal') {
-			console.log('setting context value');
-			clickedEl.value = request.value;
+			if (activeElement.tagName === 'TEXTAREA' || activeElement.tagName === 'INPUT') {
+				activeElement.value = request.value;
+			}
+			else if (activeElement.tagName === 'DIV' && activeElement.hasAttribute('contenteditable')) {
+				activeElement.innerText = request.value;
+			}
 		}
 	});
 })();

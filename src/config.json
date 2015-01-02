@@ -8,10 +8,18 @@
 	"Names": [ 
 		"John O'Grady",
 		"John James \"Jimmy\" O'Grady",
+		"Chloë Rømer",
 		"NULL",
 		"GoVeg.com",
 		"田中太郎"
 	],
+	"Whitespace": {
+		"Tabs and newlines": "Contains\tTabs\nAnd\tNewlines",
+		"Leading spaces": "  leading spaces",
+		"Mixing tabs and spaces": "\t leading tabs and spaces",
+		"spaces on both sides":" Space on both sides ",
+		"Just whitespace": "\t \t\n \n " 
+	},
 	"Format exploits": {
 		"SQL Injection": "Robert'); DROP TABLE Students;--",
 		"JS Script Injection": "Nice site,  I think I'll take it. <script>alert('Executing JS')</script>",

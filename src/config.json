@@ -48,6 +48,10 @@
 			"Multiple dots in the domain": "email@domain..com"
 		}
 	},
+	"Numbers": [
+		"0", "32768", "32769", "65536", "65537", "2147483648", "2147483649", "4294967296", "4294967297", "1E-16", "-1", "0.0001", 
+		"1,234,567", "1.234.567,89"
+	],
 	"Whitespace": {
 		"Tabs and newlines": "Contains\tTabs\nAnd\tNewlines",
 		"Leading spaces": "  leading spaces",
@@ -58,6 +62,7 @@
 	"Format exploits": {
 		"SQL Injection": "Robert'); DROP TABLE Students;--",
 		"JS Script Injection": "Nice site,  I think I'll take it. <script>alert('Executing JS')</script>",
-		"HTML parsing": "<blink>Hello there</blink>"
+		"HTML parsing": "<blink>Hello there</blink>",
+		"Broken HTML": "<i><b>Bold</i></b>"
 	}
 }

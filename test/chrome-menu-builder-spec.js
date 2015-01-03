@@ -39,12 +39,18 @@ describe('BugMagnet.ChromeMenuBuilder', function () {
 			expect(lastMenu()['parentId']).toBe('root');
 			expect(lastMenu()['onclick'] instanceof Function).toBeTruthy();
 		});
-		it('connects a chrome.tabs.sendMessage call to click', function () {
+		it('connects a chrome.tabs.sendMessage call to click with a simple string', function () {
 			underTest.menuItem('test me', 'root', 'some value');
 			var onclick = lastMenu()['onclick'];
 
 			onclick({}, {id:5});
-			expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(5, {type: 'literal', value: 'some value'});
+			expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(5, {'_type': 'literal', value: 'some value'});
+		});
+		it('connects a chrome.tabs.sendMessage call to click with a hash object string', function () {
+			underTest.menuItem('test me', 'root', {'_type': 'size', value: 'some value'});
+			var onclick = lastMenu()['onclick'];
+			onclick({}, {id:5});
+			expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(5, {'_type': 'size', value: 'some value'});
 		});
 	});
 });

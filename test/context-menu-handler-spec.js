@@ -27,23 +27,23 @@ describe('Context menu handler', function () {
 		expect(handler instanceof Function).toBeTruthy();
 	});
 	it('does not blow up if a message is passed before an element is actually clicked', function () {
-		handler({'type': 'literal', 'value': 'xxx'});
+		handler({'_type': 'literal', 'value': 'xxx'});
 	});
 	it('sets the input text value if input element in focus', function () {
 		input.focus();
-		handler({'type': 'literal', 'value': 'xyz'});
+		handler({'_type': 'literal', 'value': 'xyz'});
 
 		expect(input.value).toBe('xyz');
 	});
 	it('sets the text area text value if text area in focus', function () {
 		textArea.focus();
-		handler({'type': 'literal', 'value': 'xyz'});
+		handler({'_type': 'literal', 'value': 'xyz'});
 
 		expect(textArea.value).toBe('xyz');
 	});
 	it('sets the contenteditable div inner text if a contenteditable div is in focus', function () {
 		contentEditable.focus();
-		handler({'type': 'literal', 'value': 'xyz'});
+		handler({'_type': 'literal', 'value': 'xyz'});
 
 		expect(contentEditable.innerText).toBe('xyz');
 	});
@@ -55,7 +55,14 @@ describe('Context menu handler', function () {
 
 		expect(document.activeElement).toBe(iframe);
 
-		handler({'type': 'literal', 'value': 'xyz'});
+		handler({'_type': 'literal', 'value': 'xyz'});
 		expect(insideInput.value).toBe('xyz');
+	});
+	describe('size generator', function () {
+		it('sets the field content to a text of specified size by multiplying the template', function () {
+			input.focus();
+			handler({ '_type': 'size', 'size': '20', 'template': '1234567' });
+			expect(input.value).toBe('12345671234567123456');
+		});
 	});
 });

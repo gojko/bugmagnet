@@ -16,12 +16,11 @@
 				Object.keys(configObject).forEach(function(key) {
 					var	value = configObject[key],
 							title = getTitle(key);
-					if (typeof(value) === 'object') {
+					if (typeof(value) === 'string' || (typeof(value) === 'object' && value.hasOwnProperty('_type'))) {
+						menuBuilder.menuItem(title, parentMenu, value);
+					} else if (typeof(value) === 'object') {
 						var result = menuBuilder.subMenu(title, parentMenu);
 						processMenuObject(value, result);
-					}
-					else {
-						menuBuilder.menuItem(title, parentMenu, value);
 					}
 				});
 			},
@@ -32,9 +31,12 @@
 	};
 	BugMagnet.ChromeMenuBuilder = function () {
 		var self = this,
-				buildContentMessage = function (textToInsert){
+				buildContentMessage = function (menuValue){
+					if (typeof(menuValue)=== 'string') {
+						menuValue = {_type:'literal', value: menuValue};
+					}
 					return function (info, tab) {
-						chrome.tabs.sendMessage(tab.id, {type:'literal', value: textToInsert});
+						chrome.tabs.sendMessage(tab.id, menuValue);
 					};
 				};
 		self.rootMenu = function (title) {

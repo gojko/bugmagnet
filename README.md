@@ -19,7 +19,7 @@ Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic)
 ##Customising
 
 You can add your own values to the right-click menu by modifying
-(src/config.json). The format is simple:
+[config.json](src/config.json). The format is simple:
 
 * a hash object property is a sub-menu
 * a String property is a menu item. The property name is used as a menu item label 

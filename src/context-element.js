@@ -9,7 +9,7 @@
 		while (activeElement.contentDocument) {
 			activeElement = activeElement.contentDocument.activeElement;
 		}
-		if(request.type === 'literal') {
+		if(request['_type'] === 'literal') {
 			if (activeElement.tagName === 'TEXTAREA' || activeElement.tagName === 'INPUT') {
 				activeElement.value = request.value;
 			}

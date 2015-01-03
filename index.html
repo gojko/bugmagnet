@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="exploratory testing, software testing, bug magnet, gojko adzic" />
+    <meta name="description" content="Exploratory testing helper Chrome Extension. Adds common problematic values and edge cases to the context menu (right-click) for editable elements, so you can keep them handy and access them easily." />
+    <title>Bug Magnet - exploratory testing helper</title>
+    <link href="gh-page-resources/bootstrap-3.2.0/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/font-awesome-4.2.0/css/font-awesome.min.css">
+    <meta name="twitter:site" content="@gojkoadzic">
+    <meta name="twitter:creator" content="@gojkoadzic">
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi">
+  </head>
+<body>
+    <a href="http://github.com/gojko/bugmagnet">
+      <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">
+    </a>
+    <div class="container" style="background: url('screenshots/header-menu.png') center no-repeat;">
+      <div class="row">
+          <img src="screenshots/logo.png"/>
+      </div>
+    </div>
+    <hr class="featurette-divider"/>
+    <div class="container marketing">
+      <div class="row featurette">
+        <div class="col-md-12">
+          <p class="lead">
+          Convenient access to common problematic values and edge cases,
+          so you can keep them handy and access them easily during exploratory testing sessions. Just right-click an input field!
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+<a class="github-button" href="https://github.com/gojko/bugmagnet">Fork</a>
+<a class="github-button" href="https://github.com/gojko/bugmagnet">Star</a>
+<a href="https://twitter.com/gojkoadzic" class="twitter-follow-button" data-show-count="true" data-show-screen-name="true" data-lang="en">Follow @gojkoadzic</a> 
+        </div>
+      </div>
+      <div class="row featurette">
+        <div class="col-md-6">
+          <h1 class="featurette-heading">Features</h1>
+          <ul>
+            <li>Convenient access to common boundaries and edge cases for exploratory testing</li>
+            <li>Tiny overhead per page (&lt;1k), no 3rd party library dependencies, completely passive, so it does not interfere with your web app execution in any way</li>
+            <li>Works on input fields, text areas, content editable DIVs</li>
+            <li><a href="http://github.com/gojko/bugmagnet">Opensource</a>, so you can easily extend it with your config</li>
+          </ul>
+          <h1 class="featurette-heading">Limitations</h1>
+          <ul>
+            <li>Works on multi-frame pages, but only if they are from the same domain</li>
+            <li>Chrome extension - so only works in Chrome</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+
+          <h1 class="featurette-heading">Resources for more info</h1>
+
+<ul>
+<li>
+<a href="http://blogs.msdn.com/b/testing123/archive/2009/02/05/email-address-test-cases.aspx">E-mail address test cases</a>
+<ul>
+<li><a href="http://serverfault.com/questions/395766/are-two-periods-allowed-in-the-local-part-of-an-email-address">Dot atoms in e-mail</a></li>
+<li><a href="http://isemail.info/">Interactive RFC e-mail validation</a></li>
+</ul>
+</li>
+<li>
+<a href="http://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/">Falsehoods Programmers Believe About Names</a>
+<ul>
+<li><a href="http://stackoverflow.com/questions/4456438/how-can-i-pass-the-string-null-through-wsdl-soap-from-actionscript-3-to-a-co">We have an employee whose last name is Null</a></li>
+<li><a href="http://usatoday30.usatoday.com/tech/webguide/internetlife/2003-08-01-goveg_x.htm">Animal rights activist changes name to GoVeg.com</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Leone_Sextus_Tollemache">Longest English surname on record</a></li>
+</ul>
+</li>
+<li><a href="http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf">Elisabeth Hendrickson's test heuristics cheat sheet</a></li>
+</ul>
+
+          <h1 class="featurette-heading">Questions, suggestions...</h1>
+          <ul>
+            <li>Twitter: <a href="http://twitter.com/gojkoadzic">@gojkoadzic</a></li>
+            <li>E-mail: <a href="mailto:gojko@neuri.co.uk">gojko@neuri.co.uk</a></li>
+          </ul>
+
+
+          
+        </div>
+      </div>
+      <hr class="featurette-divider">
+
+      <!-- /END THE FEATURETTES -->
+
+    </div><!-- /.container -->
+<div class="container bottom">
+  <p>&copy; 2015 <a href="http://gojko.net">Gojko Adzic</a>. </p>
+</div>
+    <script src="gh-page-resources/jquery-2.1.0.min.js"></script>
+    <script src="gh-page-resources/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-58178859-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<!-- Place this tag right after the last button or just before your close body tag. -->
+<script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>
+      

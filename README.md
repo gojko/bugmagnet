@@ -6,7 +6,8 @@ keep them handy and access them easily during exploratory testing sessions.
 
 ##Usage
 
-The easiest way to install the extension is from the Chrome Web store. After
+The easiest way to install the extension is from the [Chrome Web
+store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi). After
 installation, just right-click on any editable item on the page and you'll see a
 Bug Magnet submenu. Click an item there, and it will be inserted into the
 editable field.
@@ -46,6 +47,7 @@ extension](https://developer.chrome.com/extensions/getstarted#unpacked).
   * [Interactive RFC e-mail validation](http://isemail.info/)
 * [Falsehoods Programmers Believe About Names](http://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/)
   * [We have an employee whose last name is Null](http://stackoverflow.com/questions/4456438/how-can-i-pass-the-string-null-through-wsdl-soap-from-actionscript-3-to-a-co)
+  * [Animal rights activist changes name to GoVeg.com](http://usatoday30.usatoday.com/tech/webguide/internetlife/2003-08-01-goveg_x.htm)
 * [Elisabeth Hendrickson's test heuristics cheat sheet](http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf)
 
 ##Icon credit

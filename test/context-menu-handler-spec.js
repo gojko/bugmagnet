@@ -58,4 +58,11 @@ describe('Context menu handler', function () {
 		handler({'_type': 'literal', 'value': 'xyz'});
 		expect(insideInput.value).toBe('xyz');
 	});
+	describe('size generator', function () {
+		it('sets the field content to a text of specified size by multiplying the template', function () {
+			input.focus();
+			handler({ '_type': 'size', 'size': '20', 'template': '1234567' });
+			expect(input.value).toBe('12345671234567123456');
+		});
+	});
 });

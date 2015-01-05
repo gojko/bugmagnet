@@ -28,7 +28,7 @@
 			"64K + 1": { "_type": "size", "size": "65537", "template": "0123456789" }
 		}
 	},
-	"Names": [ 
+	"Names": [
 		"John O'Grady",
 		"John James O'Grady",
 		"John James \"Jimmy\" O'Grady",
@@ -41,7 +41,7 @@
 		"Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache"
 	],
 	"E-mail addresses": {
-		"Valid" :{ 
+		"Valid" :{
 			"Simple": "email@domain.com",
 			"Dot in the address": "firstname.lastname@domain.com",
 			"Subdomain": "email@subdomain.domain.com",
@@ -75,8 +75,27 @@
 			"Multiple dots in the domain": "email@domain..com"
 		}
 	},
+	"Credit Cards": {
+		"Visa": {
+			"4242424242424242": { "Number": "4242424242424242", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" },
+			"4111111111111111": { "Number": "4111111111111111", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" }
+		},
+		"MasterCard": {
+			"5555555555554444": { "Number": "5555555555554444", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" },
+			"5200828282828210": { "Number": "5200828282828210", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" }
+		},
+		"American Express": {
+			"378282246310005": { "Number": "378282246310005", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" },
+			"371449635398431": { "Number": "371449635398431", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" }
+		},
+		"Others": {
+			"Discover": { "Number": "6011111111111117", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" },
+			"Diners Club": { "Number": "38520000023237", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" },
+			"JCB": { "Number": "3530111333300000", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" }
+		}
+	},
 	"Numbers": [
-		"0", "32768", "32769", "65536", "65537", "2147483648", "2147483649", "4294967296", "4294967297", "1E-16", "-1", "0.0001", 
+		"0", "32768", "32769", "65536", "65537", "2147483648", "2147483649", "4294967296", "4294967297", "1E-16", "-1", "0.0001",
 		"1,234,567", "1.234.567,89"
 	],
 	"Whitespace": {
@@ -84,7 +103,7 @@
 		"Leading spaces": "  leading spaces",
 		"Mixing tabs and spaces": "\t leading tabs and spaces",
 		"spaces on both sides":" Space on both sides ",
-		"Just whitespace": "\t \t\n \n " 
+		"Just whitespace": "\t \t\n \n "
 	},
 	"Format exploits": {
 		"SQL Injection": "Robert'); DROP TABLE Students;--",

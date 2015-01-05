@@ -94,6 +94,10 @@
 			"JCB": { "Number": "3530111333300000", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" }
 		}
 	},
+	"Addresses": {
+		"US Address": "1978 Lindale Avenue, San Francisco, CA 94108, US",
+		"UK Address": "61 Church Road, Liverpool, Merseyside L25 6DA, UK"
+	},
 	"Numbers": [
 		"0", "32768", "32769", "65536", "65537", "2147483648", "2147483649", "4294967296", "4294967297", "1E-16", "-1", "0.0001",
 		"1,234,567", "1.234.567,89"

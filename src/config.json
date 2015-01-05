@@ -38,7 +38,8 @@
 		"NULL",
 		"GoVeg.com",
 		"田中太郎",
-		"Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache"
+		"Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache",
+		"Milan Vojnovič"
 	],
 	"E-mail addresses": {
 		"Valid" :{
@@ -96,12 +97,14 @@
 	},
 	"Addresses": {
 		"US Address": "1978 Lindale Avenue, San Francisco, CA 94108, US",
-		"UK Address": "61 Church Road, Liverpool, Merseyside L25 6DA, UK"
+		"UK Address": "61 Church Road, Liverpool, Merseyside L25 6DA, UK",
+		"CZ Address": "Bramboříková 1/2996, 106 00, Praha 10"
 	},
 	"Phones": {
 		"US number": "+1-202-555-0100",
 		"UK number": "+44 1632 960132",
-		"AU number": "+61 1900 654 321"
+		"AU number": "+61 1900 654 321",
+		"CZ number": "+420777555666"
 	},
 	"Numbers": [
 		"0", "32768", "32769", "65536", "65537", "2147483648", "2147483649", "4294967296", "4294967297", "1E-16", "-1", "0.0001",

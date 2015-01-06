@@ -35,7 +35,7 @@
 		if (activeElement.tagName === 'TEXTAREA' || activeElement.tagName === 'INPUT') {
 			activeElement.value = actualValue;
 		}
-		else if (activeElement.tagName === 'DIV' && activeElement.hasAttribute('contenteditable')) {
+		else if (activeElement.hasAttribute('contenteditable')) {
 			activeElement.innerText = actualValue;
 		}
 	});

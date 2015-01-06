@@ -6,8 +6,9 @@ describe('Context menu handler', function () {
 			template = '<input type="text" value="old text"/>' +
 					'<textarea>old text area</textarea>' +
 				  '<div contenteditable>old div</div>' +
+				  '<span contenteditable>old span</span>' +
 					'<iframe></iframe>',
-			input, textArea, contentEditable, iframe;
+			input, textArea, contentEditable, iframe, span;
 	beforeEach(function () {
 		handler = chrome.runtime.onMessage.addListener.calls.first().args[0];
 		testElements = document.createElement('div');
@@ -15,6 +16,7 @@ describe('Context menu handler', function () {
 		input = testElements.getElementsByTagName('input')[0];
 		textArea = testElements.getElementsByTagName('textarea')[0];
 		contentEditable = testElements.getElementsByTagName('div')[0];
+		span = testElements.getElementsByTagName('span')[0];
 		document.body.appendChild(testElements);
 		iframe = testElements.getElementsByTagName('iframe')[0];
 
@@ -46,6 +48,12 @@ describe('Context menu handler', function () {
 		handler({'_type': 'literal', 'value': 'xyz'});
 
 		expect(contentEditable.innerText).toBe('xyz');
+	});
+	it('spans can also be contenteditable', function () {
+		span.focus();
+		handler({'_type': 'literal', 'value': 'xyz'});
+
+		expect(span.innerText).toBe('xyz');
 	});
 	it('sets the value of an element inside an iframe if it is in focus', function () {
 		iframe.contentDocument.body.innerHTML = template;

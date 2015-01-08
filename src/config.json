@@ -12,8 +12,10 @@
 			"129b": { "_type": "size", "size": "129", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
 			"256b": { "_type": "size", "size": "256", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
 			"257b": { "_type": "size", "size": "257", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+			"32K - 1": { "_type": "size", "size": "32767", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
 			"32K": { "_type": "size", "size": "32768", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
 			"32K + 1": { "_type": "size", "size": "32769", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+			"64K - 1": { "_type": "size", "size": "65535", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
 			"64K": { "_type": "size", "size": "65536", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
 			"64K + 1": { "_type": "size", "size": "65537", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
 		},
@@ -22,8 +24,10 @@
 			"129b": { "_type": "size", "size": "129", "template": "0123456789" },
 			"256b": { "_type": "size", "size": "256", "template": "0123456789" },
 			"257b": { "_type": "size", "size": "257", "template": "0123456789" },
+			"32K - 1": { "_type": "size", "size": "32767", "template": "0123456789" },
 			"32K": { "_type": "size", "size": "32768", "template": "0123456789" },
 			"32K + 1": { "_type": "size", "size": "32769", "template": "0123456789" },
+			"64K - 1": { "_type": "size", "size": "65535", "template": "0123456789" }
 			"64K": { "_type": "size", "size": "65536", "template": "0123456789" },
 			"64K + 1": { "_type": "size", "size": "65537", "template": "0123456789" }
 		}
@@ -76,7 +80,12 @@
 		}
 	},
 	"Numbers": [
-		"0", "32768", "32769", "65536", "65537", "2147483648", "2147483649", "4294967296", "4294967297", "1E-16", "-1", "0.0001", 
+		"0",
+		"32767", "32768", "32769",
+		"65535", "65536", "65537",
+		"2147483647", "2147483648", "2147483649",
+		"4294967295", "4294967296", "4294967297",
+		"1E-16", "-1", "0.0001", 
 		"1,234,567", "1.234.567,89"
 	],
 	"Whitespace": {

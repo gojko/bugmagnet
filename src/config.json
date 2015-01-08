@@ -15,7 +15,7 @@
 			"32K - 1": { "_type": "size", "size": "32767", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
 			"32K": { "_type": "size", "size": "32768", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
 			"32K + 1": { "_type": "size", "size": "32769", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-			"64K - 1": { "_type": "size", "size": "65535", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
+			"64K - 1": { "_type": "size", "size": "65535", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
 			"64K": { "_type": "size", "size": "65536", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
 			"64K + 1": { "_type": "size", "size": "65537", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
 		},
@@ -27,7 +27,7 @@
 			"32K - 1": { "_type": "size", "size": "32767", "template": "0123456789" },
 			"32K": { "_type": "size", "size": "32768", "template": "0123456789" },
 			"32K + 1": { "_type": "size", "size": "32769", "template": "0123456789" },
-			"64K - 1": { "_type": "size", "size": "65535", "template": "0123456789" }
+			"64K - 1": { "_type": "size", "size": "65535", "template": "0123456789" },
 			"64K": { "_type": "size", "size": "65536", "template": "0123456789" },
 			"64K + 1": { "_type": "size", "size": "65537", "template": "0123456789" }
 		}

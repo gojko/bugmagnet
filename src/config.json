@@ -42,6 +42,8 @@
 		"Peter de Montfort",
 		"Chloë Rømer",
 		"NULL",
+        "nil",
+        "False",
 		"GoVeg.com",
 		"田中太郎",
 		"Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache",
@@ -84,23 +86,43 @@
 			"Multiple dots in the domain": "email@domain..com"
 		}
 	},
+    "Website Addresses": {
+        "Valid": [
+            "www.mysite.com",
+            "http://www.mysite.com",
+            "https://www.mysite.com"
+            "mysite.com",
+            "my.site.com",
+            "http://www.mysite.com:80",
+            "http://www.mysite.org",
+            "http://www.mysite.net",
+            "http://www.mysite.us"
+        ],
+        "Invalid": [
+            "http//www.mysite.com",
+            "http:/www.mysite.com",
+            "://www.mysite.com",
+            "foo://www.mysite.com",
+            "mysite"
+        ]
+    },
 	"Credit Cards": {
-		"Visa": {
-			"4242424242424242": { "Number": "4242424242424242", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" },
-			"4111111111111111": { "Number": "4111111111111111", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" }
-		},
-		"MasterCard": {
-			"5555555555554444": { "Number": "5555555555554444", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" },
-			"5200828282828210": { "Number": "5200828282828210", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" }
-		},
-		"American Express": {
-			"378282246310005": { "Number": "378282246310005", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" },
-			"371449635398431": { "Number": "371449635398431", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" }
-		},
+		"Visa": [
+			"4242424242424242",
+			"4111111111111111"
+		],
+		"MasterCard": [
+			"5555555555554444",
+			"5200828282828210"
+		],
+		"American Express": [
+			"378282246310005",
+			"371449635398431"
+		],
 		"Others": {
-			"Discover": { "Number": "6011111111111117", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" },
-			"Diners Club": { "Number": "38520000023237", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" },
-			"JCB": { "Number": "3530111333300000", "Expiration Month": "1", "Expiration Year": "2016", "CVV": "123" }
+			"Discover": "6011111111111117",
+			"Diners Club": "38520000023237",
+			"JCB": "3530111333300000"
 		}
 	},
 	"Addresses": {

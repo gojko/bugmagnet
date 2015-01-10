@@ -90,7 +90,7 @@
         "Valid": [
             "www.mysite.com",
             "http://www.mysite.com",
-            "https://www.mysite.com"
+            "https://www.mysite.com",
             "mysite.com",
             "my.site.com",
             "http://www.mysite.com:80",

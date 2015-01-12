@@ -1,4 +1,4 @@
-/*global describe, it, expect, chrome, beforeEach, afterEach */
+/*global describe, it, expect, chrome, beforeEach, afterEach, jasmine */
 describe('Context menu handler', function () {
 	'use strict';
 	var handler,
@@ -37,11 +37,39 @@ describe('Context menu handler', function () {
 
 		expect(input.value).toBe('xyz');
 	});
+	it('dispatches change event on input', function () {
+		var spy = jasmine.createSpy('change');
+		input.focus();
+		input.onchange = spy;
+		handler({'_type': 'literal', 'value': 'xyz'});
+		expect(spy).toHaveBeenCalled();
+	});
+	it('dispatches input event on input', function () {
+		var spy = jasmine.createSpy('input');
+		input.focus();
+		input.onchange = spy;
+		handler({'_type': 'literal', 'value': 'xyz'});
+		expect(spy).toHaveBeenCalled();
+	});
 	it('sets the text area text value if text area in focus', function () {
 		textArea.focus();
 		handler({'_type': 'literal', 'value': 'xyz'});
 
 		expect(textArea.value).toBe('xyz');
+	});
+	it('dispatches change event on textarea', function () {
+		var spy = jasmine.createSpy('change');
+		textArea.focus();
+		textArea.onchange = spy;
+		handler({'_type': 'literal', 'value': 'xyz'});
+		expect(spy).toHaveBeenCalled();
+	});
+	it('dispatches input event on textarea', function () {
+		var spy = jasmine.createSpy('input');
+		textArea.focus();
+		textArea.onchange = spy;
+		handler({'_type': 'literal', 'value': 'xyz'});
+		expect(spy).toHaveBeenCalled();
 	});
 	it('sets the contenteditable div inner text if a contenteditable div is in focus', function () {
 		contentEditable.focus();

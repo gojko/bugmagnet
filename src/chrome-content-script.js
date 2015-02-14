@@ -1,9 +1,8 @@
-/* global chrome, document, window, BugMagnet */
-window.BugMagnet = window.BugMagnet || {};
+/* global chrome, window, BugMagnet */
 (function () {
 	'use strict';
+	window.BugMagnet = window.BugMagnet || {};
 	chrome.runtime.onMessage.addListener(function (request /*, sender, sendResponse */) {
-		var activeElement = document.activeElement;
-		BugMagnet.executeRequestOnElement(activeElement, request);
+		BugMagnet.executeRequest(request);
 	});
 })();

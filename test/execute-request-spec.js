@@ -1,16 +1,16 @@
-/*global describe, it, expect, chrome, beforeEach, afterEach, jasmine */
-describe('Context menu handler', function () {
+/*global describe, it, expect, beforeEach, afterEach, jasmine, document, BugMagnet */
+describe('BugMagnet.executeRequest', function () {
 	'use strict';
 	var handler,
 			testElements,
 			template = '<input type="text" value="old text"/>' +
 					'<textarea>old text area</textarea>' +
-				  '<div contenteditable>old div</div>' +
-				  '<span contenteditable>old span</span>' +
+					'<div contenteditable>old div</div>' +
+					'<span contenteditable>old span</span>' +
 					'<iframe></iframe>',
 			input, textArea, contentEditable, iframe, span;
 	beforeEach(function () {
-		handler = chrome.runtime.onMessage.addListener.calls.first().args[0];
+		handler = BugMagnet.executeRequest;
 		testElements = document.createElement('div');
 		testElements.innerHTML = template;
 		input = testElements.getElementsByTagName('input')[0];
@@ -23,10 +23,6 @@ describe('Context menu handler', function () {
 	});
 	afterEach(function () {
 		document.body.removeChild(testElements);
-	});
-	it('installs a handler for the chrome message listener to change the element under context menu', function () {
-		expect(chrome.runtime.onMessage.addListener.calls.count()).toBe(1);
-		expect(handler instanceof Function).toBeTruthy();
 	});
 	it('does not blow up if a message is passed before an element is actually clicked', function () {
 		handler({'_type': 'literal', 'value': 'xxx'});

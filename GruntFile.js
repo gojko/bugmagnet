@@ -31,12 +31,12 @@ module.exports = function (grunt) {
 		},
 		concat: {
 			chrome_extension_js: {
-				src: ['src/extension.js'],
+				src: ['src/bugmagnet.js', 'src/chrome-menubuilder.js', 'src/chrome-extension.js'],
 				dest: 'pack/chrome/extension.js'
 			},
 			chrome_context_js: {
-				src: ['src/context-element.js'],
-				dest: 'pack/chrome/context-element.js'
+				src: ['src/bugmagnet.js', 'src/chrome-content-script.js'],
+				dest: 'pack/chrome/content-script.js'
 			}
 		},
 		compress: {

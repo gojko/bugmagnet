@@ -42,7 +42,7 @@ Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic)
 ##Customising
 
 You can add your own values to the right-click menu by modifying
-[config.json](src/config.json). The format is simple:
+[config.json](template/common/config.json). The format is simple:
 
 * a hash object property is a sub-menu
 * a String property is a menu item. The property name is used as a menu item label 
@@ -60,10 +60,12 @@ from the command line using
 
 ###Running from a local setup
 
-Load [manifest.json](src/manifest.json) from the **src** folder in Chrome as an [unpacked
+Run the following grunt command to copy and assemble the extension
+
+    grunt package
+
+Then load the **pack/chrome** folder in Chrome as an [unpacked
 extension](https://developer.chrome.com/extensions/getstarted#unpacked).
-
-
 
 ##Icon credit
 

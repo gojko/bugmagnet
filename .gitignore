@@ -1,5 +1,5 @@
 node_modules
 SpecRunner.html
 .grunt
-src/*.zip
 .DS_Store
+pack

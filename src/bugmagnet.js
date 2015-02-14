@@ -29,7 +29,7 @@ BugMagnet.processConfigText = function (configText, menuBuilder) {
 	rootMenu = menuBuilder.rootMenu('Bug Magnet');
 	processMenuObject(config, rootMenu);
 };
-BugMagnet.executeRequestOnElement = function (domElement, request) {
+BugMagnet.executeRequest = function (request) {
 	'use strict';
 	var type_flag = '_type',
 		generators = {
@@ -63,7 +63,8 @@ BugMagnet.executeRequestOnElement = function (domElement, request) {
 					element.dispatchEvent(evt);
 				});
 			},
-			actualValue = getValue(request);
+			actualValue = getValue(request),
+			domElement = document.activeElement;
 	if (!domElement || !actualValue) {
 		return;
 	}

@@ -38,6 +38,7 @@ Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic)
   * [Longest English surname on record](http://en.wikipedia.org/wiki/Leone_Sextus_Tollemache)
   * [Creative usernames and Spotify account hijacking](https://labs.spotify.com/2013/06/18/creative-usernames/)
 * [Elisabeth Hendrickson's test heuristics cheat sheet](http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf)
+* [Personal names around the world by W3C](http://www.w3.org/International/questions/qa-personal-names)
 
 ##Customising
 

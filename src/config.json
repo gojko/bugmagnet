@@ -32,7 +32,7 @@
 			"64K + 1": { "_type": "size", "size": "65537", "template": "0123456789" }
 		}
 	},
-	"Names": [ 
+	"Names Latin": [ 
 		"John O'Grady",
 		"John James O'Grady",
 		"John James \"Jimmy\" O'Grady",
@@ -43,28 +43,32 @@
 		"GoVeg.com",
 		"Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache",
 		"ᴮᴵᴳᴮᴵᴿᴰ",
-		"Björk Guðmundsdóttir",
-		"María-Jose Carreño Quiñones",
-		"José Eduardo Santos Tavares Melo Silva",
-		"Velikkakathu Sankaran Achuthanandan",
-		"V. S. Achuthanandan",
-		"Abu Karim Muhammad al-Jamil ibn Nidal ibn Abdulaziz al-Filistini",
-		"Nguyễn Tấn Dũng",
-		"Shōji"
+		"Icelandic": "Björk Guðmundsdóttir",
+		"Spanish": "María-Jose Carreño Quiñones",
+		"Brazilian": "José Eduardo Santos Tavares Melo Silva",
+		"Indian long": "Velikkakathu Sankaran Achuthanandan",
+		"Indian short": "V. S. Achuthanandan",
+		"Arabic": "Abu Karim Muhammad al-Jamil ibn Nidal ibn Abdulaziz al-Filistini",
+		"Vietnames": "Nguyễn Tấn Dũng",
+		"Japanese": "Shōji"
 	],
-	"Character sets": [ 
+	"Names in Character sets": [ 
 		"田中太郎",
-		"東海林賢蔵",
-		"泽东",
-		"Борис Николаевич Ельцин",
-		"Наина Иосифовна Ельцина",
-		"แม",
-		"ابن خلدون",
-		"庄司",
-		"庄子",
-		"東海林",
-		"小路"
+		"Japanese Tōkairin": "東海林賢蔵",
+		"Ze Dong": 泽东",
+		"Russian male": "Борис Николаевич Ельцин",
+		"Russian female": "Наина Иосифовна Ельцина",
+		"Thai nickname": "แม",
+		"Arabic": "ابن خلدون",
+		"Shōji": "庄司",
+		"Shōji": "庄子",
+		"Shōji": "東海林",
+		"Shōji": "小路"
 	],
+	"Cities": {
+		"Scandinavian letters": "Ærøskøbing",
+		"Llanfairpwllgwyngyll": "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch"
+	},
 	"E-mail addresses": {
 		"Valid" :{ 
 			"Simple": "email@domain.com",

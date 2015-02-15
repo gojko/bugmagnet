@@ -33,7 +33,7 @@
 		}
 	},
 	"Names Latin": { 
-		"John O'Grady": "John O'Grady",
+		"John O\'Grady": "John O'Grady",
 		"escape'": John James O'Grady",
 		"escape\\": "John James \"Jimmy\" O'Grady",
 		"José Casal-Giménez": "José Casal-Giménez",
@@ -56,7 +56,7 @@
 	"Names in Character sets": { 
 		"Japanese": "田中太郎",
 		"Japanese Tōkairin": "東海林賢蔵",
-		"Ze Dong": 泽东",
+		"Ze Dong": "泽东",
 		"Russian male": "Борис Николаевич Ельцин",
 		"Russian female": "Наина Иосифовна Ельцина",
 		"Thai nickname": "แม",

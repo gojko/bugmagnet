@@ -32,7 +32,7 @@
 			"64K + 1": { "_type": "size", "size": "65537", "template": "0123456789" }
 		}
 	},
-	"Names Latin": [ 
+	"Names Latin": { 
 		"John O'Grady",
 		"John James O'Grady",
 		"John James \"Jimmy\" O'Grady",
@@ -51,8 +51,8 @@
 		"Arabic": "Abu Karim Muhammad al-Jamil ibn Nidal ibn Abdulaziz al-Filistini",
 		"Vietnames": "Nguyễn Tấn Dũng",
 		"Japanese": "Shōji"
-	],
-	"Names in Character sets": [ 
+	},
+	"Names in Character sets": { 
 		"田中太郎",
 		"Japanese Tōkairin": "東海林賢蔵",
 		"Ze Dong": 泽东",
@@ -64,7 +64,7 @@
 		"Shōji": "庄子",
 		"Shōji": "東海林",
 		"Shōji": "小路"
-	],
+	},
 	"Cities": {
 		"Scandinavian letters": "Ærøskøbing",
 		"Llanfairpwllgwyngyll": "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch"

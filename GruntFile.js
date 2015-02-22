@@ -1,21 +1,4 @@
 /*global module*/
-/*
-Installing Grunt and associated contributions
-
-- once only per machine
-install node and npm:
-	http://nodejs.org/download/
-install grunt cli:
-	npm install -g grunt-cli
-
-- per project
-npm install grunt-contrib-clean --save-dev
-npm install grunt-contrib-jasmine --save-dev
-npm install grunt-contrib-compress --save-dev
-npm install grunt-contrib-concat --save-dev
-npm install grunt-contrib-copy --save-dev
-
-*/
 
 module.exports = function (grunt) {
 	'use strict';

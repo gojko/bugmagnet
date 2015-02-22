@@ -39,6 +39,7 @@ Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic)
   * [Creative usernames and Spotify account hijacking](https://labs.spotify.com/2013/06/18/creative-usernames/)
 * [Elisabeth Hendrickson's test heuristics cheat sheet](http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf)
 
+
 ##Customising
 
 You can add your own values to the right-click menu by modifying
@@ -50,6 +51,15 @@ You can add your own values to the right-click menu by modifying
 * an Array property is a sub-menu, allowing you to quickly add a list of Strings
   without a special label (the element values are used both as menu labels and
   as text to insert).
+
+###Setting up the development environment
+
+Install node js and grunt CLI if not already installed. See
+[gruntjs.com](http://gruntjs.com/getting-started) for more information.
+
+Install project dependencies using
+
+    npm install 
 
 ###Running tests
 

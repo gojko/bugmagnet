@@ -1,6 +1,6 @@
 /*global window, document*/
 var BugMagnet = window.BugMagnet || {};
-BugMagnet.processConfigText = function (configText, menuBuilder) {
+BugMagnet.processConfigText = function (configText, menuBuilder, customRoot) {
 	'use strict';
 	var processMenuObject = function (configObject, parentMenu) {
 			var getTitle = function (key) {
@@ -26,8 +26,9 @@ BugMagnet.processConfigText = function (configText, menuBuilder) {
 		},
 		config, rootMenu;
 	config = JSON.parse(configText);
-	rootMenu = menuBuilder.rootMenu('Bug Magnet');
+	rootMenu = customRoot || menuBuilder.rootMenu('Bug Magnet');
 	processMenuObject(config, rootMenu);
+	return rootMenu;
 };
 BugMagnet.executeRequest = function (request) {
 	'use strict';

@@ -1,8 +1,5 @@
-/* global chrome, window, BugMagnet */
-(function () {
+/* global chrome, BugMagnet */
+chrome.runtime.onMessage.addListener(function (request /*, sender, sendResponse */) {
 	'use strict';
-	window.BugMagnet = window.BugMagnet || {};
-	chrome.runtime.onMessage.addListener(function (request /*, sender, sendResponse */) {
-		BugMagnet.executeRequest(request);
-	});
-})();
+	BugMagnet.executeRequest(request);
+});

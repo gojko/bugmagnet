@@ -1,5 +1,4 @@
-/* global chrome, BugMagnet, window */
-window.BugMagnet = window.BugMagnet || {};
+/* global chrome, BugMagnet */
 BugMagnet.ChromeMenuBuilder = function () {
 	'use strict';
 	var self = this,

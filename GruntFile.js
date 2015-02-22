@@ -14,11 +14,11 @@ module.exports = function (grunt) {
 		},
 		concat: {
 			chrome_extension_js: {
-				src: ['src/bugmagnet.js', 'src/chrome-menubuilder.js', 'src/chrome-extension.js'],
+				src: ['template/js/head.txt', 'src/bugmagnet.js', 'src/chrome-menubuilder.js', 'src/chrome-extension.js', 'template/js/foot.txt'],
 				dest: 'pack/chrome/extension.js'
 			},
 			chrome_context_js: {
-				src: ['src/bugmagnet.js', 'src/chrome-content-script.js'],
+				src: ['template/js/head.txt', 'src/bugmagnet.js', 'src/chrome-content-script.js', 'template/js/foot.txt'],
 				dest: 'pack/chrome/content-script.js'
 			}
 		},
@@ -48,7 +48,7 @@ module.exports = function (grunt) {
 						'test/*.js'
 					],
 					helpers: [
-						'test-lib/fake-chrome-api.js'
+						'test-lib/*.js'
 					]
 				}
 			}

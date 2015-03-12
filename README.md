@@ -61,10 +61,9 @@ Install project dependencies using
 
     npm install 
 
-
 ###Running from a local setup
 
-Install Grunt, Node and NPM (see [the Grunt Getting started guide](http://gruntjs.com/getting-started) for instructions). Run the following grunt command to copy and assemble the extension
+Run the following grunt command to copy and assemble the extension
 
     grunt package
 

@@ -61,21 +61,20 @@ Install project dependencies using
 
     npm install 
 
-###Running tests
-
-Install Grunt, Node and NPM (instructions are in [GruntFile.js](GruntFile.js)). Then run tests
-from the command line using
-
-    grunt jasmine
 
 ###Running from a local setup
 
-Run the following grunt command to copy and assemble the extension
+Install Grunt, Node and NPM (see [the Grunt Getting started guide](http://gruntjs.com/getting-started) for instructions). Run the following grunt command to copy and assemble the extension
 
     grunt package
 
-Then load the **pack/chrome** folder in Chrome as an [unpacked
-extension](https://developer.chrome.com/extensions/getstarted#unpacked).
+Then load the **pack/chrome** folder in Chrome as an [unpacked extension](https://developer.chrome.com/extensions/getstarted#unpacked).
+
+###Running tests
+
+Run tests from the command line using
+
+    grunt jasmine
 
 ##Icon credit
 

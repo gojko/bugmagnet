@@ -1,5 +1,5 @@
 /*global window, document*/
-var BugMagnet = window.BugMagnet || {};
+var BugMagnet = BugMagnet || {};
 BugMagnet.processConfigText = function (configText, menuBuilder, customRoot) {
 	'use strict';
 	var processMenuObject = function (configObject, parentMenu) {

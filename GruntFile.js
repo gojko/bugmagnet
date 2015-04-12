@@ -14,26 +14,26 @@ module.exports = function (grunt) {
 			firefox: {
 				files: [
 					{expand: true, cwd: 'template/common', src: ['**'], dest: 'pack/firefox/data/'},
-					{expand: true, cwd: 'template/firefox', src: ['**'], dest: 'pack/firefox/'}
+					{expand: true, cwd: 'template/firefox', src: ['**'], dest: 'pack/firefox/'},
+					{expand: true, cwd: 'test/firefox', src: ['**'], dest: 'pack/firefox/test/'}
 				]
 			}
 		},
 		concat: {
 			chrome_extension_js: {
-				src: ['template/js/head.txt', 'src/bugmagnet.js', 'src/chrome/chrome-menubuilder.js', 'src/chrome/chrome-extension.js', 'template/js/foot.txt'],
+				src: ['template/js/head.txt', 'src/chrome/bugmagnet.js', 'src/common/processConfig.js', 'src/chrome/chrome-menubuilder.js', 'src/chrome/chrome-extension.js', 'template/js/foot.txt'],
 				dest: 'pack/chrome/extension.js'
 			},
 			chrome_context_js: {
-				src: ['template/js/head.txt', 'src/bugmagnet.js', 'src/chrome/chrome-content-script.js', 'template/js/foot.txt'],
+				src: ['template/js/head.txt', 'src/chrome/bugmagnet.js', 'src/common/executeRequest.js', 'src/chrome/chrome-content-script.js', 'template/js/foot.txt'],
 				dest: 'pack/chrome/content-script.js'
 			},
-			firefox_addon_js: {
-				src: ['template/js/head.txt', 'src/bugmagnet.js', 'src/firefox/menuBuilder.js', 'src/firefox/firefox-addon.js', 'template/js/foot.txt'],
-				dest: 'pack/firefox/lib/main.js'
-			},
-			firefox_context_js: {
-				src: ['template/js/head.txt', 'src/bugmagnet.js', 'src/firefox/context-element.js', 'template/js/foot.txt'],
-				dest: 'pack/firefox/data/context-element.js'
+			firefox: {
+				files: {
+					'pack/firefox/lib/common.js': ['src/firefox/bugmagnet.js', 'src/common/processConfig.js', 'src/firefox/common.js'],
+					'pack/firefox/lib/main.js': ['src/firefox/menuBuilder.js', 'src/firefox/firefox-addon.js'],
+					'pack/firefox/data/context-element.js': ['src/firefox/bugmagnet.js', 'src/common/executeRequest.js', 'src/firefox/context-element.js']
+				}
 			}
 		},
 		compress: {
@@ -51,7 +51,7 @@ module.exports = function (grunt) {
 		},
 		jasmine: {
 			all: {
-				src: ['src/*.js', 'src/*/*.js'],
+				src: ['src/*.js', 'src/chrome/*.js'],
 				options: {
 					template: 'test-lib/grunt.tmpl',
 					outfile: 'SpecRunner.html',
@@ -59,11 +59,20 @@ module.exports = function (grunt) {
 					display: 'short',
 					keepRunner: true,
 					specs: [
-						'test/*.js'
+						'test/chrome/*.js'
 					],
 					helpers: [
 						'test-lib/*.js'
 					]
+				}
+			}
+		},
+		jasmine_firefoxaddon: {
+			all: {
+				src: ['test/*.js', 'test-lib/*.js'],
+				options: {
+					paths: ['test/process-config-text-spec.js'],
+					keepRunner: true
 				}
 			}
 		}
@@ -74,6 +83,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-jasmine-firefoxaddon');
 	grunt.registerTask('package-chrome', ['jasmine', 'clean', 'copy:chrome', 'concat:chrome_extension_js', 'concat:chrome_context_js', 'compress']);
-	grunt.registerTask('package-firefox', ['jasmine', 'clean', 'copy:firefox', 'concat:firefox_addon_js', 'concat:firefox_context_js']);
+	grunt.registerTask('package-firefox', ['clean', 'copy:firefox', 'concat:firefox']);
 };

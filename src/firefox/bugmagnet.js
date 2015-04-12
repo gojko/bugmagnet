@@ -1,0 +1,1 @@
+var BugMagnet = BugMagnet || {};

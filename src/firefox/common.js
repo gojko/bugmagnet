@@ -1,0 +1,1 @@
+exports.processConfigText = BugMagnet.processConfigText;

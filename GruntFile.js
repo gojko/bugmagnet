@@ -30,8 +30,7 @@ module.exports = function (grunt) {
 			},
 			firefox: {
 				files: {
-					'pack/firefox/lib/common.js': ['src/firefox/bugmagnet.js', 'src/common/processConfig.js', 'src/firefox/common.js'],
-					'pack/firefox/lib/main.js': ['src/firefox/menuBuilder.js', 'src/firefox/firefox-addon.js'],
+					'pack/firefox/lib/main.js': ['template/js/head.txt','src/firefox/bugmagnet.js', 'src/common/processConfig.js', 'src/firefox/common.js', 'src/firefox/menuBuilder.js', 'src/firefox/firefox-addon.js', 'template/js/foot.txt'],
 					'pack/firefox/data/context-element.js': ['src/firefox/bugmagnet.js', 'src/common/executeRequest.js', 'src/firefox/context-element.js']
 				}
 			}
@@ -51,7 +50,7 @@ module.exports = function (grunt) {
 		},
 		jasmine: {
 			all: {
-				src: ['src/*.js', 'src/chrome/*.js'],
+				src: ['src/common/*.js', 'src/chrome/*.js'],
 				options: {
 					template: 'test-lib/grunt.tmpl',
 					outfile: 'SpecRunner.html',
@@ -67,13 +66,69 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		jasmine_firefoxaddon: {
-			all: {
-				src: ['test/*.js', 'test-lib/*.js'],
-				options: {
-					paths: ['test/process-config-text-spec.js'],
-					keepRunner: true
-				}
+		"mozilla-addon-sdk": {
+			'latest': {
+			  options: {
+				// revision: "latest", // default official revision
+				dest_dir: "build_tools/"
+			  }
+			},
+			'1_14': {
+			  options: {
+				revision: "1.14",
+				dest_dir: "build_tools/"
+			  }
+			},
+			'master': {
+			  options: {
+				revision: "master",
+				github: true,
+				// github_user: "mozilla" // default value
+				// dest_dir: "tmp/mozilla-addon-sdk"  //  default value
+			  }
+			}
+		},
+		"mozilla-cfx-xpi": {
+			'stable': {
+			  options: {
+				"mozilla-addon-sdk": "latest",
+				extension_dir: "pack/firefox",
+				dist_dir: "tmp/dist-stable"
+			  }
+			},
+			'experimental': {
+			  options: {
+				"mozilla-addon-sdk": "latest",
+				extension_dir: "pack/firefox",
+				dist_dir: "tmp/dist-experimental",
+				strip_sdk: false // true by default
+			  }
+			},
+		},
+		"mozilla-cfx": {
+			'run_stable': {
+			  options: {
+				"mozilla-addon-sdk": "latest",
+				extension_dir: "pack/firefox",
+				command: "run",
+				pipe_output: true
+			  }
+			},
+			'test_stable': {
+			  options: {
+				"mozilla-addon-sdk": "latest",
+				extension_dir: "pack/firefox",
+				command: "test",
+				pipe_output: true
+			  }
+			},
+			'run_experimental': {
+			  options: {
+				"mozilla-addon-sdk": "latest",
+				extension_dir: "pack/firefox",
+				command: "run",
+				pipe_output: true
+			  }
 			}
 		}
 	});
@@ -83,7 +138,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-jasmine-firefoxaddon');
+	grunt.loadNpmTasks('grunt-mozilla-addon-sdk');
+	grunt.registerTask('test-chrome', ['jasmine']);
 	grunt.registerTask('package-chrome', ['jasmine', 'clean', 'copy:chrome', 'concat:chrome_extension_js', 'concat:chrome_context_js', 'compress']);
-	grunt.registerTask('package-firefox', ['clean', 'copy:firefox', 'concat:firefox']);
+	grunt.registerTask('run-firefox-no-package', ['mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx:run_stable']);
+	grunt.registerTask('run-firefox', ['clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx:run_stable']);
+	grunt.registerTask('test-firefox', ['clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable']);
+	grunt.registerTask('package-firefox', ['clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx-xpi:stable']);
 };

@@ -1,9 +1,13 @@
-'use strict';
+exports.main = function(options, callbacks){
+	'use strict';
 
-var BugMagnet = require('./common.js');
+	// load dependencies
+	var config = require("sdk/self").data.load('config.json');
+	BugMagnet.processConfigText(config, new FirefoxMenuBuilder());
 
-// load dependencies
-var data = require("sdk/self").data;
-var config = data.load('config.json');
-var cm = require('sdk/context-menu');
-BugMagnet.processConfigText(config, new FirefoxMenuBuilder(cm, data));
+	// If you run cfx with --static-args='{"quitWhenDone":true}' this program
+	// will automatically quit Firefox when it's done.
+	if (options.staticArgs.quitWhenDone)
+		callbacks.quit();
+
+};

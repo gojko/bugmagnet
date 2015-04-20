@@ -25,8 +25,8 @@ from a local setup_ below.
 
 ##Questions, suggestions
 
-Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic) (Original Concept; Chrome Extension)
-Twitter: [@bbbco](http://twitter.com/bbbco) (Firefox Addon)
+* Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic) (Original Concept; Chrome Extension)
+* Twitter: [@bbbco](http://twitter.com/bbbco) (Firefox Addon)
 
 ##Resources for more info
 
@@ -62,6 +62,8 @@ Install project dependencies using
 
     npm install 
 
+----
+
 ###Chrome Extension
 
 ####Running from a local setup
@@ -78,6 +80,8 @@ Run tests from the command line using
 
     grunt test-chrome
 
+----
+
 ### Firefox Add-on
 
 ####Running from a local setup
@@ -93,6 +97,8 @@ Then drag the \*.xpi file created inside the **pack/firefox directory to your Fi
 Run tests from the command line using
 
     grunt test-firefox
+
+----
 
 ##Icon credit
 

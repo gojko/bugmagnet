@@ -1,13 +1,13 @@
 #Bug Magnet
 
-Exploratory testing assistant for Chrome. Adds common problematic values and
+Exploratory testing assistant for Chrome and Firefox. Adds common problematic values and
 edge cases to the context menu (right-click) for editable elements, so you can
 keep them handy and access them easily during exploratory testing sessions.
 
 ##Usage
 
 The easiest way to install the extension is from the [Chrome Web
-store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi). After
+store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi) or [Addons for Firefox](https://addons.mozilla.org/en-US/firefox/addon/bugmagnet-firefox/). After
 installation, just right-click on any editable item on the page and you'll see a
 Bug Magnet submenu. Click an item there, and it will be inserted into the
 editable field. 
@@ -25,7 +25,8 @@ from a local setup_ below.
 
 ##Questions, suggestions
 
-Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic)
+Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic) (Original Concept; Chrome Extension)
+Twitter: [@bbbco](http://twitter.com/bbbco) (Firefox Addon)
 
 ##Resources for more info
 
@@ -61,11 +62,13 @@ Install project dependencies using
 
     npm install 
 
-###Running from a local setup
+###Chrome Extension
+
+####Running from a local setup
 
 Run the following grunt command to copy and assemble the extension
 
-    grunt package
+    grunt package-chrome
 
 Then load the **pack/chrome** folder in Chrome as an [unpacked extension](https://developer.chrome.com/extensions/getstarted#unpacked).
 
@@ -73,7 +76,23 @@ Then load the **pack/chrome** folder in Chrome as an [unpacked extension](https:
 
 Run tests from the command line using
 
-    grunt jasmine
+    grunt test-chrome
+
+### Firefox Add-on
+
+####Running from a local setup
+
+Run the following grunt command to copy and assemble the add-on
+
+    grunt package-firefox
+
+Then drag the \*.xpi file created inside the **pack/firefox directory to your Firefox window to install the addon extension.
+
+###Running tests
+
+Run tests from the command line using
+
+    grunt test-firefox
 
 ##Icon credit
 

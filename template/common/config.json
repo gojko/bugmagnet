@@ -34,22 +34,36 @@
 			"64K + 1": { "_type": "size", "size": "65537", "template": "0123456789" }
 		}
 	},
-	"Names": [
-		"John O'Grady",
-		"John James O'Grady",
-		"John James \"Jimmy\" O'Grady",
-		"José Casal-Giménez",
-		"Peter de Montfort",
-		"Chloë Rømer",
-		"NULL",
-        "nil",
-        "False",
-		"GoVeg.com",
-		"田中太郎",
-		"Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache",
-		"ᴮᴵᴳᴮᴵᴿᴰ",
-		"Milan Vojnovič"
-	],
+	"Names": { 
+		"Latin charset": [
+			"John O'Grady",
+			"John James O'Grady",
+			"John James \"Jimmy\" O'Grady",
+			"José Casal-Giménez",
+			"Peter de Montfort",
+			"Chloë Rømer",
+			"Björk Guðmundsdóttir",
+			"NULL",
+			"nil",
+			"false",
+			"GoVeg.com",
+			"Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache",
+			"ᴮᴵᴳᴮᴵᴿᴰ",
+			"Milan Vojnovič",
+			"Alasdair Mór Ùisdean GillEasbaig 'ic Iain Mac a' Ghobhainn Fear an t-Srònaich",
+			"Nguyễn Tấn Dũng"
+		],
+		"Other charsets": {
+			"Japanese": "田中太郎",
+			"Japanese Tōkairin": "東海林賢蔵",
+			"Ze Dong": "泽东",
+			"Russian male": "Борис Николаевич Ельцин",
+			"Russian female": "Наина Иосифовна Ельцина",
+			"Thai nickname": "แม",
+			"Arabic": "ابن خلدون"
+		}
+	}
+	,
 	"E-mail addresses": {
 		"Valid" :{
 			"Simple": "email@domain.com",

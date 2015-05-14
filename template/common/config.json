@@ -62,8 +62,11 @@
 			"Thai nickname": "แม",
 			"Arabic": "ابن خلدون"
 		}
-	}
-	,
+	},
+	"Cities": {
+		"Scandinavian letters": "Ærøskøbing",
+		"Welsh": "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch"
+	},
 	"E-mail addresses": {
 		"Valid" :{
 			"Simple": "email@domain.com",

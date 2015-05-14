@@ -6,8 +6,9 @@ keep them handy and access them easily during exploratory testing sessions.
 
 ##Usage
 
-The easiest way to install the extension is from the [Chrome Web
-store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi) or [Addons for Firefox](https://addons.mozilla.org/en-US/firefox/addon/bugmagnet-firefox/). After
+The easiest way to install the extension is from the 
+[Chrome Web store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi)
+or [Addons for Firefox](https://addons.mozilla.org/en-US/firefox/addon/bugmagnet). After
 installation, just right-click on any editable item on the page and you'll see a
 Bug Magnet submenu. Click an item there, and it will be inserted into the
 editable field. 
@@ -20,7 +21,7 @@ from a local setup_ below.
 * Convenient access to common boundaries and edge cases for exploratory testing
 * Works on input fields, text areas, content editable DIVs
 * Works on multi-frame pages, but only if they are from the same domain
-* Only works in Chrome
+* Only works in Chrome and Firefox
 * Tiny overhead per page (<1k), no 3rd party library dependencies, completely passive, so it does not interfere with your web app execution in any way
 
 ##Questions, suggestions
@@ -62,8 +63,6 @@ Install project dependencies using
 
     npm install 
 
-----
-
 ###Chrome Extension
 
 ####Running from a local setup
@@ -79,8 +78,6 @@ Then load the **pack/chrome** folder in Chrome as an [unpacked extension](https:
 Run tests from the command line using
 
     grunt test-chrome
-
-----
 
 ### Firefox Add-on
 

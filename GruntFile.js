@@ -49,7 +49,23 @@ module.exports = function (grunt) {
 			}
 		},
 		jasmine: {
-			all: {
+			common: {
+				src: ['src/common/*.js'],
+				options: {
+					template: 'test-lib/grunt.tmpl',
+					outfile: 'SpecRunner.html',
+					summary: true,
+					display: 'short',
+					keepRunner: true,
+					specs: [
+						'test/common/*.js'
+					],
+					helpers: [
+						'test-lib/*.js'
+					]
+				}
+			},
+			chrome: {
 				src: ['src/common/*.js', 'src/chrome/*.js'],
 				options: {
 					template: 'test-lib/grunt.tmpl',
@@ -130,19 +146,35 @@ module.exports = function (grunt) {
 					pipe_output: true
 				}
 			}
+		},
+		jscs: {
+			src: ['src/**/*.js', 'test/**/*.js'],
+			options: {
+				config: '.jscsrc',
+				reporter: 'inline'
+			}
+		},
+		jshint: {
+			all: ['src/**/*.js', 'test/**/*.js'],
+			options: {
+				jshintrc: true
+			}
 		}
 	});
 	// Load local tasks.
+	grunt.loadNpmTasks('grunt-jscs');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-mozilla-addon-sdk');
-	grunt.registerTask('test-chrome', ['jasmine']);
-	grunt.registerTask('package-chrome', ['jasmine', 'clean', 'copy:chrome', 'concat:chrome_extension_js', 'concat:chrome_context_js', 'compress']);
+	grunt.registerTask('checkstyle', ['jscs', 'jshint']);
+	grunt.registerTask('test-chrome', ['jasmine:common', 'jasmine:chrome']);
+	grunt.registerTask('package-chrome', ['checkstyle', 'test-chrome', 'clean', 'copy:chrome', 'concat:chrome_extension_js', 'concat:chrome_context_js', 'compress']);
 	grunt.registerTask('run-firefox-no-package', ['mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx:run_stable']);
 	grunt.registerTask('run-firefox', ['clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx:run_stable']);
-	grunt.registerTask('test-firefox', ['clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable']);
-	grunt.registerTask('package-firefox', ['clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx-xpi:stable']);
+	grunt.registerTask('test-firefox', ['jasmine:common', 'clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable']);
+	grunt.registerTask('package-firefox', ['checkstyle', 'test-firefox', 'clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx-xpi:stable']);
 };

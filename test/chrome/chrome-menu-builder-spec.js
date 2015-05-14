@@ -46,13 +46,13 @@ describe('BugMagnet.ChromeMenuBuilder', function () {
 			underTest.menuItem('test me', 'root', 'some value');
 			var result = lastMenu();
 
-			result.onclick({}, {id:5});
+			result.onclick({}, {id: 5});
 			expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(5, {'_type': 'literal', value: 'some value'});
 		});
 		it('connects a chrome.tabs.sendMessage call to click with a hash object string', function () {
 			underTest.menuItem('test me', 'root', {'_type': 'size', value: 'some value'});
 			var result = lastMenu();
-			result.onclick({}, {id:5});
+			result.onclick({}, {id: 5});
 			expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(5, {'_type': 'size', value: 'some value'});
 		});
 	});

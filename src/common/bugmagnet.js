@@ -1,3 +1,4 @@
+/*global document*/
 var BugMagnet = BugMagnet || {};
 BugMagnet.processConfigText = function (configText, menuBuilder, customRoot) {
 	'use strict';

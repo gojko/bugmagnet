@@ -39,8 +39,9 @@ from a local setup_ below.
   * [Animal rights activist changes name to GoVeg.com](http://usatoday30.usatoday.com/tech/webguide/internetlife/2003-08-01-goveg_x.htm)
   * [Longest English surname on record](http://en.wikipedia.org/wiki/Leone_Sextus_Tollemache)
   * [Creative usernames and Spotify account hijacking](https://labs.spotify.com/2013/06/18/creative-usernames/)
+  * [Personal names around the world by W3C](http://www.w3.org/International/questions/qa-personal-names)
 * [Elisabeth Hendrickson's test heuristics cheat sheet](http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf)
-* [Personal names around the world by W3C](http://www.w3.org/International/questions/qa-personal-names)
+
 
 ##Customising
 

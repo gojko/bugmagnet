@@ -1,4 +1,7 @@
 node_modules
+build_tools
+tmp
 SpecRunner.html
 .grunt
-src/*.zip
+.DS_Store
+pack

@@ -4,7 +4,9 @@
 		"Cyrillic": "Римский император Константин I Великий по достоинству оценил выгодное местоположение приморского Византия, расположенного на стыке Европы и Азии. Кроме того, на решение Константина повлияла неспокойная обстановка в самом Риме: недовольство знати и постоянные распри в борьбе за трон. Император хотел увенчать свою реформаторскую деятельность созданием нового административного центра огромной державы. Закладка города состоялась осенью 324 года, и Константин лично решил обозначить его границы.",
 		"Arabic (RTL)": "وضع ابن الهيثم تصور واضح للعلاقة بين النموذج الرياضي المثالي ومنظومة الظواهر الملحوظة.",
 		"Chinese": "北京位於華北平原的西北边缘，背靠燕山，有永定河流经老城西南，毗邻天津市、河北省，是一座有三千余年建城历史、八百六十余年建都史的历史文化名城，历史上有金、元、明、清、中华民国（北洋政府时期）等五个朝代在此定都，以及数个政权建政于此，荟萃了自元明清以来的中华文化，拥有众多历史名胜古迹和人文景观。《不列颠百科全书》将北京形容为全球最伟大的城市之一，而且断言，“这座城市是中国历史上最重要的组成部分。在中国过去的八个世纪里，不论历史是否悠久，几乎北京所有主要建筑都拥有着不可磨灭的民族和历史意义”。北京古迹众多，著名的有故宫、天坛、颐和园、圆明园、北海公园等。",
-		"Mixed charsets": "Lorem ipsum dolor sit amet, Римский император Константин I Великий, 北京位於華北平原的西北边缘"
+		"Mixed charsets": "Lorem ipsum dolor sit amet, Римский император Константин I Великий, 北京位於華北平原的西北边缘",
+		"Czech": "Příliš žluťoučký kůň úpěl ďábelské ódy",
+		"Thai" : "ทดสอบนะจ๊ะ"
 	},
 	"Text size": {
 		"With spaces": {
@@ -32,21 +34,41 @@
 			"64K + 1": { "_type": "size", "size": "65537", "template": "0123456789" }
 		}
 	},
-	"Names": [ 
-		"John O'Grady",
-		"John James O'Grady",
-		"John James \"Jimmy\" O'Grady",
-		"José Casal-Giménez",
-		"Peter de Montfort",
-		"Chloë Rømer",
-		"NULL",
-		"GoVeg.com",
-		"田中太郎",
-		"Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache",
-		"ᴮᴵᴳᴮᴵᴿᴰ"
-	],
+	"Names": { 
+		"Latin charset": [
+			"John O'Grady",
+			"John James O'Grady",
+			"John James \"Jimmy\" O'Grady",
+			"José Casal-Giménez",
+			"Peter de Montfort",
+			"Chloë Rømer",
+			"Björk Guðmundsdóttir",
+			"NULL",
+			"nil",
+			"false",
+			"GoVeg.com",
+			"Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache",
+			"ᴮᴵᴳᴮᴵᴿᴰ",
+			"Milan Vojnovič",
+			"Alasdair Mór Ùisdean GillEasbaig 'ic Iain Mac a' Ghobhainn Fear an t-Srònaich",
+			"Nguyễn Tấn Dũng"
+		],
+		"Other charsets": {
+			"Japanese": "田中太郎",
+			"Japanese Tōkairin": "東海林賢蔵",
+			"Ze Dong": "泽东",
+			"Russian male": "Борис Николаевич Ельцин",
+			"Russian female": "Наина Иосифовна Ельцина",
+			"Thai nickname": "แม",
+			"Arabic": "ابن خلدون"
+		}
+	},
+	"Cities": {
+		"Scandinavian letters": "Ærøskøbing",
+		"Welsh": "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch"
+	},
 	"E-mail addresses": {
-		"Valid" :{ 
+		"Valid" :{
 			"Simple": "email@domain.com",
 			"Dot in the address": "firstname.lastname@domain.com",
 			"Subdomain": "email@subdomain.domain.com",
@@ -81,13 +103,30 @@
 			"Multiple dots in the domain": "email@domain..com"
 		}
 	},
+	"URLs": {
+			"Valid": [
+					"www.mysite.com",
+					"mysite.com",
+					"http://www.mysite.com",
+					"https://www.mysite.com",
+					"http://www.mysite.com:80",
+					"ftp://mysite.com"
+			],
+			"Invalid": [
+					"http//www.mysite.com",
+					"http:/www.mysite.com",
+					"://www.mysite.com",
+					"foo://www.mysite.com",
+					"mysite"
+			]
+	},
 	"Numbers": [
 		"0",
 		"32767", "32768", "32769",
 		"65535", "65536", "65537",
 		"2147483647", "2147483648", "2147483649",
 		"4294967295", "4294967296", "4294967297",
-		"1E-16", "-1", "0.0001", 
+		"1E-16", "-1", "0.0001",
 		"1,234,567", "1.234.567,89"
 	],
 	"Whitespace": {
@@ -95,7 +134,7 @@
 		"Leading spaces": "  leading spaces",
 		"Mixing tabs and spaces": "\t leading tabs and spaces",
 		"spaces on both sides":" Space on both sides ",
-		"Just whitespace": "\t \t\n \n " 
+		"Just whitespace": "\t \t\n \n "
 	},
 	"Format exploits": {
 		"SQL Injection": "Robert'); DROP TABLE Students;--",

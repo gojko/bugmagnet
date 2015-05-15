@@ -1,13 +1,14 @@
 #Bug Magnet
 
-Exploratory testing assistant for Chrome. Adds common problematic values and
+Exploratory testing assistant for Chrome and Firefox. Adds common problematic values and
 edge cases to the context menu (right-click) for editable elements, so you can
 keep them handy and access them easily during exploratory testing sessions.
 
 ##Usage
 
-The easiest way to install the extension is from the [Chrome Web
-store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi). After
+The easiest way to install the extension is from the 
+[Chrome Web store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi)
+or [Addons for Firefox](https://addons.mozilla.org/en-US/firefox/addon/bugmagnet). After
 installation, just right-click on any editable item on the page and you'll see a
 Bug Magnet submenu. Click an item there, and it will be inserted into the
 editable field. 
@@ -20,12 +21,13 @@ from a local setup_ below.
 * Convenient access to common boundaries and edge cases for exploratory testing
 * Works on input fields, text areas, content editable DIVs
 * Works on multi-frame pages, but only if they are from the same domain
-* Only works in Chrome
+* Only works in Chrome and Firefox
 * Tiny overhead per page (<1k), no 3rd party library dependencies, completely passive, so it does not interfere with your web app execution in any way
 
 ##Questions, suggestions
 
-Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic)
+* Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic) (Original Concept; Chrome Extension)
+* Twitter: [@bbbco](http://twitter.com/bbbco) (Firefox Addon)
 
 ##Resources for more info
 
@@ -38,11 +40,12 @@ Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic)
   * [Longest English surname on record](http://en.wikipedia.org/wiki/Leone_Sextus_Tollemache)
   * [Creative usernames and Spotify account hijacking](https://labs.spotify.com/2013/06/18/creative-usernames/)
 * [Elisabeth Hendrickson's test heuristics cheat sheet](http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf)
+* [Personal names around the world by W3C](http://www.w3.org/International/questions/qa-personal-names)
 
 ##Customising
 
 You can add your own values to the right-click menu by modifying
-[config.json](src/config.json). The format is simple:
+[config.json](template/common/config.json). The format is simple:
 
 * a hash object property is a sub-menu
 * a String property is a menu item. The property name is used as a menu item label 
@@ -51,19 +54,48 @@ You can add your own values to the right-click menu by modifying
   without a special label (the element values are used both as menu labels and
   as text to insert).
 
+###Setting up the development environment
+
+Install node js and grunt CLI if not already installed. See
+[gruntjs.com](http://gruntjs.com/getting-started) for more information.
+
+Install project dependencies using
+
+    npm install 
+
+###Chrome Extension
+
+####Running from a local setup
+
+Run the following grunt command to copy and assemble the extension
+
+    grunt package-chrome
+
+Then load the **pack/chrome** folder in Chrome as an [unpacked extension](https://developer.chrome.com/extensions/getstarted#unpacked).
+
 ###Running tests
 
-Install Grunt, Node and NPM (instructions are in [GruntFile.js](GruntFile.js)). Then run tests
-from the command line using
+Run tests from the command line using
 
-    grunt jasmine
+    grunt test-chrome
 
-###Running from a local setup
+### Firefox Add-on
 
-Load [manifest.json](src/manifest.json) from the **src** folder in Chrome as an [unpacked
-extension](https://developer.chrome.com/extensions/getstarted#unpacked).
+####Running from a local setup
 
+Run the following grunt command to copy and assemble the add-on
 
+    grunt package-firefox
+
+Then drag the \*.xpi file created inside the **pack/firefox directory to your Firefox window to install the addon extension.
+
+###Running tests
+
+Run tests from the command line using
+
+    grunt test-firefox
+
+----
 
 ##Icon credit
 

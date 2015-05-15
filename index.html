@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="exploratory testing, software testing, bug magnet, gojko adzic" />
-    <meta name="description" content="Exploratory testing helper Chrome Extension. Adds common problematic values and edge cases to the context menu (right-click) for editable elements, so you can keep them handy and access them easily." />
+    <meta name="description" content="Exploratory testing helper. Adds common problematic values and edge cases to the context menu (right-click) for editable elements, so you can keep them handy and access them easily." />
     <title>Bug Magnet - exploratory testing helper</title>
     <link href="gh-page-resources/bootstrap-3.2.0/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="gh-page-resources/font-awesome-4.2.0/css/font-awesome.min.css">
@@ -38,6 +38,7 @@
         <div class="col-md-12 text-center">
           <a class="btn btn-success btn-lg hide" onclick="chrome.webstore.install()" id="install-button"><i class="fa fa-plug"></i> Add to Chrome</a>
           <a class="btn btn-success btn-lg" href="https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi" id="chrome-button"><i class="fa fa-plug"></i> Get On Chrome Web Store</a>
+          <a class="btn btn-info btn-lg" href="https://addons.mozilla.org/en-US/firefox/addon/bugmagnet/" id="firefox-button"><i class="fa fa-plug"></i> Get On Firefox Add-ons</a>
           <p class="small"><br/>note: only works on pages opened after the extension is installed. please refresh the page if nothing happens</p>
         </div>
       </div>
@@ -61,7 +62,7 @@
           <h1 class="featurette-heading">Limitations</h1>
           <ul>
             <li>Works on multi-frame pages, but only if they are from the same domain</li>
-            <li>Chrome extension - so only works in Chrome</li>
+            <li>Chrome extension and Firefox addon - so only works in Chrome and Firefox</li>
           </ul>
         </div>
         <div class="col-md-6">
@@ -83,19 +84,21 @@
 <li><a href="http://usatoday30.usatoday.com/tech/webguide/internetlife/2003-08-01-goveg_x.htm">Animal rights activist changes name to GoVeg.com</a></li>
 <li><a href="http://en.wikipedia.org/wiki/Leone_Sextus_Tollemache">Longest English surname on record</a></li>
 <li><a href="https://labs.spotify.com/2013/06/18/creative-usernames/">Creative usernames and Spotify account hijacking</a></li>
+<li><a href="http://www.w3.org/International/questions/qa-personal-names">Personal names around the world by W3C</a></li>
 </ul>
 </li>
 <li><a href="http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf">Elisabeth Hendrickson's test heuristics cheat sheet</a></li>
 </ul>
 
-          <h1 class="featurette-heading">Questions, suggestions...</h1>
-          <ul>
-            <li>Twitter: <a href="http://twitter.com/gojkoadzic">@gojkoadzic</a></li>
-            <li>E-mail: <a href="mailto:gojko@neuri.co.uk">gojko@neuri.co.uk</a></li>
-          </ul>
+
 
 
           
+        </div>
+        <div class="col-md-12 text-center">
+          <a class="btn btn-default btn-lg" href="http://twitter.com/gojkoadzic"><i class="fa fa-twitter"></i></a>
+          <a class="btn btn-default btn-lg" href="mailto:gojko@neuri.co.uk"><i class="fa fa-envelope" ></i></a>
+          <a class="btn btn-default btn-lg" href="https://github.com/gojko/bugmagnet"><i class="fa fa-github" ></i></a>
         </div>
       </div>
       <hr class="featurette-divider">
@@ -124,8 +127,11 @@
  $(function() {
      if(window.chrome) {
         $('#chrome-button').hide();
+        $('#firefox-button').hide();
         $('#install-button').removeClass('hide')
-     }
+      } else if (/Firefox/.test(window.navigator.userAgent)){
+        $('#chrome-button').hide();
+      }
 }); 
 </script>
   </body>

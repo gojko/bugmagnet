@@ -4,18 +4,6 @@ Exploratory testing assistant for Chrome and Firefox. Adds common problematic va
 edge cases to the context menu (right-click) for editable elements, so you can
 keep them handy and access them easily during exploratory testing sessions.
 
-##Usage
-
-The easiest way to install the extension is from the 
-[Chrome Web store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi)
-or [Addons for Firefox](https://addons.mozilla.org/en-US/firefox/addon/bugmagnet). After
-installation, just right-click on any editable item on the page and you'll see a
-Bug Magnet submenu. Click an item there, and it will be inserted into the
-editable field. 
-
-Alternatively, you can load the extension from the source files - see _Running
-from a local setup_ below.
-
 ##Features
 
 * Convenient access to common boundaries and edge cases for exploratory testing
@@ -25,24 +13,17 @@ from a local setup_ below.
 * Only works in Chrome and Firefox
 * Tiny overhead per page (<1k), no 3rd party library dependencies, completely passive, so it does not interfere with your web app execution in any way
 
-##Questions, suggestions
+##Usage
 
-* Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic) (Original Concept; Chrome Extension)
-* Twitter: [@bbbco](http://twitter.com/bbbco) (Firefox Addon)
+The easiest way to install the extension is from the 
+[Chrome Web store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi)
+or [Addons for Firefox](https://addons.mozilla.org/en-US/firefox/addon/bugmagnet). After
+installation, just right-click on any editable item on the page and you'll see a
+Bug Magnet submenu. Click an item there, and it will be inserted into the
+editable field. 
 
-##Resources for more info
-
-* [E-mail address test cases](http://blogs.msdn.com/b/testing123/archive/2009/02/05/email-address-test-cases.aspx)
-  * [Dot atoms in e-mail](http://serverfault.com/questions/395766/are-two-periods-allowed-in-the-local-part-of-an-email-address)
-  * [Interactive RFC e-mail validation](http://isemail.info/)
-* [Falsehoods Programmers Believe About Names](http://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/)
-  * [We have an employee whose last name is Null](http://stackoverflow.com/questions/4456438/how-can-i-pass-the-string-null-through-wsdl-soap-from-actionscript-3-to-a-co)
-  * [Animal rights activist changes name to GoVeg.com](http://usatoday30.usatoday.com/tech/webguide/internetlife/2003-08-01-goveg_x.htm)
-  * [Longest English surname on record](http://en.wikipedia.org/wiki/Leone_Sextus_Tollemache)
-  * [Creative usernames and Spotify account hijacking](https://labs.spotify.com/2013/06/18/creative-usernames/)
-  * [Personal names around the world by W3C](http://www.w3.org/International/questions/qa-personal-names)
-* [Elisabeth Hendrickson's test heuristics cheat sheet](http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf)
-
+Alternatively, you can load the extension from the  [source files on a local
+disk](#running-from-a-local-setup)).
 
 ##Customising
 
@@ -63,7 +44,29 @@ The configuration format is very simple:
 Alternatively, if you'd like to distribute a different configuration to a larger
 group without people individually having to load items, add your own values to the main config file
 [config.json](template/common/config.json) and rebuild the tension (see
-section [Running from a local setup](#running-from-a-local-setup) below.
+section [Running from a local setup](#running-from-a-local-setup)) below.
+
+##Questions, suggestions
+
+* Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic) (Original Concept; Chrome Extension)
+* Twitter: [@bbbco](http://twitter.com/bbbco) (Firefox Addon)
+
+##Resources for more info
+
+* [E-mail address test cases](http://blogs.msdn.com/b/testing123/archive/2009/02/05/email-address-test-cases.aspx)
+  * [Dot atoms in e-mail](http://serverfault.com/questions/395766/are-two-periods-allowed-in-the-local-part-of-an-email-address)
+  * [Interactive RFC e-mail validation](http://isemail.info/)
+* [Falsehoods Programmers Believe About Names](http://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/)
+  * [We have an employee whose last name is Null](http://stackoverflow.com/questions/4456438/how-can-i-pass-the-string-null-through-wsdl-soap-from-actionscript-3-to-a-co)
+  * [Animal rights activist changes name to GoVeg.com](http://usatoday30.usatoday.com/tech/webguide/internetlife/2003-08-01-goveg_x.htm)
+  * [Longest English surname on record](http://en.wikipedia.org/wiki/Leone_Sextus_Tollemache)
+  * [Creative usernames and Spotify account hijacking](https://labs.spotify.com/2013/06/18/creative-usernames/)
+  * [Personal names around the world by W3C](http://www.w3.org/International/questions/qa-personal-names)
+* [Elisabeth Hendrickson's test heuristics cheat sheet](http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf)
+
+
+##Contributing and extending code
+
 
 ###Setting up the development environment
 

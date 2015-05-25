@@ -82,22 +82,42 @@ describe('BugMagnet.initChromeMenu', function () {
 			BugMagnet.initChromeMenu();
 			fakeHttpRequest.onload.apply({responseText: 'some-text'});
 			chrome.contextMenus.create.calls.reset();
+			chrome.contextMenus.removeAll.calls.reset();
 			chrome.contextMenus.create.and.returnValue(newFakeRoot);
+			fakeHttpRequest.send.calls.reset();
 			underTest = chrome.storage.onChanged.addListener.calls.argsFor(0)[0];
-		});
-		it('creates a new root menu', function () {
-		});
-		it('reloads menus from cached standard config response', function () {
 
 		});
-		it('appends any elements from the additionalMenus.newValue object', function () {
-
+		it('clears all menu items', function () {
+			underTest({additionalMenus: [{name: 'a', config:{'b': 'c'}}]}, 'sync');
+			expect(chrome.contextMenus.removeAll).toHaveBeenCalled();
+		});
+		describe('after menu was cleared', function () {
+			beforeEach(function () {
+				underTest({additionalMenus: {newValue: [{name: 'a', config:{'b': 'c'}}]}}, 'sync');
+				chrome.contextMenus.removeAll.calls.argsFor(0)[0]();
+			});
+			it('creates a new root menu', function () {
+				expect(BugMagnet.rootMenu).toBe(newFakeRoot);
+			});
+			it('reloads menus from cached standard config response', function () {
+				expect(fakeHttpRequest.send).not.toHaveBeenCalled();
+				expect(BugMagnet.processConfigText).toHaveBeenCalledWith('some-text', jasmine.any(BugMagnet.ChromeMenuBuilder), newFakeRoot);
+			});
+			it('appends any elements from the additionalMenus.newValue object', function () {
+				expect(BugMagnet.processMenuObject.calls.count()).toBe(1);
+				expect(BugMagnet.processMenuObject.calls.first().args[0]).toEqual({'a': {'b':'c'}});
+			});
 		});
 		it('ignores changes that are not for the sync storage area', function () {
-
+			underTest({additionalMenus: [{name: 'a', config:{'b': 'c'}}]}, 'local');
+			expect(chrome.contextMenus.removeAll).not.toHaveBeenCalled();
+			expect(BugMagnet.rootMenu).toBe(fakeRoot);
 		});
 		it('ignores changes that are not for the additionalMenus object', function () {
-
+			underTest({version: 2}, 'sync');
+			expect(chrome.contextMenus.removeAll).not.toHaveBeenCalled();
+			expect(BugMagnet.rootMenu).toBe(fakeRoot);
 		});
 	});
 });

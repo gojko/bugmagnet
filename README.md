@@ -22,8 +22,7 @@ installation, just right-click on any editable item on the page and you'll see a
 Bug Magnet submenu. Click an item there, and it will be inserted into the
 editable field. 
 
-Alternatively, you can load the extension from the  [source files on a local
-disk](#running-from-a-local-setup)).
+Alternatively, you can load the extension from the  [source files on a local disk](#running-from-a-local-setup).
 
 ##Customising
 

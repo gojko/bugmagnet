@@ -45,8 +45,16 @@ from a local setup_ below.
 
 ##Customising
 
-You can add your own values to the right-click menu by modifying
-[config.json](template/common/config.json). The format is simple:
+The easiest way to customise BugMagnet is to add your own config files to it.
+Just click on the Configure BugMagnet option in the context menu, then select
+additional files to load. Some example files can be found in the
+[extras](extras/) folder.
+
+Alternatively, you can add your own values to the main config file by 
+[config.json](template/common/config.json) and recompiling the extension (see
+section _Running From A Local Setup_ below.
+
+The format for both custom files and the main config.json file is the same:
 
 * a hash object property is a sub-menu
 * a String property is a menu item. The property name is used as a menu item label 

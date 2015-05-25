@@ -1,4 +1,4 @@
-/*global chrome, document, BugMagnet */
+/*global chrome, document, BugMagnet, window */
 var ChromeConfigInterface = function () {
 	'use strict';
 	var self = this;
@@ -15,7 +15,9 @@ var ChromeConfigInterface = function () {
 		});
 	};
 };
-document.addEventListener('DOMContentLoaded', function () {
-	'use strict';
-	BugMagnet.initConfigWidget(document.getElementById('main'), new ChromeConfigInterface());
-});
+if (!window.jasmine) {
+	document.addEventListener('DOMContentLoaded', function () {
+		'use strict';
+		BugMagnet.initConfigWidget(document.getElementById('main'), new ChromeConfigInterface());
+	});
+}

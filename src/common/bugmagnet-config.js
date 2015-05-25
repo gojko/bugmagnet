@@ -1,4 +1,4 @@
-/*global BugMagnet, setTimeout, FileReader*/
+/*global BugMagnet, setTimeout, FileReader, window*/
 BugMagnet.initConfigWidget = function (domElement, configInterface) {
 	'use strict';
 	var additionalMenus = [],
@@ -52,6 +52,9 @@ BugMagnet.initConfigWidget = function (domElement, configInterface) {
 			},
 			initScreen = function () {
 				domElement.querySelector('[role=add]').addEventListener('click', showFileSelector);
+				domElement.querySelector('[role=close]').addEventListener('click', function () {
+					window.close();
+				});
 				domElement.querySelector('[role=back]').addEventListener('click', showMainScreen);
 
 				domElement.querySelector('[role=file-selector]').addEventListener('change', function () {

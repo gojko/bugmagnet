@@ -47,6 +47,7 @@ describe('BugMagnet.initChromeMenu', function () {
 	describe('additional config', function () {
 		beforeEach(function () {
 			spyOn(BugMagnet, 'processMenuObject');
+			fakeHttpRequest.onload.apply({responseText: 'some-text'});
 		});
 		it('asks the chrome.storage.sync api for additional config items', function () {
 			BugMagnet.initChromeMenu();

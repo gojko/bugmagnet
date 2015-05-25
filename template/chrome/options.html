@@ -19,10 +19,10 @@
 			white-space: nowrap;
 			overflow: hidden;
 		}
-		th, td {
+		#main th, #main td {
 			text-align: left;
 		}
-		table {
+		#main table {
 			width: 100%;
 		}
 		.status {
@@ -51,8 +51,10 @@
 				</tr>
 				</tbody>
 			</table>
+			<p>Configuration changes apply only to newly loaded pages, so make sure to reload the page under test after changing the configuration. </p>
 		</div>
 			<button role="add">Add Configuration File</button>
+			<button role="close">Close</button>
 		</div>
 		<div role="file-loader">
 			<form>
@@ -67,6 +69,7 @@
 			</form>
 		</div>
 	</div>
+
   <script src="options.js"></script>
 </body>
 </html>

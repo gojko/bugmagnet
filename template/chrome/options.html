@@ -4,14 +4,14 @@
   <title>BugMagnet Extension Options</title>
   <style>
     body: { padding: 10px; }
-		#file-selector {
+		.file-selector {
 			position: absolute;
 			width: 100%;
 			top: 0;
 			z-index: 1;
 			opacity: 0;
 		}
-		#select-file-cover {
+		.select-file-cover {
 			position: relative;
 		}
 		.sourceCell {
@@ -25,45 +25,47 @@
 		table {
 			width: 100%;
 		}
-		#status {
+		.status {
 			color: red;
 		}
   </style>
 </head>
 <body>
-	<div id="status"></div>
-  <div id="main-screen">
-		<div id="no-custom">
-			There are no custom configuration files loaded.
-		</div>
-		<div id="yes-custom">
-			Custom configuration files currently loaded:
-		<table>
-			<thead>
-			<tr><th>Name</th><th>Source</th><th></th></tr>
-			</thead>
-			<tbody>
-			<tr id="template">
-				<td role="name"></td>
-				<td role="source" class="sourceCell"></td>
-				<td><button role="remove">Remove</button></td>
-			</tr>
-			</tbody>
-		</table>
-	</div>
-		<button id="add">Add Configuration File</button>
-	</div>
-	<div id="file-loader">
-		<form>
-			<label>Descriptive submenu label (required): <input type="text" id="submenu-name" required="true" /></label>
-			<div id="buttons">
-				<button id="select-file-cover">
-					<input type="file" id="file-selector"/>						
-					Select File
-				</button>
-				<button id="back">Cancel</button>
+	<div id="main">
+		<div role="status" class="status"></div>
+		<div role="main-screen">
+			<div role="no-custom">
+				There are no custom configuration files loaded.
 			</div>
-		</form>
+			<div role="yes-custom">
+				Custom configuration files currently loaded:
+			<table>
+				<thead>
+				<tr><th>Name</th><th>Source</th><th></th></tr>
+				</thead>
+				<tbody>
+				<tr role="template">
+					<td role="name"></td>
+					<td role="source" class="sourceCell"></td>
+					<td><button role="remove">Remove</button></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+			<button role="add">Add Configuration File</button>
+		</div>
+		<div role="file-loader">
+			<form>
+				<label>Descriptive submenu label (required): <input type="text" role="submenu-name" required="true" /></label>
+				<div role="buttons">
+					<button role="select-file-cover" class="select-file-cover">
+						<input type="file" role="file-selector" class="file-selector"/>						
+						Select File
+					</button>
+					<button role="back">Cancel</button>
+				</div>
+			</form>
+		</div>
 	</div>
   <script src="options.js"></script>
 </body>

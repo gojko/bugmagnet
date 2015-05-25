@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BugMagnet Extension Options</title>
+  <style>
+    body: { padding: 10px; }
+		#file-selector {
+			position: absolute;
+			width: 100%;
+			top: 0;
+			z-index: 1;
+			opacity: 0;
+		}
+		#select-file-cover {
+			position: relative;
+		}
+		.sourceCell {
+			max-width: 200px;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+		th, td {
+			text-align: left;
+		}
+		table {
+			width: 100%;
+		}
+		#status {
+			color: red;
+		}
+  </style>
+</head>
+<body>
+	<div id="status"></div>
+  <div id="main-screen">
+		<div id="no-custom">
+			There are no custom configuration files loaded.
+		</div>
+		<div id="yes-custom">
+			Custom configuration files currently loaded:
+		<table>
+			<thead>
+			<tr><th>Name</th><th>Source</th><th></th></tr>
+			</thead>
+			<tbody>
+			<tr id="template">
+				<td role="name"></td>
+				<td role="source" class="sourceCell"></td>
+				<td><button role="remove">Remove</button></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+		<button id="add">Add Configuration File</button>
+	</div>
+	<div id="file-loader">
+		<form>
+			<label>Descriptive submenu label (required): <input type="text" id="submenu-name" required="true" /></label>
+			<div id="buttons">
+				<button id="select-file-cover">
+					<input type="file" id="file-selector"/>						
+					Select File
+				</button>
+				<button id="back">Cancel</button>
+			</div>
+		</form>
+	</div>
+  <script src="options.js"></script>
+</body>
+</html>

@@ -19,6 +19,7 @@ from a local setup_ below.
 ##Features
 
 * Convenient access to common boundaries and edge cases for exploratory testing
+* Extend it with your own config files easily
 * Works on input fields, text areas, content editable DIVs
 * Works on multi-frame pages, but only if they are from the same domain
 * Only works in Chrome and Firefox
@@ -50,11 +51,7 @@ Just click on the Configure BugMagnet option in the context menu, then select
 additional files to load. Some example files can be found in the
 [extras](extras/) folder.
 
-Alternatively, you can add your own values to the main config file by 
-[config.json](template/common/config.json) and recompiling the extension (see
-section _Running From A Local Setup_ below.
-
-The format for both custom files and the main config.json file is the same:
+The configuration format is very simple:
 
 * a hash object property is a sub-menu
 * a String property is a menu item. The property name is used as a menu item label 
@@ -62,6 +59,11 @@ The format for both custom files and the main config.json file is the same:
 * an Array property is a sub-menu, allowing you to quickly add a list of Strings
   without a special label (the element values are used both as menu labels and
   as text to insert).
+
+Alternatively, if you'd like to distribute a different configuration to a larger
+group without people individually having to load items, add your own values to the main config file
+[config.json](template/common/config.json) and rebuild the tension (see
+section [Running from a local setup](#running-from-a-local-setup) below.
 
 ###Setting up the development environment
 

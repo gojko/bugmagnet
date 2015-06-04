@@ -118,6 +118,7 @@
 					"http:/www.mysite.com",
 					"://www.mysite.com",
 					"foo://www.mysite.com",
+					"http://:",
 					"mysite"
 			]
 	},

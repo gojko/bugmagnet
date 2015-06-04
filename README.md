@@ -62,6 +62,7 @@ section [Running from a local setup](#running-from-a-local-setup)) below.
   * [Creative usernames and Spotify account hijacking](https://labs.spotify.com/2013/06/18/creative-usernames/)
   * [Personal names around the world by W3C](http://www.w3.org/International/questions/qa-personal-names)
 * [Elisabeth Hendrickson's test heuristics cheat sheet](http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf)
+* [Skype crashes — and won't stop crashing — if you send it this message](http://www.theverge.com/2015/6/3/8717951/skype-crash-http-error)
 
 
 ##Contributing and extending code

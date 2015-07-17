@@ -141,6 +141,8 @@
 	"Format exploits": {
 		"SQL Injection": "Robert'); DROP TABLE Students;--",
 		"JS Script Injection": "Nice site,  I think I'll take it. <script>alert('Executing JS')</script>",
+		"JS String (XSS) Injection - single quote": "'-prompt()-'",
+		"JS String (XSS) Injection - double quote": "\"-prompt()-\"",
 		"HTML parsing": "<blink>Hello there</blink>",
 		"Broken HTML": "<i><b>Bold</i></b>"
 	}

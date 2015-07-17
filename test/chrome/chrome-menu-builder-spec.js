@@ -1,4 +1,4 @@
-/*global describe, it, expect, BugMagnet, beforeEach, chrome*/
+/*global describe, it, expect, BugMagnet, beforeEach, chrome, jasmine*/
 describe('BugMagnet.ChromeMenuBuilder', function () {
 	'use strict';
 	var underTest,
@@ -32,6 +32,16 @@ describe('BugMagnet.ChromeMenuBuilder', function () {
 			expect(result.onclick).toBeFalsy();
 		});
 	});
+	describe('separator', function () {
+		it('creates a separator under a parent', function () {
+			underTest.separator('root');
+			expect(chrome.contextMenus.create.calls.count()).toBe(1);
+			var result = lastMenu();
+			expect(result.contexts).toEqual(['editable']);
+			expect(result.parentId).toBe('root');
+			expect(result.type).toBe('separator');
+		});
+	});
 	describe('menuItem', function () {
 		it('creates a clickable menu item with a parent', function () {
 			underTest.menuItem('test me', 'root', 'some value');
@@ -54,6 +64,16 @@ describe('BugMagnet.ChromeMenuBuilder', function () {
 			var result = lastMenu();
 			result.onclick({}, {id: 5});
 			expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(5, {'_type': 'size', value: 'some value'});
+		});
+		it('attaches a custom click handler if provided', function () {
+			var spy = jasmine.createSpy('click'),
+				result;
+			underTest.menuItem('test me', 'root', 'some value', spy);
+			result = lastMenu();
+
+			result.onclick({}, {id: 5});
+			expect(chrome.tabs.sendMessage).not.toHaveBeenCalledWith();
+			expect(spy).toHaveBeenCalled();
 		});
 	});
 });

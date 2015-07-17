@@ -24,6 +24,10 @@ module.exports = function (grunt) {
 				src: ['template/js/head.txt', 'src/common/bugmagnet.js', 'src/chrome/chrome-menubuilder.js', 'src/chrome/chrome-extension.js', 'template/js/foot.txt'],
 				dest: 'pack/chrome/extension.js'
 			},
+			chrome_options_js: {
+				src: ['template/js/head.txt', 'src/common/bugmagnet.js', 'src/common/bugmagnet-config.js', 'src/chrome/config-init.js', 'template/js/foot.txt'],
+				dest: 'pack/chrome/options.js'
+			},
 			chrome_context_js: {
 				src: ['template/js/head.txt', 'src/common/bugmagnet.js', 'src/chrome/chrome-content-script.js', 'template/js/foot.txt'],
 				dest: 'pack/chrome/content-script.js'
@@ -172,7 +176,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-mozilla-addon-sdk');
 	grunt.registerTask('checkstyle', ['jscs', 'jshint']);
 	grunt.registerTask('test-chrome', ['jasmine:common', 'jasmine:chrome']);
-	grunt.registerTask('package-chrome', ['checkstyle', 'test-chrome', 'clean', 'copy:chrome', 'concat:chrome_extension_js', 'concat:chrome_context_js', 'compress']);
+	grunt.registerTask('package-chrome', ['checkstyle', 'test-chrome', 'clean', 'copy:chrome', 'concat:chrome_extension_js', 'concat:chrome_context_js', 'concat:chrome_options_js', 'compress']);
 	grunt.registerTask('run-firefox-no-package', ['mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx:run_stable']);
 	grunt.registerTask('run-firefox', ['clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx:run_stable']);
 	grunt.registerTask('test-firefox', ['jasmine:common', 'clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable']);

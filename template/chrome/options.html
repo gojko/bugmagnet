@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BugMagnet Extension Options</title>
+  <style>
+    body: { padding: 10px; }
+		.file-selector {
+			position: absolute;
+			width: 100%;
+			top: 0;
+			z-index: 1;
+			opacity: 0;
+		}
+		.select-file-cover {
+			position: relative;
+		}
+		.sourceCell {
+			max-width: 200px;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+		#main th, #main td {
+			text-align: left;
+		}
+		#main table {
+			width: 100%;
+		}
+		.status {
+			color: red;
+		}
+  </style>
+</head>
+<body>
+	<div id="main">
+		<div role="status" class="status"></div>
+		<div role="main-screen">
+			<div role="no-custom">
+				There are no custom configuration files loaded.
+			</div>
+			<div role="yes-custom">
+				Custom configuration files currently loaded:
+			<table>
+				<thead>
+				<tr><th>Name</th><th>Source</th><th></th></tr>
+				</thead>
+				<tbody>
+				<tr role="template">
+					<td role="name"></td>
+					<td role="source" class="sourceCell"></td>
+					<td><button role="remove">Remove</button></td>
+				</tr>
+				</tbody>
+			</table>
+			<p>Configuration changes apply only to newly loaded pages, so make sure to reload the page under test after changing the configuration. </p>
+		</div>
+			<button role="add">Add Configuration File</button>
+			<button role="close">Close</button>
+		</div>
+		<div role="file-loader">
+			<form>
+				<label>Descriptive submenu label (required): <input type="text" role="submenu-name" required="true" /></label>
+				<div role="buttons">
+					<button role="select-file-cover" class="select-file-cover">
+						<input type="file" role="file-selector" class="file-selector"/>						
+						Select File
+					</button>
+					<button role="back">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+  <script src="options.js"></script>
+</body>
+</html>

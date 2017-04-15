@@ -1,10 +1,10 @@
-#Bug Magnet
+# Bug Magnet
 
 Exploratory testing assistant for Chrome and Firefox. Adds common problematic values and
 edge cases to the context menu (right-click) for editable elements, so you can
 keep them handy and access them easily during exploratory testing sessions.
 
-##Features
+## Features
 
 * Convenient access to common boundaries and edge cases for exploratory testing
 * Extend it with your own config files easily
@@ -13,7 +13,7 @@ keep them handy and access them easily during exploratory testing sessions.
 * Only works in Chrome and Firefox
 * Tiny overhead per page (<1k), no 3rd party library dependencies, completely passive, so it does not interfere with your web app execution in any way
 
-##Usage
+## Usage
 
 The easiest way to install the extension is from the 
 [Chrome Web store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi)
@@ -24,7 +24,7 @@ editable field.
 
 Alternatively, you can load the extension from the  [source files on a local disk](#running-from-a-local-setup).
 
-##Customising
+## Customising
 
 The easiest way to customise BugMagnet is to add your own config files to it.
 Just click on the Configure BugMagnet option in the context menu, then select
@@ -45,12 +45,12 @@ group without people individually having to load items, add your own values to t
 [config.json](template/common/config.json) and rebuild the tension (see
 section [Running from a local setup](#running-from-a-local-setup)) below.
 
-##Questions, suggestions
+## Questions, suggestions
 
 * Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic) (Original Concept; Chrome Extension)
 * Twitter: [@bbbco](http://twitter.com/bbbco) (Firefox Addon)
 
-##Resources for more info
+## Resources for more info
 
 * [E-mail address test cases](http://blogs.msdn.com/b/testing123/archive/2009/02/05/email-address-test-cases.aspx)
   * [Dot atoms in e-mail](http://serverfault.com/questions/395766/are-two-periods-allowed-in-the-local-part-of-an-email-address)
@@ -66,10 +66,10 @@ section [Running from a local setup](#running-from-a-local-setup)) below.
 * [Troy Hunt - How I got XSS’d by my ad network](http://www.troyhunt.com/2015/07/how-i-got-xssd-by-my-ad-network.html)
 
 
-##Contributing and extending code
+## Contributing and extending code
 
 
-###Setting up the development environment
+### Setting up the development environment
 
 Install node js and grunt CLI if not already installed. See
 [gruntjs.com](http://gruntjs.com/getting-started) for more information.
@@ -78,9 +78,9 @@ Install project dependencies using
 
     npm install 
 
-###Chrome Extension
+### Chrome Extension
 
-####Running from a local setup
+#### Running from a local setup
 
 Run the following grunt command to copy and assemble the extension
 
@@ -88,7 +88,7 @@ Run the following grunt command to copy and assemble the extension
 
 Then load the **pack/chrome** folder in Chrome as an [unpacked extension](https://developer.chrome.com/extensions/getstarted#unpacked).
 
-###Running tests
+### Running tests
 
 Run tests from the command line using
 
@@ -96,7 +96,7 @@ Run tests from the command line using
 
 ### Firefox Add-on
 
-####Running from a local setup
+#### Running from a local setup
 
 Run the following grunt command to copy and assemble the add-on
 
@@ -104,7 +104,7 @@ Run the following grunt command to copy and assemble the add-on
 
 Then drag the \*.xpi file created inside the **pack/firefox directory to your Firefox window to install the addon extension.
 
-###Running tests
+### Running tests
 
 Run tests from the command line using
 
@@ -112,6 +112,6 @@ Run tests from the command line using
 
 ----
 
-##Icon credit
+## Icon credit
 
 Magnet icon from [Woothemes Ultimate Icon Set by Nishan Sothilingam](http://iconfindr.com/1vSsaKB)

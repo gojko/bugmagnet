@@ -9,6 +9,6 @@
 - [x] clean up chrome packaging
 - [ ] install additional examples from github contributors
 - [ ] install additional examples from Humans vs Computers
-- [ ] update for firefox webextensions
+- [x] update for firefox webextensions
 - [ ] simplify code/packaging after firefox spike
 

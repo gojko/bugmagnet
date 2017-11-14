@@ -8,12 +8,12 @@ Exploratory testing assistant for Chrome. Adds common problematic values and edg
 * Extend it with your own config files easily
 * Works on input fields, text areas, content editable DIVs
 * Works on multi-frame pages, but only if they are from the same domain
-* Only works in Chrome ([support for Firefox 57+ is in progress](todo.md)) 
+* Works in Chrome and Firefox
 * Tiny overhead per page (<1k), no 3rd party library dependencies, completely passive, so it does not interfere with your web app execution in any way
 
 ## Usage
 
-The easiest way to install the extension is from the [Chrome Web store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi).
+The easiest way to install the extension is from the [Chrome Web store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi) or [Mozilla Add-ons](https://addons.mozilla.org/en-US/firefox/addon/bug-magnet/).
 
 After installation, just right-click on any editable item on the page and you'll see a Bug Magnet submenu. Click an item there, and it will be inserted into the editable field. 
 

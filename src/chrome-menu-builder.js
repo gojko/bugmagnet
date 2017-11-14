@@ -1,7 +1,6 @@
-/* global chrome, BugMagnet */
-BugMagnet.ChromeMenuBuilder = function () {
+module.exports = function ChromeMenuBuilder(chrome) {
 	'use strict';
-	var self = this,
+	const self = this,
 		buildContentMessage = function (menuValue) {
 			if (typeof (menuValue) === 'string') {
 				menuValue = { '_type': 'literal', 'value': menuValue};

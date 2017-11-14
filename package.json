@@ -1,15 +1,26 @@
 {
   "name": "bugmagnet",
   "version": "2.0.0",
+  "scripts": {
+    "lint": "eslint src test",
+    "pretest": "npm run lint && rm -rf testem/compiled",
+    "test": "testem ci -R dot",
+    "pretest-browser": "npm run pretest",
+    "test-browser": "testem -l Chrome",
+    "sourcemap": "sourcemap-lookup",
+    "prepack-chrome": "rm -rf pack && mkdir -p pack/chrome",
+    "pack-chrome-templates": "cp template/common/* template/chrome/* pack/chrome",
+    "pack-chrome": "npm run pack-chrome-templates && webpack --config webpack.chrome.config.js"
+  },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-compress": "^0.13.0",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-copy": "^0.8.0",
-    "grunt-contrib-jasmine": "^0.8.2",
-    "grunt-contrib-jshint": "^0.11.2",
-    "grunt-jscs": "^1.8.0",
-    "grunt-mozilla-addon-sdk": "~0.4.0"
+    "eslint": "^4.11.0",
+    "eslint-config-crockford": "^2.0.0",
+    "eslint-config-defaults": "^9.0.0",
+    "fs-readdir-recursive": "^1.1.0",
+    "jasmine": "^2.8.0",
+    "sourcemap-lookup": "0.0.3",
+    "testem": "^1.18.4",
+    "webpack": "^3.8.1",
+    "webpack-dev-middleware": "^1.12.0"
   }
 }

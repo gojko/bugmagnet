@@ -5,3 +5,4 @@ SpecRunner.html
 .grunt
 .DS_Store
 pack
+testem/compiled

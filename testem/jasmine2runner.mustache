@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <title>Test'em</title>
+  <script src="/jasmine/jasmine.js"></script>
+  <script src="/jasmine/jasmine-html.js"></script>
+  <script src="/jasmine/boot.js"></script>
+  <script src="/testem.js"></script>
+
+
+  {{#serve_files}}
+	<script src="/{{src}}"></script>
+	{{/serve_files}}
+
+	{{#css_files}}
+	<link rel="stylesheet" href="/{{src}}">
+	{{/css_files}}
+
+  <link rel="stylesheet" href="/jasmine/jasmine.css">
+
+  {{#styles}}<link rel="stylesheet" href="{{.}}">{{/styles}}
+</head>
+<body>
+  <div id="jasmine_content"></div>
+</body>
+</html>

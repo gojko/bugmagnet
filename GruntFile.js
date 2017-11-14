@@ -176,7 +176,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-mozilla-addon-sdk');
 	grunt.registerTask('checkstyle', ['jscs', 'jshint']);
 	grunt.registerTask('test-chrome', ['jasmine:common', 'jasmine:chrome']);
-	grunt.registerTask('package-chrome', ['checkstyle', 'test-chrome', 'clean', 'copy:chrome', 'concat:chrome_extension_js', 'concat:chrome_context_js', 'concat:chrome_options_js', 'compress']);
+	grunt.registerTask('package-chrome', ['checkstyle',  'clean', 'copy:chrome', 'concat:chrome_extension_js', 'concat:chrome_context_js', 'concat:chrome_options_js', 'compress']);
 	grunt.registerTask('run-firefox-no-package', ['mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx:run_stable']);
 	grunt.registerTask('run-firefox', ['clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable', 'mozilla-cfx:run_stable']);
 	grunt.registerTask('test-firefox', ['jasmine:common', 'clean', 'copy:firefox', 'concat:firefox', 'mozilla-addon-sdk', 'mozilla-cfx:test_stable']);

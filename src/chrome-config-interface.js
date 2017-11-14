@@ -1,7 +1,6 @@
-/*global chrome, document, BugMagnet, window */
-var ChromeConfigInterface = function () {
+module.exports = function ChromeConfigInterface(chrome) {
 	'use strict';
-	var self = this;
+	const self = this;
 	self.saveOptions = function (additionalMenus) {
 		chrome.storage.sync.set({
 			'additionalMenus': additionalMenus
@@ -15,9 +14,4 @@ var ChromeConfigInterface = function () {
 		});
 	};
 };
-if (!window.jasmine) {
-	document.addEventListener('DOMContentLoaded', function () {
-		'use strict';
-		BugMagnet.initConfigWidget(document.getElementById('main'), new ChromeConfigInterface());
-	});
-}
+

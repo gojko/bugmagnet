@@ -68,47 +68,7 @@ section [Running from a local setup](#running-from-a-local-setup)) below.
 
 ## Contributing and extending code
 
-
-### Setting up the development environment
-
-Install node js and grunt CLI if not already installed. See
-[gruntjs.com](http://gruntjs.com/getting-started) for more information.
-
-Install project dependencies using
-
-    npm install 
-
-### Chrome Extension
-
-#### Running from a local setup
-
-Run the following grunt command to copy and assemble the extension
-
-    grunt package-chrome
-
-Then load the **pack/chrome** folder in Chrome as an [unpacked extension](https://developer.chrome.com/extensions/getstarted#unpacked).
-
-### Running tests
-
-Run tests from the command line using
-
-    grunt test-chrome
-
-### Firefox Add-on
-
-#### Running from a local setup
-
-Run the following grunt command to copy and assemble the add-on
-
-    grunt package-firefox
-
-Then drag the \*.xpi file created inside the **pack/firefox directory to your Firefox window to install the addon extension.
-
-### Running tests
-
-Run tests from the command line using
-
-    grunt test-firefox
+See the [Contributor Guide](CONTRIBUTING.md).
 
 ----
 

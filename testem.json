@@ -1,0 +1,21 @@
+{
+  "test_page": "./testem/jasmine2runner.mustache",
+	"serve_files": [
+		"./testem/compiled/**/*.js"
+	],
+  "src_files": [
+        "src/**/*.js",
+        "test/**/*.js"
+  ],
+	"before_tests": "webpack --config webpack.testem.config.js",
+	"launch_in_dev": ["Chrome"],
+	"launch_in_ci": ["Chrome"],
+	"browser_args": {
+	 "Chrome": [
+			"--auto-open-devtools-for-tabs"
+		]
+	},
+  "routes": {
+    "/jasmine": "node_modules/jasmine-core/lib/jasmine-core"
+  }
+}

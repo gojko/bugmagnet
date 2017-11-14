@@ -1,8 +1,6 @@
 # Bug Magnet
 
-Exploratory testing assistant for Chrome and Firefox. Adds common problematic values and
-edge cases to the context menu (right-click) for editable elements, so you can
-keep them handy and access them easily during exploratory testing sessions.
+Exploratory testing assistant for Chrome. Adds common problematic values and edge cases to the context menu (right-click) for editable elements, so you can keep them handy and access them easily during exploratory testing sessions.  
 
 ## Features
 
@@ -10,26 +8,18 @@ keep them handy and access them easily during exploratory testing sessions.
 * Extend it with your own config files easily
 * Works on input fields, text areas, content editable DIVs
 * Works on multi-frame pages, but only if they are from the same domain
-* Only works in Chrome and Firefox
+* Only works in Chrome ([support for Firefox 57+ is in progress](tasks.md)) 
 * Tiny overhead per page (<1k), no 3rd party library dependencies, completely passive, so it does not interfere with your web app execution in any way
 
 ## Usage
 
-The easiest way to install the extension is from the 
-[Chrome Web store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi)
-or [Addons for Firefox](https://addons.mozilla.org/en-US/firefox/addon/bugmagnet). After
-installation, just right-click on any editable item on the page and you'll see a
-Bug Magnet submenu. Click an item there, and it will be inserted into the
-editable field. 
+The easiest way to install the extension is from the [Chrome Web store](https://chrome.google.com/webstore/detail/efhedldbjahpgjcneebmbolkalbhckfi).
 
-Alternatively, you can load the extension from the  [source files on a local disk](#running-from-a-local-setup).
+After installation, just right-click on any editable item on the page and you'll see a Bug Magnet submenu. Click an item there, and it will be inserted into the editable field. 
 
 ## Customising
 
-The easiest way to customise BugMagnet is to add your own config files to it.
-Just click on the Configure BugMagnet option in the context menu, then select
-additional files to load. Some example files can be found in the
-[extras](extras/) folder.
+The easiest way to customise BugMagnet is to add your own config files to it.  Just click on the Configure BugMagnet option in the context menu, then select additional files to load. Some example files can be found in the [extras](extras/) folder.
 
 The configuration format is very simple:
 
@@ -40,15 +30,12 @@ The configuration format is very simple:
   without a special label (the element values are used both as menu labels and
   as text to insert).
 
-Alternatively, if you'd like to distribute a different configuration to a larger
-group without people individually having to load items, add your own values to the main config file
-[config.json](template/common/config.json) and rebuild the tension (see
-section [Running from a local setup](#running-from-a-local-setup)) below.
+Alternatively, if you'd like to distribute a different configuration to a larger group without people individually having to load items, add your own values to the main config file [config.json](template/common/config.json) and rebuild the tension (see [Contributor Guide](CONTRIBUTING.md)).
 
-## Questions, suggestions
+## Authors 
 
-* Twitter: [@gojkoadzic](http://twitter.com/gojkoadzic) (Original Concept; Chrome Extension)
-* Twitter: [@bbbco](http://twitter.com/bbbco) (Firefox Addon)
+* [@gojkoadzic](http://twitter.com/gojkoadzic) (Original Concept; Chrome Extension)
+* [@bbbco](http://twitter.com/bbbco) (old Firefox Addon)
 
 ## Resources for more info
 

@@ -8,7 +8,7 @@ Exploratory testing assistant for Chrome. Adds common problematic values and edg
 * Extend it with your own config files easily
 * Works on input fields, text areas, content editable DIVs
 * Works on multi-frame pages, but only if they are from the same domain
-* Only works in Chrome ([support for Firefox 57+ is in progress](tasks.md)) 
+* Only works in Chrome ([support for Firefox 57+ is in progress](todo.md)) 
 * Tiny overhead per page (<1k), no 3rd party library dependencies, completely passive, so it does not interfere with your web app execution in any way
 
 ## Usage

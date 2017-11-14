@@ -50,12 +50,22 @@ module.exports = function initConfigWidget(domElement, configInterface) {
 			domElement.querySelector('[role=file-loader]').style.display = '';
 		},
 		initScreen = function () {
+			domElement.querySelector('form').addEventListener('submit', e => {
+				e.preventDefault();
+			});
 			domElement.querySelector('[role=add]').addEventListener('click', showFileSelector);
 			domElement.querySelector('[role=close]').addEventListener('click', function () {
 				window.close();
 			});
 			domElement.querySelector('[role=back]').addEventListener('click', showMainScreen);
-
+			domElement.querySelector('[role=select-file-cover]').addEventListener('click', () => {
+				const event = new MouseEvent('click', {
+					view: window,
+					bubbles: true,
+					cancelable: true
+				});
+				domElement.querySelector('[role=file-selector]').dispatchEvent(event);
+			});
 			domElement.querySelector('[role=file-selector]').addEventListener('change', function () {
 				const element = this,
 					oFReader = new FileReader(),

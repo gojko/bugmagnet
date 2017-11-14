@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>BugMagnet Extension Options</title>
   <style>
     body: { padding: 10px; }
 		.file-selector {
-			position: absolute;
-			width: 100%;
-			top: 0;
-			z-index: 1;
-			opacity: 0;
-		}
-		.select-file-cover {
-			position: relative;
+			display: none;
 		}
 		.sourceCell {
 			max-width: 200px;
@@ -57,15 +51,15 @@
 			<button role="close">Close</button>
 		</div>
 		<div role="file-loader">
-			<form>
+			<form action="#">
 				<label>Descriptive submenu label (required): <input type="text" role="submenu-name" required="true" /></label>
 				<div role="buttons">
 					<button role="select-file-cover" class="select-file-cover">
-						<input type="file" role="file-selector" class="file-selector"/>						
 						Select File
 					</button>
 					<button role="back">Cancel</button>
 				</div>
+				<input type="file" role="file-selector" class="file-selector"/>						
 			</form>
 		</div>
 	</div>

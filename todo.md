@@ -10,8 +10,8 @@
 - [ ] install additional examples from github contributors
 - [ ] install additional examples from Humans vs Computers
 - [x] update for firefox webextensions
-- [ ] simplify code/packaging after firefox spike
-- [ ] add tests for the config widget
-- [ ] run tests both in ff and chrome
+- [x] simplify code/packaging after firefox spike
+- [x] add tests for the config widget
+- [x] run tests both in ff and chrome
 - [ ] configure with a text area or remote URL
 

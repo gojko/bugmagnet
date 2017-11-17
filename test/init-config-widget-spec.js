@@ -2,8 +2,10 @@
 const initConfigWidget = require('../src/lib/init-config-widget');
 describe('initConfigWidget', function () {
 	'use strict';
+	let underTest, browserInterface, mainScreen, addScreen, loadOptionsCallback, sectionForCustom, sectionWithoutCustom,
+		configList, statusMessage, submenuName;
 	const template = `
-		<div role="status" class="status"></div>
+		<div role="status" id="statusMessage"></div>
 		<div id="mainScreen" role="main-screen">
 			<div id="sectionWithoutCustom" role="no-custom"></div>
 			<div id="sectionForCustom" role="yes-custom"></div>
@@ -19,12 +21,12 @@ describe('initConfigWidget', function () {
 		</div>
 		<div id="addScreen" role="file-loader">
 			<form id="form">
-				<input type="text" role="submenu-name" required="true" />
+				<input id="submenuName" type="text" role="submenu-name"/>
 				<div role="buttons">
 					<button id="btnFileSelect" role="select-file-cover">Select File</button>
 					<button id="backBtn" role="back">Cancel</button>
 				</div>
-				<input id="fileSelector" role="file-selector"/>
+				<span id="fileSelector" role="file-selector"/>
 			</form>
 		</div>`,
 		clickOn = function (domElement) {
@@ -35,9 +37,17 @@ describe('initConfigWidget', function () {
 			});
 			domElement.dispatchEvent(event);
 			return event;
+		},
+		loadFile = function (fileId) {
+			const file = fileId, //new Blob([textContent], {contentType: 'application/json'}),
+				changeEvt = new Event('change', {
+					view: window,
+					bubbles: true,
+					cancelable: true
+				});
+			document.getElementById('fileSelector').files = [file];
+			document.getElementById('fileSelector').dispatchEvent(changeEvt);
 		};
-	let underTest, browserInterface, mainScreen, addScreen, loadOptionsCallback, sectionForCustom, sectionWithoutCustom,
-		configList;
 	beforeEach(() => {
 		underTest = document.createElement('div');
 		underTest.innerHTML = template;
@@ -50,6 +60,8 @@ describe('initConfigWidget', function () {
 		sectionForCustom = document.getElementById('sectionForCustom');
 		sectionWithoutCustom = document.getElementById('sectionWithoutCustom');
 		configList = document.getElementById('templateParent');
+		submenuName = document.getElementById('submenuName');
+		statusMessage = document.getElementById('statusMessage');
 	});
 	it('prevents form from submitting to allow firefox to handle the form', () => {
 		const event = new Event('submit', {
@@ -97,6 +109,17 @@ describe('initConfigWidget', function () {
 			expect(sectionWithoutCustom.style.display).not.toBe('none');
 			expect(sectionForCustom.style.display).toBe('none');
 		});
+		it('shows the custom section after the first element is loaded', done => {
+			submenuName.value = 'abc';
+			browserInterface.readFile.and.returnValue(Promise.resolve(JSON.stringify({a: 'b'})));
+			browserInterface.saveOptions.and.callFake(() => {
+				expect(sectionWithoutCustom.style.display).toBe('none');
+				expect(sectionForCustom.style.display).not.toBe('none');
+				done();
+			});
+			loadFile({name: 'filename.json'});
+		});
+
 	});
 	describe('with additional config sections', () => {
 		beforeEach(() => {
@@ -128,6 +151,44 @@ describe('initConfigWidget', function () {
 				{ name: 'first', source: 'fi.json' },
 				{ name: 'third', source: 'th.json' }
 			]);
+		});
+	});
+	describe('when a file is loaded into the file box', () => {
+		it('shows an error message in the status field if the submenu name is empty', () => {
+			submenuName.value = '\t';
+			loadFile({name: 'file.json'});
+			expect(browserInterface.readFile).not.toHaveBeenCalled();
+			expect(statusMessage.innerHTML).toEqual('Please provide submenu name!');
+		});
+		it('loads the file using the browser interface', done => {
+			submenuName.value = 'abc';
+			browserInterface.readFile.and.callFake((fileInfo) => {
+				expect(fileInfo).toEqual({name: 'file.json'});
+				expect(statusMessage.innerHTML).toEqual('');
+				done();
+				return new Promise(() => false);
+			});
+			loadFile({name: 'file.json'});
+		});
+		it('adds a menu when the file load resolves with a JSON content', done => {
+			loadOptionsCallback([
+				{name: 'first', source: 'fi.json'}
+			]);
+			submenuName.value = 'abc';
+			browserInterface.readFile.and.returnValue(Promise.resolve(JSON.stringify({a: 'b'})));
+			browserInterface.saveOptions.and.callFake(options => {
+
+				expect(configList.children.length).toEqual(2);
+				expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
+				expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('filename.json');
+
+				expect(options).toEqual([
+					{name: 'first', source: 'fi.json'},
+					{name: 'abc', source: 'filename.json', config: {a: 'b'}}
+				]);
+				done();
+			});
+			loadFile({name: 'filename.json'});
 		});
 	});
 

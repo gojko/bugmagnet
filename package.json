@@ -6,7 +6,9 @@
     "pretest": "npm run lint && rm -rf testem/compiled",
     "test": "testem ci -R dot",
     "pretest-browser": "npm run pretest",
-    "test-browser": "testem -l Chrome",
+    "test-browser": "testem",
+    "pretest-chrome": "npm run pretest",
+    "test-chrome": "testem -l Chrome",
     "sourcemap": "sourcemap-lookup",
     "prepack-extension": "rm -rf pack && cp -R template pack",
     "pack-extension": "webpack --config webpack.config.js"

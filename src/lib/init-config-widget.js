@@ -1,9 +1,9 @@
-module.exports = function initConfigWidget(domElement, configInterface) {
+module.exports = function initConfigWidget(domElement, browserInterface) {
 	'use strict';
 	let template,
 		list,
 		additionalMenus = [];
-	const updateStatus = function (text) {
+	const showErrorMsg = function (text) {
 			const status = domElement.querySelector('[role=status]');
 			status.textContent = text;
 			setTimeout(function () {
@@ -21,7 +21,7 @@ module.exports = function initConfigWidget(domElement, configInterface) {
 					clone.querySelector('[role=remove]').addEventListener('click', function () {
 						additionalMenus.splice(index, 1);
 						rebuildMenu();
-						configInterface.saveOptions(additionalMenus);
+						browserInterface.saveOptions(additionalMenus);
 					});
 				});
 				domElement.querySelector('[role=no-custom]').style.display = 'none';
@@ -31,8 +31,19 @@ module.exports = function initConfigWidget(domElement, configInterface) {
 				domElement.querySelector('[role=no-custom]').style.display = '';
 			}
 		},
+		showMainScreen = function () {
+			domElement.querySelector('[role=main-screen]').style.display = '';
+			domElement.querySelector('[role=file-loader]').style.display = 'none';
+		},
+		addSubMenu = function (textContent, submenuName, sourceName) {
+			const parsed = JSON.parse(textContent);
+			additionalMenus.push({source: sourceName, config: parsed, name: submenuName});
+			showMainScreen();
+			rebuildMenu();
+			browserInterface.saveOptions(additionalMenus);
+		},
 		restoreOptions = function () {
-			configInterface.loadOptions(function (opts) {
+			browserInterface.loadOptions(function (opts) {
 				if (Array.isArray(opts)) {
 					additionalMenus = opts;
 				}	else {
@@ -41,22 +52,14 @@ module.exports = function initConfigWidget(domElement, configInterface) {
 				rebuildMenu();
 			});
 		},
-		showMainScreen = function () {
-			domElement.querySelector('[role=main-screen]').style.display = '';
-			domElement.querySelector('[role=file-loader]').style.display = 'none';
-		},
 		showFileSelector = function () {
 			domElement.querySelector('[role=main-screen]').style.display = 'none';
 			domElement.querySelector('[role=file-loader]').style.display = '';
 		},
 		initScreen = function () {
-			domElement.querySelector('form').addEventListener('submit', e => {
-				e.preventDefault();
-			});
+			domElement.querySelector('form').addEventListener('submit', e => e.preventDefault());
+			domElement.querySelector('[role=close]').addEventListener('click', browserInterface.closeWindow);
 			domElement.querySelector('[role=add]').addEventListener('click', showFileSelector);
-			domElement.querySelector('[role=close]').addEventListener('click', function () {
-				window.close();
-			});
 			domElement.querySelector('[role=back]').addEventListener('click', showMainScreen);
 			domElement.querySelector('[role=select-file-cover]').addEventListener('click', () => {
 				const event = new MouseEvent('click', {
@@ -68,31 +71,17 @@ module.exports = function initConfigWidget(domElement, configInterface) {
 			});
 			domElement.querySelector('[role=file-selector]').addEventListener('change', function () {
 				const element = this,
-					oFReader = new FileReader(),
-					submenuField =  domElement.querySelector('[role=submenu-name]');
-				let fileName, submenuName, fileInfo;//eslint-disable-line
-				oFReader.onload = function (oFREvent) {
-					try {
-						const parsed = JSON.parse(oFREvent.target.result);
-						additionalMenus.push({source: fileName, config: parsed, name: submenuName});
-						submenuField.value = '';
-						showMainScreen();
-						rebuildMenu();
-						configInterface.saveOptions(additionalMenus);
-					} catch (exception) {
-						updateStatus('Error reading ' + fileName);
-					}
-				};
-				oFReader.onerror = function () {
-					updateStatus('Error reading ' + fileName);
-				};
-				fileInfo = this.files[0];//eslint-disable-line
-				fileName = fileInfo.name;//eslint-disable-line
-				submenuName = submenuField.value && submenuField.value.trim();
+					submenuField =  domElement.querySelector('[role=submenu-name]'),
+					fileInfo = this.files[0],
+					fileName = fileInfo.name,
+					submenuName = submenuField.value && submenuField.value.trim();
 				if (!submenuName) {
-					updateStatus('Please provide submenu name!');
+					showErrorMsg('Please provide submenu name!');
+					submenuField.value = '';
 				} else {
-					oFReader.readAsText(fileInfo, 'UTF-8');
+					browserInterface.readFile(fileInfo).then(result => {
+						addSubMenu(result, submenuName, fileName);
+					}).catch(showErrorMsg);
 				}
 				element.value = '';
 			});

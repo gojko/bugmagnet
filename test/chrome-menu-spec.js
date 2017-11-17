@@ -1,6 +1,6 @@
 /*global describe, window, it, afterEach, beforeEach, jasmine, expect*/
 const FakeChromeApi = require('./utils/fake-chrome-api.js'),
-	ChromeMenu = require('../src/chrome-menu');
+	ChromeMenu = require('../src/lib/chrome-menu');
 describe('ChromeMenu', function () {
 	'use strict';
 	let oldHttpRequest, fakeHttpRequest, fakeRoot, chrome, underTest, configLoaders, chromeMenuBuilder;

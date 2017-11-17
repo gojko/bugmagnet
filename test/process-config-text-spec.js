@@ -1,5 +1,5 @@
 /*global describe, it, expect, beforeEach, jasmine */
-const processConfigText = require('../src/process-config-text');
+const processConfigText = require('../src/lib/process-config-text');
 describe('processConfigText', function () {
 	'use strict';
 	let menuBuilder;

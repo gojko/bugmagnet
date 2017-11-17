@@ -1,5 +1,5 @@
 /*global describe, it, expect, beforeEach, afterEach, jasmine, document */
-const handler = require('../src/execute-request');
+const handler = require('../src/lib/execute-request');
 describe('executeRequest', () => {
 	'use strict';
 	const template = '<input type="text" value="old text"/>' +

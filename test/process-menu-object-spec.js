@@ -1,5 +1,5 @@
 /*global jasmine, beforeEach, it, expect, describe */
-const processMenuObject = require('../src/process-menu-object');
+const processMenuObject = require('../src/lib/process-menu-object');
 describe('processMenuObject', function () {
 	'use strict';
 	let rootMenu, menuBuilder;

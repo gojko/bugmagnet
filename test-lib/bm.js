@@ -1,2 +1,0 @@
-/*global window*/
-window.BugMagnet = {};

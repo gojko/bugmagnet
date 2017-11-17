@@ -8,9 +8,8 @@
     "pretest-browser": "npm run pretest",
     "test-browser": "testem -l Chrome",
     "sourcemap": "sourcemap-lookup",
-    "prepack-chrome": "rm -rf pack && mkdir -p pack/chrome",
-    "pack-chrome-templates": "cp template/common/* template/chrome/* pack/chrome",
-    "pack-chrome": "npm run pack-chrome-templates && webpack --config webpack.chrome.config.js"
+    "prepack-extension": "rm -rf pack && cp -R template pack",
+    "pack-extension": "webpack --config webpack.config.js"
   },
   "devDependencies": {
     "eslint": "^4.11.0",

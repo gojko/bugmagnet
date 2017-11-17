@@ -9,11 +9,11 @@ const path = require('path'),
 		});
 	};
 //buildEntries('core');
-buildEntries(path.resolve(__dirname, 'src', 'chrome'));
+buildEntries(path.resolve(__dirname, 'src', 'main'));
 module.exports = {
 	entry: entries,
 	output: {
-		path: path.resolve(__dirname, 'pack', 'chrome'),
+		path: path.resolve(__dirname, 'pack'),
 		filename: '[name]'
 	}
 };

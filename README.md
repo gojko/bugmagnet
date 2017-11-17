@@ -1,6 +1,6 @@
 # Bug Magnet
 
-Exploratory testing assistant for Chrome. Adds common problematic values and edge cases to the context menu (right-click) for editable elements, so you can keep them handy and access them easily during exploratory testing sessions.  
+Exploratory testing assistant for Chrome and Firefox. Adds common problematic values and edge cases to the context menu (right-click) for editable elements, so you can keep them handy and access them easily during exploratory testing sessions.  
 
 ## Features
 
@@ -51,6 +51,8 @@ Alternatively, if you'd like to distribute a different configuration to a larger
 * [Elisabeth Hendrickson's test heuristics cheat sheet](http://testobsessed.com/wp-content/uploads/2011/04/testheuristicscheatsheetv1.pdf)
 * [Skype crashes — and won't stop crashing — if you send it this message](http://www.theverge.com/2015/6/3/8717951/skype-crash-http-error)
 * [Troy Hunt - How I got XSS’d by my ad network](http://www.troyhunt.com/2015/07/how-i-got-xssd-by-my-ad-network.html)
+* [Humans vs Computers](http://amzn.to/2yRl1D8) book by Gojko Adzic
+* [Heuristics from Humans vs Computers](https://atlas.mindmup.com/neuri/humans_vs_computers_ideas/index.html) as a mind map
 
 
 ## Contributing and extending code

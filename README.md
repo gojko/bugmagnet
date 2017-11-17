@@ -1,4 +1,4 @@
-# Bug Magnet
+![](screenshots/chrome-medium-tile.png)
 
 Exploratory testing assistant for Chrome and Firefox. Adds common problematic values and edge cases to the context menu (right-click) for editable elements, so you can keep them handy and access them easily during exploratory testing sessions.  
 

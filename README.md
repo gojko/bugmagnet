@@ -30,7 +30,7 @@ The configuration format is very simple:
   without a special label (the element values are used both as menu labels and
   as text to insert).
 
-Alternatively, if you'd like to distribute a different configuration to a larger group without people individually having to load items, add your own values to the main config file [config.json](template/common/config.json) and rebuild the tension (see [Contributor Guide](CONTRIBUTING.md)).
+Alternatively, if you'd like to distribute a different configuration to a larger group without people individually having to load items, add your own values to the main config file [config.json](template/common/config.json) and rebuild the extension (see [Contributor Guide](CONTRIBUTING.md)).
 
 ## Authors 
 

@@ -53,14 +53,19 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			});
 		},
 		showFileSelector = function () {
+			const submenuField =  domElement.querySelector('[role=submenu-name]'),
+				configTextArea = domElement.querySelector('[role=custom-config-text]');
+			submenuField.value = '';
+			configTextArea.value = '';
 			domElement.querySelector('[role=main-screen]').style.display = 'none';
 			domElement.querySelector('[role=file-loader]').style.display = '';
 		},
 		initScreen = function () {
+			const submenuField =  domElement.querySelector('[role=submenu-name]');
 			domElement.querySelector('form').addEventListener('submit', e => e.preventDefault());
 			domElement.querySelector('[role=close]').addEventListener('click', browserInterface.closeWindow);
 			domElement.querySelector('[role=add]').addEventListener('click', showFileSelector);
-			domElement.querySelector('[role=back]').addEventListener('click', showMainScreen);
+			Array.from(domElement.querySelectorAll('[role=back]')).map(el => el.addEventListener('click', showMainScreen));
 			domElement.querySelector('[role=select-file-cover]').addEventListener('click', () => {
 				const event = new MouseEvent('click', {
 					view: window,
@@ -71,7 +76,6 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			});
 			domElement.querySelector('[role=file-selector]').addEventListener('change', function () {
 				const element = this,
-					submenuField =  domElement.querySelector('[role=submenu-name]'),
 					fileInfo = this.files[0],
 					fileName = fileInfo.name,
 					submenuName = submenuField.value && submenuField.value.trim();
@@ -84,6 +88,22 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 					}).catch(showErrorMsg);
 				}
 				element.value = '';
+			});
+			domElement.querySelector('[role=add-custom-config]').addEventListener('click', () => {
+				const submenuName = submenuField.value && submenuField.value.trim(),
+					customConfigText = 	domElement.querySelector('[role=custom-config-text]').value;
+				if (!submenuName) {
+					submenuField.value = '';
+					return showErrorMsg('Please provide submenu name!');
+				}
+				if (!customConfigText) {
+					return showErrorMsg('Please provide the configuration');
+				}
+				try {
+					addSubMenu(customConfigText, submenuName, 'config');
+				} catch (e) {
+					showErrorMsg(e);
+				}
 			});
 			template = domElement.querySelector('[role=template]');
 			list = template.parentElement;

@@ -27,6 +27,12 @@ describe('initConfigWidget', function () {
 					<button id="backBtn" role="back">Cancel</button>
 				</div>
 				<span id="fileSelector" role="file-selector"/>
+
+				<textarea id="customConfigText" role="custom-config-text"></textarea>
+
+				<button id="addCustomConfig" role="add-custom-config"/>
+				<button id="backBtn2" role="back">Cancel</button>
+
 			</form>
 		</div>`,
 		clickOn = function (domElement) {
@@ -86,10 +92,25 @@ describe('initConfigWidget', function () {
 			expect(mainScreen.style.display).toBe('none');
 			expect(addScreen.style.display).not.toBe('none');
 		});
+		it('clears the content from custom data fields when switching to add screen', () => {
+			document.getElementById('customConfigText').value = 'abc';
+			document.getElementById('submenuName').value = 'def';
+			clickOn(document.getElementById('addBtn'));
+			expect(document.getElementById('customConfigText').value).toEqual('');
+			expect(document.getElementById('submenuName').value).toEqual('');
+		});
+
 		it('sets up the back button to show the main screen', () => {
 			mainScreen.style.display = 'none';
 			addScreen.style.display = '';
 			clickOn(document.getElementById('backBtn'));
+			expect(mainScreen.style.display).not.toBe('none');
+			expect(addScreen.style.display).toBe('none');
+		});
+		it('sets up all back buttons with the same role to show the main screen', () => {
+			mainScreen.style.display = 'none';
+			addScreen.style.display = '';
+			clickOn(document.getElementById('backBtn2'));
 			expect(mainScreen.style.display).not.toBe('none');
 			expect(addScreen.style.display).toBe('none');
 		});
@@ -153,12 +174,56 @@ describe('initConfigWidget', function () {
 			]);
 		});
 	});
+	describe('when content is added via the custom config box', () => {
+		const loadCustomConfig = function (text) {
+			document.getElementById('customConfigText').value = text;
+			clickOn(document.getElementById('addCustomConfig'));
+		};
+		it('shows an error in the status field if the submenu name is empty', () => {
+			submenuName.value = '\t';
+			loadCustomConfig('{"a": "b"}');
+			expect(statusMessage.innerHTML).toEqual('Please provide submenu name!');
+			expect(browserInterface.saveOptions).not.toHaveBeenCalled();
+		});
+		it('shows an error in the status field if the custom content is empty', () => {
+			submenuName.value = 'abc';
+			loadCustomConfig('');
+			expect(statusMessage.innerHTML).toEqual('Please provide the configuration');
+			expect(browserInterface.saveOptions).not.toHaveBeenCalled();
+		});
+		it('shows an error in the status field if the custom content is not valid JSON', () => {
+			submenuName.value = 'abc';
+			loadCustomConfig('a: b');
+			expect(statusMessage.innerHTML).toMatch(/SyntaxError/);
+			expect(browserInterface.saveOptions).not.toHaveBeenCalled();
+		});
+		it('adds a menu when the file load resolves with a JSON content', done => {
+			loadOptionsCallback([
+				{name: 'first', source: 'fi.json'}
+			]);
+			submenuName.value = 'abc';
+			browserInterface.saveOptions.and.callFake(options => {
+				expect(configList.children.length).toEqual(2);
+				expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
+				expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('config');
+
+				expect(options).toEqual([
+					{name: 'first', source: 'fi.json'},
+					{name: 'abc', source: 'config', config: {a: 'b'}}
+				]);
+				done();
+			});
+			loadCustomConfig('{"a": "b"}');
+		});
+
+	});
 	describe('when a file is loaded into the file box', () => {
 		it('shows an error message in the status field if the submenu name is empty', () => {
 			submenuName.value = '\t';
 			loadFile({name: 'file.json'});
 			expect(browserInterface.readFile).not.toHaveBeenCalled();
 			expect(statusMessage.innerHTML).toEqual('Please provide submenu name!');
+			expect(browserInterface.saveOptions).not.toHaveBeenCalled();
 		});
 		it('loads the file using the browser interface', done => {
 			submenuName.value = 'abc';

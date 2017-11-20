@@ -22,6 +22,19 @@
 		.status {
 			color: red;
 		}
+		.tab {
+			display: none;
+		}
+		#sourceLocal:checked ~ [role="local-file"] {
+			display: block;
+		}
+		#sourceConfig:checked ~ [role="text-config"] {
+			display: block;
+		}
+		textarea[role=custom-config-text] {
+			width: 100%;
+		}
+		
   </style>
 </head>
 <body>
@@ -52,14 +65,26 @@
 		</div>
 		<div role="file-loader">
 			<form action="#">
+				<input type="radio" value="local" name="source" id="sourceLocal" checked="checked"><label for="sourceLocal">Local file</label>
+				<input type="radio" value="source" name="source" id="sourceConfig"><label for="sourceConfig">Paste configuration</label>
+				<div>
 				<label>Descriptive submenu label (required): <input type="text" role="submenu-name" required="true" /></label>
-				<div role="buttons">
+				</div>
+				<div class="tab" role="local-file">
 					<button role="select-file-cover" class="select-file-cover">
 						Select File
 					</button>
 					<button role="back">Cancel</button>
+					<input type="file" role="file-selector" class="file-selector"/>						
 				</div>
-				<input type="file" role="file-selector" class="file-selector"/>						
+				<div class="tab" role="text-config">
+					<textarea role="custom-config-text" placeholder="paste configuration JSON"></textarea>
+					<div>
+						<button role="add-custom-config">Save</button>
+						<button role="back">Cancel</button>
+					</div>
+				</div>
+
 			</form>
 		</div>
 	</div>

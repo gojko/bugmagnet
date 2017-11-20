@@ -10,32 +10,6 @@
     "Hindi": "एक जल्दी भूरी लोमड़ी आलसी कुत्ते पर कूदता",
     "Unicode symbols (non letters)": "Iñtërnâtiônàlizætiøn☃💪"
   },
-  "Text size": {
-    "With spaces": {
-      "128b": { "_type": "size", "size": "128", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-      "129b": { "_type": "size", "size": "129", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-      "256b": { "_type": "size", "size": "256", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-      "257b": { "_type": "size", "size": "257", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-      "32K - 1": { "_type": "size", "size": "32767", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-      "32K": { "_type": "size", "size": "32768", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-      "32K + 1": { "_type": "size", "size": "32769", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-      "64K - 1": { "_type": "size", "size": "65535", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-      "64K": { "_type": "size", "size": "65536", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-      "64K + 1": { "_type": "size", "size": "65537", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
-    },
-    "Without spaces": {
-      "128b": { "_type": "size", "size": "128", "template": "0123456789" },
-      "129b": { "_type": "size", "size": "129", "template": "0123456789" },
-      "256b": { "_type": "size", "size": "256", "template": "0123456789" },
-      "257b": { "_type": "size", "size": "257", "template": "0123456789" },
-      "32K - 1": { "_type": "size", "size": "32767", "template": "0123456789" },
-      "32K": { "_type": "size", "size": "32768", "template": "0123456789" },
-      "32K + 1": { "_type": "size", "size": "32769", "template": "0123456789" },
-      "64K - 1": { "_type": "size", "size": "65535", "template": "0123456789" },
-      "64K": { "_type": "size", "size": "65536", "template": "0123456789" },
-      "64K + 1": { "_type": "size", "size": "65537", "template": "0123456789" }
-    }
-  },
   "Names": { 
     "Latin charset": [
       "John O'Grady",
@@ -47,15 +21,24 @@
       "Milan Vojnovič",
       "Chloë Rømer",
       "Björk Guðmundsdóttir",
-      "NULL",
-      "nil",
-      "false",
-      "GoVeg.com",
+      "Rosalind Arusha Arkadina Altalune Florence Thurman-Busson",
       "Leone Sextus Denys Oswolf Fraudatifilius Tollemache-Tollemache de Orellana Plantagenet Tollemache-Tollemache",
-      "ᴮᴵᴳᴮᴵᴿᴰ",
       "Alasdair Mór Ùisdean GillEasbaig 'ic Iain Mac a' Ghobhainn Fear an t-Srònaich",
       "Abu Karim Muhammad al-Jamil ibn Nidal ibn Abdulaziz al-Filistini",
       "Nguyễn Tấn Dũng"
+    ],
+    "Name length": [
+      "Rhoshandiatellyneshiaunneveshenk",
+      "StopFortnumAndMasonFoieGras",
+      "Stephen O",
+      "A Martinez",
+      "They"
+    ],
+    "Unusual accents/chars": [
+      "Keihanaikukauakahihuliheʻekahaunaele",
+      "GoVeg.com",
+      "Number 16 Bus Shelter",
+      "John Blake Cusack 2.0"
     ],
     "Other charsets": {
       "Japanese": "田中太郎",
@@ -66,11 +49,29 @@
       "Ukrainian female": "Леся Українка",
       "Thai nickname": "แม",
       "Arabic": "ابن خلدون"
-    }
+    },
+    "Commonly thought as invalid": [
+      "Null",
+      "nil",
+      "false",
+      "Tom Test",
+      "Jeff Sample"
+    ],
+    "Unicode case folding": "ᴮᴵᴳᴮᴵᴿᴰ",
+    "James Bond (with middle names)": "James Dr No From Russia with Love Goldfinger Thunderball You Only Live Twice On Her Majesty’s Secret Service Diamonds Are Forever Live and Let Die The Man with the Golden Gun The Spy Who Loved Me Moonraker For Your Eyes Only Octopussy A View to a Kill The Living Daylights Licence to Kill Golden Eye Tomorrow Never Dies The World Is Not Enough Die Another Day Casino Royale Bond"
+  },
+  "Post Codes": {
+    "Alphanumeric (GB)": "EC11AA",
+    "With spaces (GB)": "EC1 1AA",
+    "4 digits (Aarau, CH)": "5004",
+    "3 digits (Kvivik, FO)":"340",
+    "10 digits (Tehran, IR)": "1193653471"
   },
   "Cities": {
     "Scandinavian letters": "Ærøskøbing",
-    "Welsh": "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch"
+    "Welsh": "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch",
+    "Single letter - Norwegian": "Å",
+    "Single letter - France": "Y"
   },
   "E-mail addresses": {
     "Valid" :{
@@ -137,6 +138,11 @@
     "1E-16", "-1", "0.0001",
     "1,234,567", "1.234.567,89"
   ],
+  "Amounts": ["5000", "$5,000", "$5 000", "$5,000.00"],
+  "Currencies": {
+    "No decimals": "JPY",
+    "3 Decimals": "KWD"
+  },
   "Payment cards": {
      "Authorize.net": {
       "Credit Card": {
@@ -292,6 +298,32 @@
         "Do Not Honor":"349",
         "Generic Decline":"350"
       }
+    }
+  },
+  "Text size": {
+    "With spaces": {
+      "128b": { "_type": "size", "size": "128", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+      "129b": { "_type": "size", "size": "129", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+      "256b": { "_type": "size", "size": "256", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+      "257b": { "_type": "size", "size": "257", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+      "32K - 1": { "_type": "size", "size": "32767", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+      "32K": { "_type": "size", "size": "32768", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+      "32K + 1": { "_type": "size", "size": "32769", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+      "64K - 1": { "_type": "size", "size": "65535", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+      "64K": { "_type": "size", "size": "65536", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+      "64K + 1": { "_type": "size", "size": "65537", "template": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
+    },
+    "Without spaces": {
+      "128b": { "_type": "size", "size": "128", "template": "0123456789" },
+      "129b": { "_type": "size", "size": "129", "template": "0123456789" },
+      "256b": { "_type": "size", "size": "256", "template": "0123456789" },
+      "257b": { "_type": "size", "size": "257", "template": "0123456789" },
+      "32K - 1": { "_type": "size", "size": "32767", "template": "0123456789" },
+      "32K": { "_type": "size", "size": "32768", "template": "0123456789" },
+      "32K + 1": { "_type": "size", "size": "32769", "template": "0123456789" },
+      "64K - 1": { "_type": "size", "size": "65535", "template": "0123456789" },
+      "64K": { "_type": "size", "size": "65536", "template": "0123456789" },
+      "64K + 1": { "_type": "size", "size": "65537", "template": "0123456789" }
     }
   },
   "Whitespace": {

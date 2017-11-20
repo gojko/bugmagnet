@@ -321,7 +321,7 @@
       "with cyrilic a": "https://аpple.com",
       "single-charset": "https://еріс.com/"
     },
-    "Confusables": {
+    "Confusable": {
       "colon": "\uFF1A\u02D0\u02F8\u0589\u1361\u16EC\u205A\u2236\u2806\uFE13\uFE55",
       "semi-colon": "\uFF1B\u037E\uFE14\uFE54",
       "equals": "\uFF1D\u2550\u268C\uFE66",

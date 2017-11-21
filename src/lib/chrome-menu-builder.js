@@ -21,4 +21,7 @@ module.exports = function ChromeMenuBuilder(chrome) {
 	self.menuItem = function (title, parentMenu, value, clickHandler) {
 		return chrome.contextMenus.create({'title': title, 'parentId': parentMenu, 'contexts': ['editable'], onclick: clickHandler || buildContentMessage(value)});
 	};
+	self.removeAll = function () {
+		return new Promise(resolve => chrome.contextMenus.removeAll(resolve));
+	};
 };

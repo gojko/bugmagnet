@@ -13,6 +13,28 @@ module.exports = function ChromeBrowserInterface(chrome) {
 			callback(items && items.additionalMenus);
 		});
 	};
+	self.getOptionsAsync = function () {
+		return new Promise((resolve) => {
+			chrome.storage.sync.get({
+				additionalMenus: []
+			}, resolve);
+		});
+	};
+	self.openSettings = function () {
+		if (chrome.runtime.openOptionsPage) {
+			chrome.runtime.openOptionsPage();
+		} else {
+			window.open(chrome.runtime.getURL('options.html'));
+		}
+	};
+	self.addStorageListener = function (listener) {
+		chrome.storage.onChanged.addListener(function (changes, areaName) {
+			if (areaName === 'sync') {
+				listener(changes);
+			};
+		});
+	};
+
 	self.closeWindow = function () {
 		window.close();
 	};

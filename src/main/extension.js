@@ -1,8 +1,13 @@
 /*global chrome*/
 const ChromeMenu = require('../lib/chrome-menu'),
 	ChromeMenuBuilder = require('../lib/chrome-menu-builder'),
-	configLoaders = {
-		processConfigText: require('../lib/process-config-text'),
-		processMenuObject: require('../lib/process-menu-object')
-	};
-new ChromeMenu(chrome, configLoaders, new ChromeMenuBuilder(chrome)).init();
+	ChromeBrowserInterface = require('../lib/chrome-browser-interface'),
+	processMenuObject = require('../lib/process-menu-object'),
+	standardConfig = require('../../template/config.json');
+new ChromeMenu(
+	standardConfig,
+	new ChromeBrowserInterface(chrome),
+	new ChromeMenuBuilder(chrome),
+	processMenuObject
+).init();
+

@@ -1,119 +1,112 @@
-/*global describe, window, it, afterEach, beforeEach, jasmine, expect*/
-const FakeChromeApi = require('./utils/fake-chrome-api.js'),
-	ChromeMenu = require('../src/lib/chrome-menu');
+/*global describe, window, it, beforeEach, jasmine, expect*/
+const ChromeMenu = require('../src/lib/chrome-menu');
 describe('ChromeMenu', function () {
 	'use strict';
-	let oldHttpRequest, fakeHttpRequest, fakeRoot, chrome, underTest, configLoaders, chromeMenuBuilder;
+	let fakeRoot, standardConfig, browserInterface, underTest, processMenuObject, menuBuilder;
 	beforeEach(function () {
-		chrome = new FakeChromeApi();
-		oldHttpRequest = window.XMLHttpRequest;
-		chrome.extension.getURL.and.returnValue('http://some-url');
-		window.XMLHttpRequest = function () {
-			const self = this;
-			self.open = jasmine.createSpy('open');
-			self.send = jasmine.createSpy('send');
-			fakeHttpRequest = this;
+		standardConfig = {
+			name: 'value'
 		};
 		fakeRoot = {fake: 'root'};
-		chrome.storage.sync.get.calls.reset();
-		chrome.storage.onChanged.addListener.calls.reset();
+		processMenuObject = jasmine.createSpy('processMenuObject');
+		menuBuilder = jasmine.createSpyObj('menuBuilder', ['rootMenu', 'separator', 'menuItem', 'removeAll']);
+		browserInterface = jasmine.createSpyObj('browserInterface', ['getOptionsAsync', 'openSettings', 'addStorageListener']);
+		menuBuilder.rootMenu.and.returnValue(fakeRoot);
+		menuBuilder.removeAll.and.returnValue(Promise.resolve({}));
+		underTest = new ChromeMenu(standardConfig, browserInterface, menuBuilder, processMenuObject);
+	});
+	describe('initial load', function () {
+		it('sets up the basic menu when no local settings', done => {
+			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve());
+			underTest.init().then(() => {
+				expect(processMenuObject.calls.count()).toBe(1);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot]);
+			}).then(done, done.fail);
+		});
+		it('sets up the basic menu when local settings do not contain additional menus', done => {
+			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({another: true}));
+			underTest.init().then(() => {
+				expect(processMenuObject.calls.count()).toBe(1);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot]);
+			}).then(done, done.fail);
+		});
+		it('sets up the basic menu when local settings do contain an empty menu list', done => {
+			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({additionalMenus: []}));
+			underTest.init().then(() => {
+				expect(processMenuObject.calls.count()).toBe(1);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot]);
+			}).then(done, done.fail);
+		});
+		it('sets up the additional menus between the standard config and generic menus', done => {
+			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({
+				additionalMenus: [{name: 'first', config: '123'}, {name: 'second', config: 'xyz'}]
+			}));
+			underTest.init().then(() => {
+				expect(processMenuObject.calls.count()).toBe(3);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot]);
+				expect(processMenuObject.calls.argsFor(1)).toEqual([{
+					first: '123'
+				}, menuBuilder, fakeRoot]);
+				expect(processMenuObject.calls.argsFor(2)).toEqual([{
+					second: 'xyz'
+				}, menuBuilder, fakeRoot]);
 
-		configLoaders = jasmine.createSpyObj('configLoaders', ['processConfigText', 'processMenuObject']);
-		chromeMenuBuilder = jasmine.createSpyObj('menuBuilder', ['rootMenu', 'separator', 'menuItem']);
-		chromeMenuBuilder.rootMenu.and.returnValue(fakeRoot);
-		underTest = new ChromeMenu(chrome, configLoaders, chromeMenuBuilder);
-	});
-	afterEach(function () {
-		window.XMLHttpRequest = oldHttpRequest;
-	});
-	it('creates a root menu using the menu builder', function () {
-		underTest.init();
-		expect(underTest.getRootMenu()).toBe(fakeRoot);
-	});
-	describe('standard config', function () {
-		it('loads the standard config using xhr', function () {
-			underTest.init();
-			expect(chrome.extension.getURL).toHaveBeenCalledWith('config.json');
-			expect(fakeHttpRequest.open).toHaveBeenCalledWith('GET', 'http://some-url');
-			expect(fakeHttpRequest.send).toHaveBeenCalled();
-		});
-		it('does not load the config text immediately', function () {
-			underTest.init();
-			expect(configLoaders.processConfigText).not.toHaveBeenCalled();
-		});
-		it('registers an onload handler that creates the menu', function () {
-			underTest.init();
-			fakeHttpRequest.onload.apply({responseText: 'some-text'});
-			expect(configLoaders.processConfigText).toHaveBeenCalledWith('some-text', chromeMenuBuilder, fakeRoot);
-		});
-	});
-	describe('additional config', function () {
-		let callback;
-		beforeEach(function () {
-			underTest.init();
-			fakeHttpRequest.onload.apply({responseText: 'some-text'});
-			callback = chrome.storage.sync.get.calls.argsFor(0)[1];
-		});
-		it('asks the chrome.storage.sync api for additional config items', function () {
-			expect(chrome.storage.sync.get).toHaveBeenCalledWith({additionalMenus: []}, jasmine.any(Function));
-		});
-		it('loads additional items from the config and name property of each array element', function () {
-			callback({additionalMenus: [{name: 'additional 1', config: {first: 'yes'}}, {name: 'additional 2', config: {second: 'yes'}}]});
-			expect(configLoaders.processMenuObject.calls.count()).toBe(2);
-			expect(configLoaders.processMenuObject.calls.argsFor(0)[0]).toEqual({'additional 1': {first: 'yes'}});
-			expect(configLoaders.processMenuObject.calls.argsFor(1)[0]).toEqual({'additional 2': {second: 'yes'}});
-		});
-		it('does nothing if chrome.storage.sync api does not have any additional config', function () {
-			callback(false);
-			expect(configLoaders.processMenuObject).not.toHaveBeenCalled();
-		});
-		it('does nothing if chrome.storage.sync api has an empty array', function () {
-			callback([]);
-			expect(configLoaders.processMenuObject).not.toHaveBeenCalled();
+			}).then(done, done.fail);
 		});
 	});
 	describe('sync storage listener', function () {
-		const newFakeRoot = {newRoot: 'root'};
-		let listener;
-		beforeEach(function () {
-			underTest.init();
-			fakeHttpRequest.onload.apply({responseText: 'some-text'});
-			chrome.contextMenus.create.calls.reset();
-			chrome.contextMenus.removeAll.calls.reset();
-			chromeMenuBuilder.rootMenu.and.returnValue(newFakeRoot);
-			fakeHttpRequest.send.calls.reset();
-			listener = chrome.storage.onChanged.addListener.calls.argsFor(0)[0];
+		let listener, validChange, newRoot;
+		beforeEach(done => {
+			validChange = {additionalMenus: [{name: 'a', config: {'b': 'c'}}]};
+			newRoot = {newRoot: 'root'};
+			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({
+				additionalMenus: [{name: 'first', config: '123'}, {name: 'second', config: 'xyz'}]
+			}));
+			underTest.init().then(() => {
+				menuBuilder.rootMenu.and.returnValue(newRoot);
+				listener = browserInterface.addStorageListener.calls.argsFor(0)[0];
+				processMenuObject.calls.reset();
+				menuBuilder.rootMenu.calls.reset();
+			}).then(done, done.fail);
 		});
-		it('clears all menu items', function () {
-			listener({additionalMenus: [{name: 'a', config: {'b': 'c'}}]}, 'sync');
-			expect(chrome.contextMenus.removeAll).toHaveBeenCalled();
+		it('does nothing if the changes do not contain additionalMenus', done => {
+			listener({somethingElse: true}).then(() => {
+				expect(menuBuilder.removeAll).not.toHaveBeenCalled();
+			}).then(done, done.fail);
 		});
-		describe('after menu was cleared', function () {
-			beforeEach(function () {
-				listener({additionalMenus: {newValue: [{name: 'a', config: {'b': 'c'}}]}}, 'sync');
-				chrome.contextMenus.removeAll.calls.argsFor(0)[0]();
-			});
-			it('creates a new root menu', function () {
-				expect(underTest.getRootMenu()).toBe(newFakeRoot);
-			});
-			it('reloads menus from cached standard config response', function () {
-				expect(fakeHttpRequest.send).not.toHaveBeenCalled();
-				expect(configLoaders.processConfigText).toHaveBeenCalledWith('some-text', chromeMenuBuilder, newFakeRoot);
-			});
-			it('appends any elements from the additionalMenus.newValue object', function () {
-				expect(configLoaders.processMenuObject.calls.count()).toBe(1);
-				expect(configLoaders.processMenuObject.calls.first().args[0]).toEqual({'a': {'b': 'c'}});
-			});
+		it('clears all menu items', function (done) {
+			listener(validChange).then(() => {
+				expect(menuBuilder.removeAll).toHaveBeenCalled();
+			}).then(done, done.fail);
 		});
-		it('ignores changes that are not for the sync storage area', function () {
-			listener({additionalMenus: [{name: 'a', config: {'b': 'c'}}]}, 'local');
-			expect(chrome.contextMenus.removeAll).not.toHaveBeenCalled();
-			expect(underTest.getRootMenu()).toBe(fakeRoot);
+		it('does not re-create menus before the old menu is cleared', done => {
+			menuBuilder.removeAll.and.callFake(() => {
+				expect(menuBuilder.rootMenu).not.toHaveBeenCalled();
+				expect(processMenuObject).not.toHaveBeenCalled();
+				done();
+				return new Promise(() => false);
+			});
+			listener({additionalMenus: [{name: 'a', config: {'b': 'c'}}]})
+				.then(done.fail, done.fail);
 		});
-		it('ignores changes that are not for the additionalMenus object', function () {
-			listener({version: 2}, 'sync');
-			expect(chrome.contextMenus.removeAll).not.toHaveBeenCalled();
-			expect(underTest.getRootMenu()).toBe(fakeRoot);
+		it('sets up the new menus after clearing', done => {
+			listener({
+				additionalMenus: {
+					newValue: [
+						{name: 'new1', config: {n1: 'v1'}},
+						{name: 'new2', config: {n2: 'v2'}}
+					]
+				}
+			}).then(() => {
+				expect(processMenuObject.calls.count()).toBe(3);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, newRoot]);
+				expect(processMenuObject.calls.argsFor(1)).toEqual([{
+					new1: {n1: 'v1'}
+				}, menuBuilder, newRoot]);
+				expect(processMenuObject.calls.argsFor(2)).toEqual([{
+					new2: {n2: 'v2'}
+				}, menuBuilder, newRoot]);
+			}).then(done, done.fail);
 		});
 	});
 });

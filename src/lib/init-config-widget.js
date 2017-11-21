@@ -43,9 +43,9 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			browserInterface.saveOptions(additionalMenus);
 		},
 		restoreOptions = function () {
-			browserInterface.loadOptions(function (opts) {
-				if (Array.isArray(opts)) {
-					additionalMenus = opts;
+			return browserInterface.getOptionsAsync().then(function (opts) {
+				if (opts && Array.isArray(opts.additionalMenus)) {
+					additionalMenus = opts.additionalMenus;
 				}	else {
 					additionalMenus = [];
 				}
@@ -108,9 +108,9 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			template = domElement.querySelector('[role=template]');
 			list = template.parentElement;
 			list.removeChild(template);
-			restoreOptions();
 			showMainScreen();
+			return restoreOptions();
 		};
-	initScreen();
+	return initScreen();
 };
 

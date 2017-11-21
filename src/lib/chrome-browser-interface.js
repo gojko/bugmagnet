@@ -6,13 +6,6 @@ module.exports = function ChromeBrowserInterface(chrome) {
 			'additionalMenus': additionalMenus
 		});
 	};
-	self.loadOptions = function (callback) {
-		chrome.storage.sync.get({
-			additionalMenus: []
-		}, function (items) {
-			callback(items && items.additionalMenus);
-		});
-	};
 	self.getOptionsAsync = function () {
 		return new Promise((resolve) => {
 			chrome.storage.sync.get({

@@ -2,8 +2,8 @@
 const initConfigWidget = require('../src/lib/init-config-widget');
 describe('initConfigWidget', function () {
 	'use strict';
-	let underTest, browserInterface, mainScreen, addScreen, loadOptionsCallback, sectionForCustom, sectionWithoutCustom,
-		configList, statusMessage, submenuName;
+	let underTest, browserInterface, mainScreen, addScreen, sectionForCustom, sectionWithoutCustom,
+		configList, statusMessage, submenuName, asyncResult, resolveLoadOptions;
 	const template = `
 		<div role="status" id="statusMessage"></div>
 		<div id="mainScreen" role="main-screen">
@@ -55,19 +55,21 @@ describe('initConfigWidget', function () {
 			document.getElementById('fileSelector').dispatchEvent(changeEvt);
 		};
 	beforeEach(() => {
+		const loadOptionsPromise = new Promise(resolve => resolveLoadOptions = resolve);
 		underTest = document.createElement('div');
 		underTest.innerHTML = template;
 		document.body.append(underTest);
-		browserInterface = jasmine.createSpyObj('browserInterface', ['readFile', 'saveOptions', 'closeWindow', 'loadOptions']);
-		initConfigWidget(underTest, browserInterface);
+		browserInterface = jasmine.createSpyObj('browserInterface', ['readFile', 'saveOptions', 'closeWindow', 'getOptionsAsync']);
+		browserInterface.getOptionsAsync.and.returnValue(loadOptionsPromise);
+		asyncResult = initConfigWidget(underTest, browserInterface);
 		mainScreen = document.getElementById('mainScreen');
 		addScreen = document.getElementById('addScreen');
-		loadOptionsCallback = browserInterface.loadOptions.calls.argsFor(0)[0];
 		sectionForCustom = document.getElementById('sectionForCustom');
 		sectionWithoutCustom = document.getElementById('sectionWithoutCustom');
 		configList = document.getElementById('templateParent');
 		submenuName = document.getElementById('submenuName');
 		statusMessage = document.getElementById('statusMessage');
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = 200;
 	});
 	it('prevents form from submitting to allow firefox to handle the form', () => {
 		const event = new Event('submit', {
@@ -123,8 +125,9 @@ describe('initConfigWidget', function () {
 		});
 	});
 	describe('without any additional config sections', () => {
-		beforeEach(() => {
-			loadOptionsCallback([]);
+		beforeEach(done => {
+			resolveLoadOptions({});
+			asyncResult.then(done, done.fail);
 		});
 		it('hides the custom section', () => {
 			expect(sectionWithoutCustom.style.display).not.toBe('none');
@@ -143,12 +146,14 @@ describe('initConfigWidget', function () {
 
 	});
 	describe('with additional config sections', () => {
-		beforeEach(() => {
-			loadOptionsCallback([
-				{name: 'first', source: 'fi.json'},
-				{name: 'second', source: 'se.json'},
-				{name: 'third', source: 'th.json'}
-			]);
+		beforeEach(done => {
+			resolveLoadOptions({
+				additionalMenus: [
+					{name: 'first', source: 'fi.json'},
+					{name: 'second', source: 'se.json'},
+					{name: 'third', source: 'th.json'}
+				]});
+			asyncResult.then(done, done.fail);
 		});
 		it('shows the custom section', () => {
 			expect(sectionWithoutCustom.style.display).toBe('none');
@@ -174,86 +179,92 @@ describe('initConfigWidget', function () {
 			]);
 		});
 	});
-	describe('when content is added via the custom config box', () => {
-		const loadCustomConfig = function (text) {
-			document.getElementById('customConfigText').value = text;
-			clickOn(document.getElementById('addCustomConfig'));
-		};
-		it('shows an error in the status field if the submenu name is empty', () => {
-			submenuName.value = '\t';
-			loadCustomConfig('{"a": "b"}');
-			expect(statusMessage.innerHTML).toEqual('Please provide submenu name!');
-			expect(browserInterface.saveOptions).not.toHaveBeenCalled();
+	describe('after initialisation', () => {
+		beforeEach(done => {
+			resolveLoadOptions({
+				additionalMenus: [
+					{name: 'first', source: 'fi.json'}
+				]});
+			asyncResult.then(done, done.fail);
 		});
-		it('shows an error in the status field if the custom content is empty', () => {
-			submenuName.value = 'abc';
-			loadCustomConfig('');
-			expect(statusMessage.innerHTML).toEqual('Please provide the configuration');
-			expect(browserInterface.saveOptions).not.toHaveBeenCalled();
-		});
-		it('shows an error in the status field if the custom content is not valid JSON', () => {
-			submenuName.value = 'abc';
-			loadCustomConfig('a: b');
-			expect(statusMessage.innerHTML).toMatch(/SyntaxError/);
-			expect(browserInterface.saveOptions).not.toHaveBeenCalled();
-		});
-		it('adds a menu when the file load resolves with a JSON content', done => {
-			loadOptionsCallback([
-				{name: 'first', source: 'fi.json'}
-			]);
-			submenuName.value = 'abc';
-			browserInterface.saveOptions.and.callFake(options => {
-				expect(configList.children.length).toEqual(2);
-				expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
-				expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('config');
 
-				expect(options).toEqual([
-					{name: 'first', source: 'fi.json'},
-					{name: 'abc', source: 'config', config: {a: 'b'}}
-				]);
-				done();
+		describe('when content is added via the custom config box', () => {
+			const loadCustomConfig = function (text) {
+				document.getElementById('customConfigText').value = text;
+				clickOn(document.getElementById('addCustomConfig'));
+			};
+
+
+			it('shows an error in the status field if the submenu name is empty', () => {
+				submenuName.value = '\t';
+				loadCustomConfig('{"a": "b"}');
+				expect(statusMessage.innerHTML).toEqual('Please provide submenu name!');
+				expect(browserInterface.saveOptions).not.toHaveBeenCalled();
 			});
-			loadCustomConfig('{"a": "b"}');
-		});
-
-	});
-	describe('when a file is loaded into the file box', () => {
-		it('shows an error message in the status field if the submenu name is empty', () => {
-			submenuName.value = '\t';
-			loadFile({name: 'file.json'});
-			expect(browserInterface.readFile).not.toHaveBeenCalled();
-			expect(statusMessage.innerHTML).toEqual('Please provide submenu name!');
-			expect(browserInterface.saveOptions).not.toHaveBeenCalled();
-		});
-		it('loads the file using the browser interface', done => {
-			submenuName.value = 'abc';
-			browserInterface.readFile.and.callFake((fileInfo) => {
-				expect(fileInfo).toEqual({name: 'file.json'});
-				expect(statusMessage.innerHTML).toEqual('');
-				done();
-				return new Promise(() => false);
+			it('shows an error in the status field if the custom content is empty', () => {
+				submenuName.value = 'abc';
+				loadCustomConfig('');
+				expect(statusMessage.innerHTML).toEqual('Please provide the configuration');
+				expect(browserInterface.saveOptions).not.toHaveBeenCalled();
 			});
-			loadFile({name: 'file.json'});
-		});
-		it('adds a menu when the file load resolves with a JSON content', done => {
-			loadOptionsCallback([
-				{name: 'first', source: 'fi.json'}
-			]);
-			submenuName.value = 'abc';
-			browserInterface.readFile.and.returnValue(Promise.resolve(JSON.stringify({a: 'b'})));
-			browserInterface.saveOptions.and.callFake(options => {
-
-				expect(configList.children.length).toEqual(2);
-				expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
-				expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('filename.json');
-
-				expect(options).toEqual([
-					{name: 'first', source: 'fi.json'},
-					{name: 'abc', source: 'filename.json', config: {a: 'b'}}
-				]);
-				done();
+			it('shows an error in the status field if the custom content is not valid JSON', () => {
+				submenuName.value = 'abc';
+				loadCustomConfig('a: b');
+				expect(statusMessage.innerHTML).toMatch(/SyntaxError/);
+				expect(browserInterface.saveOptions).not.toHaveBeenCalled();
 			});
-			loadFile({name: 'filename.json'});
+			it('adds a menu when the file load resolves with a JSON content', done => {
+				submenuName.value = 'abc';
+				browserInterface.saveOptions.and.callFake(options => {
+					expect(configList.children.length).toEqual(2);
+					expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
+					expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('config');
+
+					expect(options).toEqual([
+						{name: 'first', source: 'fi.json'},
+						{name: 'abc', source: 'config', config: {a: 'b'}}
+					]);
+					done();
+				});
+				loadCustomConfig('{"a": "b"}');
+			});
+
+		});
+		describe('when a file is loaded into the file box', () => {
+			it('shows an error message in the status field if the submenu name is empty', () => {
+				submenuName.value = '\t';
+				loadFile({name: 'file.json'});
+				expect(browserInterface.readFile).not.toHaveBeenCalled();
+				expect(statusMessage.innerHTML).toEqual('Please provide submenu name!');
+				expect(browserInterface.saveOptions).not.toHaveBeenCalled();
+			});
+			it('loads the file using the browser interface', done => {
+				submenuName.value = 'abc';
+				browserInterface.readFile.and.callFake((fileInfo) => {
+					expect(fileInfo).toEqual({name: 'file.json'});
+					expect(statusMessage.innerHTML).toEqual('');
+					done();
+					return new Promise(() => false);
+				});
+				loadFile({name: 'file.json'});
+			});
+			it('adds a menu when the file load resolves with a JSON content', done => {
+				submenuName.value = 'abc';
+				browserInterface.readFile.and.returnValue(Promise.resolve(JSON.stringify({a: 'b'})));
+				browserInterface.saveOptions.and.callFake(options => {
+
+					expect(configList.children.length).toEqual(2);
+					expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
+					expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('filename.json');
+
+					expect(options).toEqual([
+						{name: 'first', source: 'fi.json'},
+						{name: 'abc', source: 'filename.json', config: {a: 'b'}}
+					]);
+					done();
+				});
+				loadFile({name: 'filename.json'});
+			});
 		});
 	});
 

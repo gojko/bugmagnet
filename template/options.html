@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>BugMagnet Extension Options</title>
   <style>
-		body: { padding: 10px; }
+		body: { padding: 10px;  }
 		.file-selector {
 			display: none;
 		}
@@ -12,6 +12,10 @@
 			max-width: 200px;
 			white-space: nowrap;
 			overflow: hidden;
+		}
+		#main {
+			height: 400px;
+			min-height: 300px;
 		}
 		#main th, #main td {
 			text-align: left;
@@ -31,13 +35,17 @@
 		#sourceConfig:checked ~ [role="text-config"] {
 			display: block;
 		}
+		#sourceRemote:checked ~ [role="remote-config"] {
+			display: block;
+		}
+
 		textarea[role=custom-config-text] {
 			width: 100%;
 		}
 		.container {
-			max-height: 250px;
+			max-height: 200px;
+			height: 200px;
 			overflow: scroll;
-			height: 250px;
 		}
 		[role="main-screen"] div {
 			margin-bottom: 10px;
@@ -76,6 +84,7 @@
 		<div role="file-loader">
 			<form action="#">
 				<input type="radio" value="local" name="source" id="sourceLocal" checked="checked"><label for="sourceLocal">Local file</label>
+				<input type="radio" value="remote" name="source" id="sourceRemote"><label for="sourceRemote">Remote URL</label>
 				<input type="radio" value="source" name="source" id="sourceConfig"><label for="sourceConfig">Paste configuration</label>
 				<div>
 				<label>Descriptive submenu label (required): <input type="text" role="submenu-name" required="true" /></label>
@@ -94,7 +103,13 @@
 						<button role="back">Cancel</button>
 					</div>
 				</div>
-
+				<div class="tab" role="remote-config">
+					URL: <input role="remote-config-url" placeholder="JSON file URL"/>
+					<div>
+						<button role="add-remote-config">Load</button>
+						<button role="back">Cancel</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>

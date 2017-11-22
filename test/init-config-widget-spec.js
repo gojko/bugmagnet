@@ -29,9 +29,11 @@ describe('initConfigWidget', function () {
 				<span id="fileSelector" role="file-selector"/>
 
 				<textarea id="customConfigText" role="custom-config-text"></textarea>
-
 				<button id="addCustomConfig" role="add-custom-config"/>
 				<button id="backBtn2" role="back">Cancel</button>
+
+				<input type="text" role="remote-config-url" id="remoteUrl"/>
+				<button id="addRemoteConfig" role="add-remote-config" />
 
 			</form>
 		</div>`,
@@ -59,7 +61,7 @@ describe('initConfigWidget', function () {
 		underTest = document.createElement('div');
 		underTest.innerHTML = template;
 		document.body.append(underTest);
-		browserInterface = jasmine.createSpyObj('browserInterface', ['readFile', 'saveOptions', 'closeWindow', 'getOptionsAsync']);
+		browserInterface = jasmine.createSpyObj('browserInterface', ['readFile', 'getRemoteFile', 'saveOptions', 'closeWindow', 'getOptionsAsync']);
 		browserInterface.getOptionsAsync.and.returnValue(loadOptionsPromise);
 		asyncResult = initConfigWidget(underTest, browserInterface);
 		mainScreen = document.getElementById('mainScreen');
@@ -218,11 +220,11 @@ describe('initConfigWidget', function () {
 				browserInterface.saveOptions.and.callFake(options => {
 					expect(configList.children.length).toEqual(2);
 					expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
-					expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('config');
+					expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('');
 
 					expect(options).toEqual([
 						{name: 'first', source: 'fi.json'},
-						{name: 'abc', source: 'config', config: {a: 'b'}}
+						{name: 'abc', config: {a: 'b'}}
 					]);
 					done();
 				});
@@ -230,6 +232,45 @@ describe('initConfigWidget', function () {
 			});
 
 		});
+		describe('remote file configuration', () => {
+			const tryLoadingUrl = function (url) {
+				document.getElementById('remoteUrl').value = url;
+				clickOn(document.getElementById('addRemoteConfig'));
+			};
+			it('shows an error message in the status field if the submenu name is empty', () => {
+				submenuName.value = '\t';
+				tryLoadingUrl('http://a/b.json');
+				expect(browserInterface.getRemoteFile).not.toHaveBeenCalled();
+				expect(statusMessage.innerHTML).toEqual('Please provide submenu name!');
+				expect(browserInterface.saveOptions).not.toHaveBeenCalled();
+			});
+			it('loads the remote URL using the browser interface', done => {
+				submenuName.value = 'abc';
+				browserInterface.getRemoteFile.and.callFake((url) => {
+					expect(url).toEqual('http://a/b.json');
+					expect(statusMessage.innerHTML).toEqual('');
+					done();
+					return new Promise(() => false);
+				});
+				tryLoadingUrl('http://a/b.json');
+			});
+			it('adds a menu when the file load resolves with a JSON content', done => {
+				submenuName.value = 'abc';
+				browserInterface.getRemoteFile.and.returnValue(Promise.resolve(JSON.stringify({a: 'b'})));
+				browserInterface.saveOptions.and.callFake(options => {
+					expect(configList.children.length).toEqual(2);
+					expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
+					expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('<a href="http://a/b.json" target="_blank">b.json</a>');
+					expect(options).toEqual([
+						{name: 'first', source: 'fi.json'},
+						{name: 'abc', remote: true, source: 'http://a/b.json', config: {a: 'b'}}
+					]);
+					done();
+				});
+				tryLoadingUrl('http://a/b.json');
+			});
+		});
+
 		describe('when a file is loaded into the file box', () => {
 			it('shows an error message in the status field if the submenu name is empty', () => {
 				submenuName.value = '\t';

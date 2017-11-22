@@ -27,7 +27,14 @@ module.exports = function ChromeBrowserInterface(chrome) {
 			};
 		});
 	};
-
+	self.getRemoteFile = function (url) {
+		return fetch(url, {mode: 'cors'}).then(function (response) {
+			if (response.ok) {
+				return response.text();
+			}
+			throw new Error('Network error reading the remote URL');
+		});
+	};
 	self.closeWindow = function () {
 		window.close();
 	};

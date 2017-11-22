@@ -10,6 +10,13 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 				status.textContent = '';
 			}, 1500);
 		},
+		addLink = function (parent, url) {
+			const link = document.createElement('a');
+			link.setAttribute('href', url);
+			link.setAttribute('target', '_blank');
+			link.textContent = url.replace(/.*\//g, '');
+			parent.appendChild(link);
+		},
 		rebuildMenu = function () {
 			list.innerHTML = '';
 			if (additionalMenus && additionalMenus.length) {
@@ -17,7 +24,13 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 					const clone = template.cloneNode(true);
 					list.appendChild(clone);
 					clone.querySelector('[role=name]').textContent = configItem.name;
-					clone.querySelector('[role=source]').textContent = configItem.source;
+					if (configItem.remote) {
+						addLink(clone.querySelector('[role=source]'), configItem.source);
+					} else {
+						clone.querySelector('[role=source]').textContent = configItem.source || '';
+					}
+
+
 					clone.querySelector('[role=remove]').addEventListener('click', function () {
 						additionalMenus.splice(index, 1);
 						rebuildMenu();
@@ -35,9 +48,9 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			domElement.querySelector('[role=main-screen]').style.display = '';
 			domElement.querySelector('[role=file-loader]').style.display = 'none';
 		},
-		addSubMenu = function (textContent, submenuName, sourceName) {
+		addSubMenu = function (textContent, props) {
 			const parsed = JSON.parse(textContent);
-			additionalMenus.push({source: sourceName, config: parsed, name: submenuName});
+			additionalMenus.push(Object.assign({}, props, {config: parsed}));
 			showMainScreen();
 			rebuildMenu();
 			browserInterface.saveOptions(additionalMenus);
@@ -84,7 +97,7 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 					submenuField.value = '';
 				} else {
 					browserInterface.readFile(fileInfo).then(result => {
-						addSubMenu(result, submenuName, fileName);
+						addSubMenu(result, {name: submenuName, source: fileName});
 					}).catch(showErrorMsg);
 				}
 				element.value = '';
@@ -100,11 +113,30 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 					return showErrorMsg('Please provide the configuration');
 				}
 				try {
-					addSubMenu(customConfigText, submenuName, 'config');
+					addSubMenu(customConfigText, {name: submenuName});
 				} catch (e) {
 					showErrorMsg(e);
 				}
 			});
+			domElement.querySelector('[role=add-remote-config]').addEventListener('click', () => {
+				const submenuName = submenuField.value && submenuField.value.trim(),
+					urlField = domElement.querySelector('[role="remote-config-url"]'),
+					url = urlField.value;
+				if (!submenuName) {
+					showErrorMsg('Please provide submenu name!');
+					submenuField.value = '';
+				} else if (!url) {
+					return showErrorMsg('Please provide the url');
+				} else {
+					browserInterface.getRemoteFile(url).then(result => {
+						showErrorMsg('got file', result);
+						addSubMenu(result, {name: submenuName, source: url, remote: true});
+						submenuField.value = '';
+						urlField.value = '';
+					}).catch(showErrorMsg);
+				}
+			});
+
 			template = domElement.querySelector('[role=template]');
 			list = template.parentElement;
 			list.removeChild(template);

@@ -1,18 +1,6 @@
 module.exports = function ChromeMenu(standardConfig, browserInterface, menuBuilder, processMenuObject) {
 	'use strict';
 	const self = this,
-		/*loadConfigFromInternalFile = function (callback) {
-			const xhr = new XMLHttpRequest();
-			xhr.open('GET', chrome.extension.getURL('config.json'));
-			xhr.onload = function () {
-				if (!standardConfig && this.responseText) {
-					standardConfig = this.responseText;
-				}
-				processConfig();
-				callback();
-			};
-			xhr.send();
-		},*/
 		loadAdditionalMenus = function (additionalMenus, rootMenu) {
 			if (additionalMenus && Array.isArray(additionalMenus) && additionalMenus.length) {
 				additionalMenus.forEach(function (configItem) {

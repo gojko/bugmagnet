@@ -3,6 +3,7 @@
 ## Easier to simmulate real user workflows
 
 - [ ] Use clipboard copy/paste instead of directly manipulating field values
+- [ ] Add/replace selection instead of always replacing the whole value
 - [ ] test if paste works around multi-frame page/cross domain issue
 
 ## More secure to use
@@ -20,6 +21,7 @@
 - [x] configure with a remote URL
 - [x] better error reports when config loading fails
 - [ ] allow users to disable standard config
+- [ ] add config instructions to the options page
 
 ## Full FireFox support
 
@@ -42,3 +44,5 @@
 - [x] simplify code/packaging after firefox spike
 - [x] add tests for the config widget
 - [x] run tests both in ff and chrome
+- [ ] add contribution guide links to the menu 
+

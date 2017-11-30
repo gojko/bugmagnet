@@ -52,6 +52,14 @@ module.exports = function ChromeBrowserInterface(chrome) {
 			oFReader.readAsText(fileInfo, 'UTF-8');
 		});
 	};
+	self.executeScript = function (tabId, source) {
+		return new Promise((resolve) => {
+			return chrome.tabs.executeScript(tabId, {file: source}, resolve);
+		});
+	};
+	self.sendMessage = function (tabId, message) {
+		return chrome.tabs.sendMessage(tabId, message);
+	};
 
 };
 

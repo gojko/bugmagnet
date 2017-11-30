@@ -1,4 +1,4 @@
-module.exports = function processMenuObject(configObject, menuBuilder, parentMenu) {
+module.exports = function processMenuObject(configObject, menuBuilder, parentMenu, onClick) {
 	'use strict';
 	const getTitle = function (key) {
 		if (configObject instanceof Array) {
@@ -14,10 +14,10 @@ module.exports = function processMenuObject(configObject, menuBuilder, parentMen
 			title = getTitle(key);
 		let result;
 		if (typeof (value) === 'string' || (typeof (value) === 'object' && value.hasOwnProperty('_type'))) {
-			menuBuilder.menuItem(title, parentMenu, value);
+			menuBuilder.menuItem(title, parentMenu, onClick, value);
 		} else if (typeof (value) === 'object') {
 			result = menuBuilder.subMenu(title, parentMenu);
-			processMenuObject(value, menuBuilder, result);
+			processMenuObject(value, menuBuilder, result, onClick);
 		}
 	});
 };

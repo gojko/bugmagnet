@@ -3,13 +3,15 @@ const FakeChromeApi = require('./utils/fake-chrome-api'),
 	ChromeMenuBuilder = require('../src/lib/chrome-menu-builder');
 describe('BugMagnet.ChromeMenuBuilder', function () {
 	'use strict';
-	let underTest, chrome;
+	let underTest, chrome, index = 0, clickHandler;
 	const lastMenu = function () {
 		return chrome.contextMenus.create.calls.argsFor(0)[0];
 	};
 	beforeEach(function () {
 		chrome = new FakeChromeApi();
+		chrome.contextMenus.create.and.callFake(() => index++);
 		underTest = new ChromeMenuBuilder(chrome);
+		clickHandler = chrome.contextMenus.onClicked.addListener.calls.mostRecent().args[0];
 	});
 	describe('rootMenu', function () {
 		it('creates a menu item without a parent', function () {
@@ -19,7 +21,7 @@ describe('BugMagnet.ChromeMenuBuilder', function () {
 			expect(result.contexts).toEqual(['editable']);
 			expect(result.title).toBe('test me');
 			expect(result.parentId).toBeFalsy();
-			expect(result.onclick).toBeFalsy();
+			expect(result.onclick).toBeUndefined();
 		});
 	});
 	describe('subMenu', function () {
@@ -30,7 +32,7 @@ describe('BugMagnet.ChromeMenuBuilder', function () {
 			expect(result.contexts).toEqual(['editable']);
 			expect(result.title).toBe('test me');
 			expect(result.parentId).toBe('root');
-			expect(result.onclick).toBeFalsy();
+			expect(result.onclick).toBeUndefined();
 		});
 	});
 	describe('separator', function () {
@@ -44,34 +46,27 @@ describe('BugMagnet.ChromeMenuBuilder', function () {
 		});
 	});
 	describe('menuItem', function () {
-		it('creates a clickable menu item with a parent', function () {
+		it('creates a clickable menu item without a click handler', function () {
 			underTest.menuItem('test me', 'root', 'some value');
 			expect(chrome.contextMenus.create.calls.count()).toBe(1);
 			const result = lastMenu();
 			expect(result.contexts).toEqual(['editable']);
 			expect(result.title).toBe('test me');
 			expect(result.parentId).toBe('root');
-			expect(result.onclick instanceof Function).toBeTruthy();
+			expect(result.onclick).toBeUndefined();
 		});
-		it('connects a chrome.tabs.sendMessage call to click with a simple string', function () {
-			underTest.menuItem('test me', 'root', 'some value');
-			const result = lastMenu();
+		it('passes the value to the click handler', function () {
+			const onClick = jasmine.createSpy('click'),
+				result = underTest.menuItem('test me', 'root', onClick, 'some value');
 
-			result.onclick({}, {id: 5});
-			expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(5, {'_type': 'literal', value: 'some value'});
+			clickHandler({menuItemId: result}, {id: 5});
+			expect(onClick).toHaveBeenCalledWith(5, 'some value');
 		});
-		it('connects a chrome.tabs.sendMessage call to click with a hash object string', function () {
-			underTest.menuItem('test me', 'root', {'_type': 'size', value: 'some value'});
-			const result = lastMenu();
-			result.onclick({}, {id: 5});
-			expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(5, {'_type': 'size', value: 'some value'});
-		});
-		it('attaches a custom click handler if provided', function () {
-			const spy = jasmine.createSpy('click');
-			underTest.menuItem('test me', 'root', 'some value', spy);
-			lastMenu().onclick({}, {id: 5});
-			expect(chrome.tabs.sendMessage).not.toHaveBeenCalledWith();
-			expect(spy).toHaveBeenCalled();
+		it('executes the click handler even without a value', function () {
+			const onClick = jasmine.createSpy('click'),
+				result = underTest.menuItem('test me', 'root', onClick);
+			clickHandler({menuItemId: result}, {id: 5});
+			expect(onClick).toHaveBeenCalledWith(5, undefined);
 		});
 	});
 });

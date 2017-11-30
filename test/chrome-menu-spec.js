@@ -10,7 +10,9 @@ describe('ChromeMenu', function () {
 		fakeRoot = {fake: 'root'};
 		processMenuObject = jasmine.createSpy('processMenuObject');
 		menuBuilder = jasmine.createSpyObj('menuBuilder', ['rootMenu', 'separator', 'menuItem', 'removeAll']);
-		browserInterface = jasmine.createSpyObj('browserInterface', ['getOptionsAsync', 'openSettings', 'addStorageListener']);
+		browserInterface = jasmine.createSpyObj('browserInterface', ['getOptionsAsync', 'openSettings', 'addStorageListener', 'executeScript', 'sendMessage']);
+		browserInterface.executeScript.and.returnValue(Promise.resolve({}));
+		browserInterface.sendMessage.and.returnValue(Promise.resolve({}));
 		menuBuilder.rootMenu.and.returnValue(fakeRoot);
 		menuBuilder.removeAll.and.returnValue(Promise.resolve({}));
 		underTest = new ChromeMenu(standardConfig, browserInterface, menuBuilder, processMenuObject);
@@ -20,21 +22,21 @@ describe('ChromeMenu', function () {
 			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve());
 			underTest.init().then(() => {
 				expect(processMenuObject.calls.count()).toBe(1);
-				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot]);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot, jasmine.any(Function)]);
 			}).then(done, done.fail);
 		});
 		it('sets up the basic menu when local settings do not contain additional menus', done => {
 			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({another: true}));
 			underTest.init().then(() => {
 				expect(processMenuObject.calls.count()).toBe(1);
-				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot]);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot, jasmine.any(Function)]);
 			}).then(done, done.fail);
 		});
 		it('sets up the basic menu when local settings do contain an empty menu list', done => {
 			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({additionalMenus: []}));
 			underTest.init().then(() => {
 				expect(processMenuObject.calls.count()).toBe(1);
-				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot]);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot, jasmine.any(Function)]);
 			}).then(done, done.fail);
 		});
 		it('sets up the additional menus between the standard config and generic menus', done => {
@@ -43,13 +45,13 @@ describe('ChromeMenu', function () {
 			}));
 			underTest.init().then(() => {
 				expect(processMenuObject.calls.count()).toBe(3);
-				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot]);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot, jasmine.any(Function)]);
 				expect(processMenuObject.calls.argsFor(1)).toEqual([{
 					first: '123'
-				}, menuBuilder, fakeRoot]);
+				}, menuBuilder, fakeRoot, jasmine.any(Function)]);
 				expect(processMenuObject.calls.argsFor(2)).toEqual([{
 					second: 'xyz'
-				}, menuBuilder, fakeRoot]);
+				}, menuBuilder, fakeRoot, jasmine.any(Function)]);
 
 			}).then(done, done.fail);
 		});
@@ -99,14 +101,63 @@ describe('ChromeMenu', function () {
 				}
 			}).then(() => {
 				expect(processMenuObject.calls.count()).toBe(3);
-				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, newRoot]);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, newRoot, jasmine.any(Function)]);
 				expect(processMenuObject.calls.argsFor(1)).toEqual([{
 					new1: {n1: 'v1'}
-				}, menuBuilder, newRoot]);
+				}, menuBuilder, newRoot, jasmine.any(Function)]);
 				expect(processMenuObject.calls.argsFor(2)).toEqual([{
 					new2: {n2: 'v2'}
-				}, menuBuilder, newRoot]);
+				}, menuBuilder, newRoot, jasmine.any(Function)]);
 			}).then(done, done.fail);
 		});
+	});
+	describe('click handler for menus', () => {
+		let clickHandler;
+		beforeEach((done) => {
+			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve());
+			underTest.init().then(() => {
+				clickHandler = processMenuObject.calls.argsFor(0)[3];
+			}).then(done, done.fail);
+		});
+		it('does nothing when the value is false -- but not empty string', () => {
+			clickHandler(1, null);
+			clickHandler(2, false);
+			clickHandler(3, undefined);
+			expect(browserInterface.executeScript).not.toHaveBeenCalled();
+		});
+		it('executes the script when the message is valid', done => {
+			browserInterface.executeScript.and.callFake((tabId, url) => {
+				expect(tabId).toEqual(1);
+				expect(url).toEqual('/content-script.js');
+				done();
+				return new Promise(() => false);
+			});
+			clickHandler(1, 'something').then(done.fail, done.fail);
+		});
+		it('does not send the message before the script executes', done => {
+			browserInterface.executeScript.and.callFake(() => {
+				expect(browserInterface.sendMessage).not.toHaveBeenCalled();
+				done();
+				return new Promise(() => false);
+			});
+			clickHandler(1, 'something').then(done.fail, done.fail);
+		});
+		it('sends plain strings as a literal type object after the script executes', done => {
+			clickHandler(1, 'something')
+				.then(() => expect(browserInterface.sendMessage).toHaveBeenCalledWith(1, {_type: 'literal', value: 'something'}))
+				.then(done, done.fail);
+		});
+		it('sends empty strings as a literal type object after the script executes', done => {
+			clickHandler(1, '')
+				.then(() => expect(browserInterface.sendMessage).toHaveBeenCalledWith(1, {_type: 'literal', value: ''}))
+				.then(done, done.fail);
+		});
+		it('sends objects directly after the script executes', done => {
+			clickHandler(1, {a: 'b'})
+				.then(() => expect(browserInterface.sendMessage).toHaveBeenCalledWith(1, {a: 'b'}))
+				.then(done, done.fail);
+		});
+
+
 	});
 });

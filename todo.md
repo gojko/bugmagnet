@@ -14,6 +14,7 @@
 ## Easier to use
 
 - [x] Active immediately after installation, even on pages already open (previous extensions required reloading open pages)
+- [x] A ton of new edge cases, including payment cards for popular providers, unicode edge cases, names
 
 ## Easier to customise
 

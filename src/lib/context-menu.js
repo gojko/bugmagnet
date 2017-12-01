@@ -1,4 +1,4 @@
-module.exports = function ChromeMenu(standardConfig, browserInterface, menuBuilder, processMenuObject) {
+module.exports = function ContextMenu(standardConfig, browserInterface, menuBuilder, processMenuObject) {
 	'use strict';
 	const self = this,
 		onClick = function (tabId, itemMenuValue) {
@@ -31,8 +31,9 @@ module.exports = function ChromeMenu(standardConfig, browserInterface, menuBuild
 			menuBuilder.separator(rootMenu);
 			menuBuilder.menuItem('Configure BugMagnet', rootMenu, browserInterface.openSettings);
 		},
-		rebuildMenu = function (additionalMenus) {
-			const rootMenu =  menuBuilder.rootMenu('Bug Magnet');
+		rebuildMenu = function (options) {
+			const rootMenu =  menuBuilder.rootMenu('Bug Magnet'),
+				additionalMenus = options && options.additionalMenus;
 			processMenuObject(standardConfig, menuBuilder, rootMenu, onClick);
 			if (additionalMenus) {
 				loadAdditionalMenus(additionalMenus, rootMenu);
@@ -40,16 +41,15 @@ module.exports = function ChromeMenu(standardConfig, browserInterface, menuBuild
 			addGenericMenus(rootMenu);
 		},
 		wireStorageListener = function () {
-			browserInterface.addStorageListener(function (changes) {
-				if (changes.additionalMenus) {
-					return menuBuilder.removeAll().then(() => rebuildMenu(changes.additionalMenus.newValue));
-				}
-				return Promise.resolve();
+			browserInterface.addStorageListener(function () {
+				return menuBuilder.removeAll()
+					.then(browserInterface.getOptionsAsync)
+					.then(rebuildMenu);
 			});
 		};
 	self.init = function () {
 		return browserInterface.getOptionsAsync()
-			.then(options => rebuildMenu(options && options.additionalMenus))
+			.then(rebuildMenu)
 			.then(wireStorageListener);
 	};
 };

@@ -1,6 +1,6 @@
 /*global describe, window, it, beforeEach, jasmine, expect*/
-const ChromeMenu = require('../src/lib/chrome-menu');
-describe('ChromeMenu', function () {
+const ContextMenu = require('../src/lib/context-menu');
+describe('ContextMenu', function () {
 	'use strict';
 	let fakeRoot, standardConfig, browserInterface, underTest, processMenuObject, menuBuilder;
 	beforeEach(function () {
@@ -15,7 +15,7 @@ describe('ChromeMenu', function () {
 		browserInterface.sendMessage.and.returnValue(Promise.resolve({}));
 		menuBuilder.rootMenu.and.returnValue(fakeRoot);
 		menuBuilder.removeAll.and.returnValue(Promise.resolve({}));
-		underTest = new ChromeMenu(standardConfig, browserInterface, menuBuilder, processMenuObject);
+		underTest = new ContextMenu(standardConfig, browserInterface, menuBuilder, processMenuObject);
 	});
 	describe('initial load', function () {
 		it('sets up the basic menu when no local settings', done => {
@@ -71,11 +71,6 @@ describe('ChromeMenu', function () {
 				menuBuilder.rootMenu.calls.reset();
 			}).then(done, done.fail);
 		});
-		it('does nothing if the changes do not contain additionalMenus', done => {
-			listener({somethingElse: true}).then(() => {
-				expect(menuBuilder.removeAll).not.toHaveBeenCalled();
-			}).then(done, done.fail);
-		});
 		it('clears all menu items', function (done) {
 			listener(validChange).then(() => {
 				expect(menuBuilder.removeAll).toHaveBeenCalled();
@@ -92,14 +87,13 @@ describe('ChromeMenu', function () {
 				.then(done.fail, done.fail);
 		});
 		it('sets up the new menus after clearing', done => {
-			listener({
-				additionalMenus: {
-					newValue: [
-						{name: 'new1', config: {n1: 'v1'}},
-						{name: 'new2', config: {n2: 'v2'}}
-					]
-				}
-			}).then(() => {
+			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({
+				additionalMenus: [
+					{name: 'new1', config: {n1: 'v1'}},
+					{name: 'new2', config: {n2: 'v2'}}
+				]
+			}));
+			listener().then(() => {
 				expect(processMenuObject.calls.count()).toBe(3);
 				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, newRoot, jasmine.any(Function)]);
 				expect(processMenuObject.calls.argsFor(1)).toEqual([{

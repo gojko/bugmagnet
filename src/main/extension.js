@@ -1,10 +1,10 @@
 /*global chrome*/
-const ChromeMenu = require('../lib/chrome-menu'),
+const ContextMenu = require('../lib/context-menu'),
 	ChromeMenuBuilder = require('../lib/chrome-menu-builder'),
 	ChromeBrowserInterface = require('../lib/chrome-browser-interface'),
 	processMenuObject = require('../lib/process-menu-object'),
 	standardConfig = require('../../template/config.json');
-new ChromeMenu(
+new ContextMenu(
 	standardConfig,
 	new ChromeBrowserInterface(chrome),
 	new ChromeMenuBuilder(chrome),

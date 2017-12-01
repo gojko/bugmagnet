@@ -33,8 +33,11 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 		},
 		rebuildMenu = function (options) {
 			const rootMenu =  menuBuilder.rootMenu('Bug Magnet'),
-				additionalMenus = options && options.additionalMenus;
-			processMenuObject(standardConfig, menuBuilder, rootMenu, onClick);
+				additionalMenus = options && options.additionalMenus,
+				skipStandard = options && options.skipStandard;
+			if (!skipStandard) {
+				processMenuObject(standardConfig, menuBuilder, rootMenu, onClick);
+			}
 			if (additionalMenus) {
 				loadAdditionalMenus(additionalMenus, rootMenu);
 			}

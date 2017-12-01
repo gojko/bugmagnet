@@ -21,8 +21,8 @@
 - [x] configure with a text area 
 - [x] configure with a remote URL
 - [x] better error reports when config loading fails
-- [ ] allow users to disable standard config
-- [ ] add config instructions to the options page
+- [x] allow users to disable standard config
+- [ ] add link to config instructions to the options page
 
 ## Full FireFox support
 

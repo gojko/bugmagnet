@@ -2,6 +2,7 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 	'use strict';
 	let template,
 		list,
+		skipStandard,
 		additionalMenus = [];
 	const showErrorMsg = function (text) {
 			const status = domElement.querySelector('[role=status]');
@@ -16,6 +17,12 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			link.setAttribute('target', '_blank');
 			link.textContent = url.replace(/.*\//g, '');
 			parent.appendChild(link);
+		},
+		saveOptions = function () {
+			browserInterface.saveOptions({
+				additionalMenus: additionalMenus,
+				skipStandard: skipStandard
+			});
 		},
 		rebuildMenu = function () {
 			list.innerHTML = '';
@@ -34,7 +41,7 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 					clone.querySelector('[role=remove]').addEventListener('click', function () {
 						additionalMenus.splice(index, 1);
 						rebuildMenu();
-						browserInterface.saveOptions(additionalMenus);
+						saveOptions();
 					});
 				});
 				domElement.querySelector('[role=no-custom]').style.display = 'none';
@@ -43,6 +50,7 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 				domElement.querySelector('[role=yes-custom]').style.display = 'none';
 				domElement.querySelector('[role=no-custom]').style.display = '';
 			}
+			domElement.querySelector('[role=option-skipStandard]').checked = (!!skipStandard);
 		},
 		showMainScreen = function () {
 			domElement.querySelector('[role=main-screen]').style.display = '';
@@ -53,7 +61,7 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			additionalMenus.push(Object.assign({}, props, {config: parsed}));
 			showMainScreen();
 			rebuildMenu();
-			browserInterface.saveOptions(additionalMenus);
+			saveOptions();
 		},
 		restoreOptions = function () {
 			return browserInterface.getOptionsAsync().then(function (opts) {
@@ -62,6 +70,7 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 				}	else {
 					additionalMenus = [];
 				}
+				skipStandard = opts && opts.skipStandard;
 				rebuildMenu();
 			});
 		},
@@ -74,8 +83,9 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			domElement.querySelector('[role=file-loader]').style.display = '';
 		},
 		initScreen = function () {
-			const submenuField =  domElement.querySelector('[role=submenu-name]');
-			domElement.querySelector('form').addEventListener('submit', e => e.preventDefault());
+			const submenuField =  domElement.querySelector('[role=submenu-name]'),
+				skipStandardCheckbox = domElement.querySelector('[role=option-skipStandard]');
+			Array.from(domElement.querySelectorAll('form')).map(el => el.addEventListener('submit', e => e.preventDefault()));
 			domElement.querySelector('[role=close]').addEventListener('click', browserInterface.closeWindow);
 			domElement.querySelector('[role=add]').addEventListener('click', showFileSelector);
 			Array.from(domElement.querySelectorAll('[role=back]')).map(el => el.addEventListener('click', showMainScreen));
@@ -86,6 +96,10 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 					cancelable: true
 				});
 				domElement.querySelector('[role=file-selector]').dispatchEvent(event);
+			});
+			skipStandardCheckbox.addEventListener('change', function () {
+				skipStandard = !!skipStandardCheckbox.checked;
+				saveOptions();
 			});
 			domElement.querySelector('[role=file-selector]').addEventListener('change', function () {
 				const element = this,

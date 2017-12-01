@@ -8,9 +8,7 @@ module.exports = function ChromeBrowserInterface(chrome) {
 	};
 	self.getOptionsAsync = function () {
 		return new Promise((resolve) => {
-			chrome.storage.sync.get({
-				additionalMenus: []
-			}, resolve);
+			chrome.storage.sync.get(null, resolve);
 		});
 	};
 	self.openSettings = function () {

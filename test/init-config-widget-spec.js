@@ -7,6 +7,7 @@ describe('initConfigWidget', function () {
 	const template = `
 		<div role="status" id="statusMessage"></div>
 		<div id="mainScreen" role="main-screen">
+			<input type="checkbox" role="option-skipStandard" id="skipStandardCheckbox"/>
 			<div id="sectionWithoutCustom" role="no-custom"></div>
 			<div id="sectionForCustom" role="yes-custom"></div>
 			<div id="templateParent">
@@ -126,6 +127,45 @@ describe('initConfigWidget', function () {
 			clickOn(document.getElementById('btnFileSelect'));
 		});
 	});
+	describe('skipStandard', () => {
+		let skipStandardCheckbox;
+		beforeEach(() => {
+			skipStandardCheckbox = document.getElementById('skipStandardCheckbox');
+		});
+		it('checks the option-skipStandard box if the option is set', done => {
+			resolveLoadOptions({skipStandard: true});
+			asyncResult
+				.then(() => expect(skipStandardCheckbox.checked).toBeTruthy())
+				.then(done, done.fail);
+		});
+		it('unchecks the option-skipStandard box if the option is not set', done => {
+			skipStandardCheckbox.checked = true;
+			resolveLoadOptions({});
+			asyncResult
+				.then(() => expect(skipStandardCheckbox.checked).toBeFalsy())
+				.then(done, done.fail);
+		});
+		it('saves the options if changed', done => {
+			browserInterface.saveOptions.and.callFake(options => {
+				expect(options.skipStandard).toBeTruthy();
+				done();
+			});
+			resolveLoadOptions({});
+			asyncResult
+				.then(() => clickOn(skipStandardCheckbox))
+				.then(() => expect(browserInterface.saveOptions).toHaveBeenCalledWith({additionalMenus: [], skipStandard: true}))
+				.then(done, done.fail);
+		});
+		it('preserves other options when saving', done => {
+			resolveLoadOptions({
+				additionalMenus: [1, 2, 3]
+			});
+			asyncResult
+				.then(() => clickOn(skipStandardCheckbox))
+				.then(() => expect(browserInterface.saveOptions).toHaveBeenCalledWith({additionalMenus: [1, 2, 3], skipStandard: true}))
+				.then(done, done.fail);
+		});
+	});
 	describe('without any additional config sections', () => {
 		beforeEach(done => {
 			resolveLoadOptions({});
@@ -154,7 +194,9 @@ describe('initConfigWidget', function () {
 					{name: 'first', source: 'fi.json'},
 					{name: 'second', source: 'se.json'},
 					{name: 'third', source: 'th.json'}
-				]});
+				],
+				skipStandard: false
+			});
 			asyncResult.then(done, done.fail);
 		});
 		it('shows the custom section', () => {
@@ -175,10 +217,13 @@ describe('initConfigWidget', function () {
 			expect(configList.children.length).toEqual(2);
 			expect(configList.children.item(0).querySelector('[role="name"]').innerHTML).toEqual('first');
 			expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('third');
-			expect(browserInterface.saveOptions).toHaveBeenCalledWith([
-				{ name: 'first', source: 'fi.json' },
-				{ name: 'third', source: 'th.json' }
-			]);
+			expect(browserInterface.saveOptions).toHaveBeenCalledWith({
+				additionalMenus: [
+					{ name: 'first', source: 'fi.json' },
+					{ name: 'third', source: 'th.json' }
+				],
+				skipStandard: false
+			});
 		});
 	});
 	describe('after initialisation', () => {
@@ -222,7 +267,7 @@ describe('initConfigWidget', function () {
 					expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
 					expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('');
 
-					expect(options).toEqual([
+					expect(options.additionalMenus).toEqual([
 						{name: 'first', source: 'fi.json'},
 						{name: 'abc', config: {a: 'b'}}
 					]);
@@ -261,7 +306,7 @@ describe('initConfigWidget', function () {
 					expect(configList.children.length).toEqual(2);
 					expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
 					expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('<a href="http://a/b.json" target="_blank">b.json</a>');
-					expect(options).toEqual([
+					expect(options.additionalMenus).toEqual([
 						{name: 'first', source: 'fi.json'},
 						{name: 'abc', remote: true, source: 'http://a/b.json', config: {a: 'b'}}
 					]);
@@ -298,7 +343,7 @@ describe('initConfigWidget', function () {
 					expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
 					expect(configList.children.item(1).querySelector('[role="source"]').innerHTML).toEqual('filename.json');
 
-					expect(options).toEqual([
+					expect(options.additionalMenus).toEqual([
 						{name: 'first', source: 'fi.json'},
 						{name: 'abc', source: 'filename.json', config: {a: 'b'}}
 					]);

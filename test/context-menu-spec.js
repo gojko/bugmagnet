@@ -25,14 +25,14 @@ describe('ContextMenu', function () {
 				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot, jasmine.any(Function)]);
 			}).then(done, done.fail);
 		});
-		it('sets up the basic menu when local settings do not contain additional menus', done => {
+		it('sets up only the basic menu when local settings do not contain additional menus', done => {
 			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({another: true}));
 			underTest.init().then(() => {
 				expect(processMenuObject.calls.count()).toBe(1);
 				expect(processMenuObject.calls.argsFor(0)).toEqual([standardConfig, menuBuilder, fakeRoot, jasmine.any(Function)]);
 			}).then(done, done.fail);
 		});
-		it('sets up the basic menu when local settings do contain an empty menu list', done => {
+		it('sets up only the basic menu when local settings do contain an empty menu list', done => {
 			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({additionalMenus: []}));
 			underTest.init().then(() => {
 				expect(processMenuObject.calls.count()).toBe(1);
@@ -50,6 +50,22 @@ describe('ContextMenu', function () {
 					first: '123'
 				}, menuBuilder, fakeRoot, jasmine.any(Function)]);
 				expect(processMenuObject.calls.argsFor(2)).toEqual([{
+					second: 'xyz'
+				}, menuBuilder, fakeRoot, jasmine.any(Function)]);
+
+			}).then(done, done.fail);
+		});
+		it('sets up only the additional menus when skipStandard is set', done => {
+			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({
+				skipStandard: true,
+				additionalMenus: [{name: 'first', config: '123'}, {name: 'second', config: 'xyz'}]
+			}));
+			underTest.init().then(() => {
+				expect(processMenuObject.calls.count()).toBe(2);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([{
+					first: '123'
+				}, menuBuilder, fakeRoot, jasmine.any(Function)]);
+				expect(processMenuObject.calls.argsFor(1)).toEqual([{
 					second: 'xyz'
 				}, menuBuilder, fakeRoot, jasmine.any(Function)]);
 
@@ -104,6 +120,25 @@ describe('ContextMenu', function () {
 				}, menuBuilder, newRoot, jasmine.any(Function)]);
 			}).then(done, done.fail);
 		});
+		it('sets up only the additional menus when skipStandard is set', done => {
+			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve({
+				skipStandard: true,
+				additionalMenus: [
+					{name: 'new1', config: {n1: 'v1'}},
+					{name: 'new2', config: {n2: 'v2'}}
+				]
+			}));
+			listener().then(() => {
+				expect(processMenuObject.calls.count()).toBe(2);
+				expect(processMenuObject.calls.argsFor(0)).toEqual([{
+					new1: {n1: 'v1'}
+				}, menuBuilder, newRoot, jasmine.any(Function)]);
+				expect(processMenuObject.calls.argsFor(1)).toEqual([{
+					new2: {n2: 'v2'}
+				}, menuBuilder, newRoot, jasmine.any(Function)]);
+			}).then(done, done.fail);
+		});
+
 	});
 	describe('click handler for menus', () => {
 		let clickHandler;

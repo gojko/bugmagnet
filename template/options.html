@@ -62,29 +62,32 @@
 				<label><input type="checkbox" role="option-skipStandard"> Hide standard menus</label>
 				</form>
 			</div>
+			<div>
+				<form action="#">
+					<button role="add">Add Configuration File</button>
+					<button role="close">Close</button>
+				</form>
+			</div>
 			<div role="no-custom">
 				There are no custom configuration files loaded.
 			</div>
 			<div role="yes-custom">
-					Custom configuration files currently loaded:
-					<div class="container">
-						<table>
+				Custom configuration files currently loaded:
+				<div class="container">
+					<table>
 						<thead>
-						<tr><th>Name</th><th>Source</th><th></th></tr>
+							<tr><th>Name</th><th>Source</th><th></th></tr>
 						</thead>
 						<tbody>
-						<tr role="template">
-							<td role="name"></td>
-							<td role="source" class="sourceCell"></td>
-							<td><button role="remove">Remove</button></td>
-						</tr>
+							<tr role="template">
+								<td role="name"></td>
+								<td role="source" class="sourceCell"></td>
+								<td><button role="remove">Remove</button></td>
+							</tr>
 						</tbody>
-						</table>
-					</div>
-				<p>Configuration changes apply only to newly loaded pages, so make sure to reload the page under test after changing the configuration. </p>
+					</table>
+				</div>
 			</div>
-			<button role="add">Add Configuration File</button>
-			<button role="close">Close</button>
 		</div>
 		<div role="file-loader">
 			<form action="#">

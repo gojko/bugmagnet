@@ -1,10 +1,8 @@
 module.exports = function ChromeBrowserInterface(chrome) {
 	'use strict';
 	const self = this;
-	self.saveOptions = function (additionalMenus) {
-		chrome.storage.sync.set({
-			'additionalMenus': additionalMenus
-		});
+	self.saveOptions = function (options) {
+		chrome.storage.sync.set(options);
 	};
 	self.getOptionsAsync = function () {
 		return new Promise((resolve) => {

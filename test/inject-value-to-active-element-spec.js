@@ -1,6 +1,6 @@
 /*global describe, it, expect, beforeEach, afterEach, jasmine, document */
-const handler = require('../src/lib/execute-request');
-describe('executeRequest', () => {
+const handler = require('../src/lib/inject-value-to-active-element');
+describe('injectValueToAciveElement', () => {
 	'use strict';
 	const template = '<input type="text" value="old text"/>' +
 					'<textarea>old text area</textarea>' +

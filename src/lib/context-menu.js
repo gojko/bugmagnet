@@ -15,8 +15,14 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 			if (falsyButNotEmpty(valueToInsert)) {
 				return;
 			};
-			return browserInterface.executeScript(tabId, '/content-script.js')
+			return browserInterface.executeScript(tabId, '/inject-value.js')
 				.then(() => browserInterface.sendMessage(tabId, valueToInsert));
+		},
+		turnOnPasting = function () {
+
+		},
+		turnOffPasting = function () {
+
 		},
 		loadAdditionalMenus = function (additionalMenus, rootMenu) {
 			if (additionalMenus && Array.isArray(additionalMenus) && additionalMenus.length) {
@@ -29,6 +35,9 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 		},
 		addGenericMenus = function (rootMenu) {
 			menuBuilder.separator(rootMenu);
+			const modeMenu = menuBuilder.subMenu('Operational mode', rootMenu);
+			menuBuilder.choice('Inject value', modeMenu, turnOffPasting, true);
+			menuBuilder.choice('Simulate pasting', modeMenu, turnOnPasting);
 			menuBuilder.menuItem('Configure BugMagnet', rootMenu, browserInterface.openSettings);
 		},
 		rebuildMenu = function (options) {

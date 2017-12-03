@@ -9,7 +9,7 @@ describe('ContextMenu', function () {
 		};
 		fakeRoot = {fake: 'root'};
 		processMenuObject = jasmine.createSpy('processMenuObject');
-		menuBuilder = jasmine.createSpyObj('menuBuilder', ['rootMenu', 'separator', 'menuItem', 'removeAll']);
+		menuBuilder = jasmine.createSpyObj('menuBuilder', ['rootMenu', 'separator', 'menuItem', 'removeAll', 'subMenu', 'choice']);
 		browserInterface = jasmine.createSpyObj('browserInterface', ['getOptionsAsync', 'openSettings', 'addStorageListener', 'executeScript', 'sendMessage']);
 		browserInterface.executeScript.and.returnValue(Promise.resolve({}));
 		browserInterface.sendMessage.and.returnValue(Promise.resolve({}));
@@ -157,7 +157,7 @@ describe('ContextMenu', function () {
 		it('executes the script when the message is valid', done => {
 			browserInterface.executeScript.and.callFake((tabId, url) => {
 				expect(tabId).toEqual(1);
-				expect(url).toEqual('/content-script.js');
+				expect(url).toEqual('/inject-value.js');
 				done();
 				return new Promise(() => false);
 			});

@@ -2,9 +2,9 @@
 
 ## Easier to simmulate real user workflows
 
-- [ ] Use clipboard copy/paste instead of directly manipulating field values
-- [ ] Add/replace selection instead of always replacing the whole value
-- [ ] test if paste works around multi-frame page/cross domain issue
+- [x] option to use clipboard copy/paste instead of directly manipulating field values
+  - [ ] add to firefox when the ff bug for optional permissions gets fixed (https://bugzilla.mozilla.org/show_bug.cgi?id=1422605)
+- [x] Add/replace selection instead of always replacing the whole value
 
 ## More secure to use
 

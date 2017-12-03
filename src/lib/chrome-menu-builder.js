@@ -33,4 +33,7 @@ module.exports = function ChromeMenuBuilder(chrome) {
 			itemHandlers[itemId](tab.id, itemValues[itemId]);
 		}
 	});
+	self.selectChoice = function (menuId) {
+		return chrome.contextMenus.update(menuId, {checked: true});
+	};
 };

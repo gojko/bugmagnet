@@ -57,5 +57,28 @@ module.exports = function ChromeBrowserInterface(chrome) {
 		return chrome.tabs.sendMessage(tabId, message);
 	};
 
+	self.requestPermissions = function (permissionsArray) {
+		return new Promise((resolve, reject) => {
+			chrome.permissions.request({permissions: permissionsArray}, function (granted) {
+				if (granted) {
+					resolve();
+				} else {
+					reject();
+				}
+			});
+		});
+	};
+	self.removePermissions = function (permissionsArray) {
+		return new Promise((resolve) => chrome.permissions.remove({permissions: permissionsArray}, resolve));
+	};
+	self.copyToClipboard = function (text) {
+		const handler = function (e) {
+			e.clipboardData.setData('text/plain', text);
+			e.preventDefault();
+		};
+		document.addEventListener('copy', handler);
+		document.execCommand('copy');
+		document.removeEventListener('copy', handler);
+	};
 };
 

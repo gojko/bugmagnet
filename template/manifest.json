@@ -3,6 +3,7 @@
 	"description": "Right-click context menu to help with exploratory testing",
 	"version": "1.99",
 	"permissions": ["contextMenus", "storage", "activeTab"],
+  "optional_permissions": ["clipboardWrite", "clipboardRead"],
 	"background": {
 		"scripts": ["extension.js"]
 	},

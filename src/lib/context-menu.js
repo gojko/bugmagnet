@@ -1,6 +1,14 @@
+const injectValueRequestHandler = require('./inject-value-request-handler'),
+	pasteRequestHandler = require('./paste-request-handler');
 module.exports = function ContextMenu(standardConfig, browserInterface, menuBuilder, processMenuObject) {
 	'use strict';
+	let handlerType = 'injectValue';
 	const self = this,
+		handlerMenus = {},
+		handlers = {
+			injectValue: injectValueRequestHandler,
+			paste: pasteRequestHandler
+		},
 		onClick = function (tabId, itemMenuValue) {
 			const falsyButNotEmpty = function (v) {
 					return !v && typeof (v) !== 'string';
@@ -11,18 +19,19 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 					}
 					return itemMenuValue;
 				},
-				valueToInsert = toValue(itemMenuValue);
-			if (falsyButNotEmpty(valueToInsert)) {
+				requestValue = toValue(itemMenuValue);
+			if (falsyButNotEmpty(requestValue)) {
 				return;
 			};
-			return browserInterface.executeScript(tabId, '/inject-value.js')
-				.then(() => browserInterface.sendMessage(tabId, valueToInsert));
+			return handlers[handlerType](browserInterface, tabId, requestValue);
 		},
 		turnOnPasting = function () {
-
+			return browserInterface.requestPermissions(['clipboardRead', 'clipboardWrite'])
+				.then(() => handlerType = 'paste')
+				.catch(() => menuBuilder.selectChoice(handlerMenus.injectValue));
 		},
 		turnOffPasting = function () {
-
+			handlerType = 'injectValue';
 		},
 		loadAdditionalMenus = function (additionalMenus, rootMenu) {
 			if (additionalMenus && Array.isArray(additionalMenus) && additionalMenus.length) {
@@ -36,9 +45,9 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 		addGenericMenus = function (rootMenu) {
 			menuBuilder.separator(rootMenu);
 			const modeMenu = menuBuilder.subMenu('Operational mode', rootMenu);
-			menuBuilder.choice('Inject value', modeMenu, turnOffPasting, true);
-			menuBuilder.choice('Simulate pasting', modeMenu, turnOnPasting);
-			menuBuilder.menuItem('Configure BugMagnet', rootMenu, browserInterface.openSettings);
+			handlerMenus.injectValue = menuBuilder.choice('Inject value', modeMenu, turnOffPasting, true);
+			handlerMenus.paste = menuBuilder.choice('Simulate pasting', modeMenu, turnOnPasting);
+			menuBuilder.menuItem('Customise menus', rootMenu, browserInterface.openSettings);
 		},
 		rebuildMenu = function (options) {
 			const rootMenu =  menuBuilder.rootMenu('Bug Magnet'),

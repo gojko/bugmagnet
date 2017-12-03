@@ -1,7 +1,6 @@
-const getRequestValue = require('./get-request-value');
+const copyToClipboard = require('./copy-request-handler');
 module.exports = function pasteRequestHandler(browserInterface, tabId, request) {
 	'use strict';
-	const valueToPaste = getRequestValue(request);
-	browserInterface.copyToClipboard(valueToPaste);
+	copyToClipboard(browserInterface, tabId, request);
 	return browserInterface.executeScript(tabId, '/paste.js');
 };

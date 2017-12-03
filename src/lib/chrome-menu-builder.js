@@ -20,7 +20,9 @@ module.exports = function ChromeMenuBuilder(chrome) {
 		return id;
 	};
 	self.choice  = function (title, parentMenu, clickHandler, value) {
-		return chrome.contextMenus.create({type: 'radio', checked: value, title: title, parentId: parentMenu, onclick: clickHandler, 'contexts': contexts});
+		const id = chrome.contextMenus.create({type: 'radio', checked: value, title: title, parentId: parentMenu, 'contexts': contexts});
+		itemHandlers[id] = clickHandler;
+		return id;
 	};
 	self.removeAll = function () {
 		itemValues = {};

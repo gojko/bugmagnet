@@ -59,13 +59,18 @@ module.exports = function ChromeBrowserInterface(chrome) {
 
 	self.requestPermissions = function (permissionsArray) {
 		return new Promise((resolve, reject) => {
-			chrome.permissions.request({permissions: permissionsArray}, function (granted) {
-				if (granted) {
-					resolve();
-				} else {
-					reject();
-				}
-			});
+			try {
+				chrome.permissions.request({permissions: permissionsArray}, function (granted) {
+					if (granted) {
+						resolve();
+					} else {
+						reject();
+					}
+				});
+			} catch (e) {
+				console.log(e);
+				reject(e);
+			}
 		});
 	};
 	self.removePermissions = function (permissionsArray) {
@@ -79,6 +84,9 @@ module.exports = function ChromeBrowserInterface(chrome) {
 		document.addEventListener('copy', handler);
 		document.execCommand('copy');
 		document.removeEventListener('copy', handler);
+	};
+	self.showMessage = function (text) {
+		chrome.tabs.executeScript(null, {code: `alert("${text}")`});
 	};
 };
 

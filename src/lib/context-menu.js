@@ -1,13 +1,15 @@
 const injectValueRequestHandler = require('./inject-value-request-handler'),
-	pasteRequestHandler = require('./paste-request-handler');
-module.exports = function ContextMenu(standardConfig, browserInterface, menuBuilder, processMenuObject) {
+	pasteRequestHandler = require('./paste-request-handler'),
+	copyRequestHandler = require('./copy-request-handler');
+module.exports = function ContextMenu(standardConfig, browserInterface, menuBuilder, processMenuObject, pasteSupported) {
 	'use strict';
 	let handlerType = 'injectValue';
 	const self = this,
 		handlerMenus = {},
 		handlers = {
 			injectValue: injectValueRequestHandler,
-			paste: pasteRequestHandler
+			paste: pasteRequestHandler,
+			copy: copyRequestHandler
 		},
 		onClick = function (tabId, itemMenuValue) {
 			const falsyButNotEmpty = function (v) {
@@ -28,10 +30,17 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 		turnOnPasting = function () {
 			return browserInterface.requestPermissions(['clipboardRead', 'clipboardWrite'])
 				.then(() => handlerType = 'paste')
-				.catch(() => menuBuilder.selectChoice(handlerMenus.injectValue));
+				.catch(() => {
+					browserInterface.showMessage('Could not access clipboard');
+					menuBuilder.selectChoice(handlerMenus.injectValue);
+				});
 		},
 		turnOffPasting = function () {
 			handlerType = 'injectValue';
+			return browserInterface.removePermissions(['clipboardRead', 'clipboardWrite']);
+		},
+		turnOnCopy = function () {
+			handlerType = 'copy';
 		},
 		loadAdditionalMenus = function (additionalMenus, rootMenu) {
 			if (additionalMenus && Array.isArray(additionalMenus) && additionalMenus.length) {
@@ -44,9 +53,12 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 		},
 		addGenericMenus = function (rootMenu) {
 			menuBuilder.separator(rootMenu);
-			const modeMenu = menuBuilder.subMenu('Operational mode', rootMenu);
-			handlerMenus.injectValue = menuBuilder.choice('Inject value', modeMenu, turnOffPasting, true);
-			handlerMenus.paste = menuBuilder.choice('Simulate pasting', modeMenu, turnOnPasting);
+			if (pasteSupported) {
+				const modeMenu = menuBuilder.subMenu('Operational mode', rootMenu);
+				handlerMenus.injectValue = menuBuilder.choice('Inject value', modeMenu, turnOffPasting, true);
+				handlerMenus.paste = menuBuilder.choice('Simulate pasting', modeMenu, turnOnPasting);
+				handlerMenus.copy = menuBuilder.choice('Copy to clipboard', modeMenu, turnOnCopy);
+			}
 			menuBuilder.menuItem('Customise menus', rootMenu, browserInterface.openSettings);
 		},
 		rebuildMenu = function (options) {

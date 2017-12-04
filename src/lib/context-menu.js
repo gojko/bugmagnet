@@ -60,6 +60,7 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 				handlerMenus.copy = menuBuilder.choice('Copy to clipboard', modeMenu, turnOnCopy);
 			}
 			menuBuilder.menuItem('Customise menus', rootMenu, browserInterface.openSettings);
+			menuBuilder.menuItem('Help/Support', rootMenu, () => browserInterface.openUrl('https://bugmagnet.org/contributing.html'));
 		},
 		rebuildMenu = function (options) {
 			const rootMenu =  menuBuilder.rootMenu('Bug Magnet'),

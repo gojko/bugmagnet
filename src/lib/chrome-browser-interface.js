@@ -16,6 +16,9 @@ module.exports = function ChromeBrowserInterface(chrome) {
 			window.open(chrome.runtime.getURL('options.html'));
 		}
 	};
+	self.openUrl = function (url) {
+		window.open(url);
+	};
 	self.addStorageListener = function (listener) {
 		chrome.storage.onChanged.addListener(function (changes, areaName) {
 			if (areaName === 'sync') {

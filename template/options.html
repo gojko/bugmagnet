@@ -120,7 +120,17 @@
 				</div>
 			</form>
 		</div>
-	</div>
+        </div>
+        <hr/>
+        <div id="credentials">
+                <h2>Credential Settings</h2>
+                <div role="cred-status" class="status"></div>
+                <div>Vault URL: <input type="text" role="vault-url" placeholder="https://myvault.vault.azure.net"/></div>
+                <div>PAT Token: <input type="password" role="vault-pat"/></div>
+                <div>Test Accounts (JSON array):</div>
+                <div><textarea role="accounts" placeholder='["user@example.com"]'></textarea></div>
+                <button role="save-credentials">Save</button>
+        </div>
 
   <script src="options.js"></script>
 </body>

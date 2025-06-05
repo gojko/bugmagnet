@@ -6,7 +6,7 @@ module.exports = function CredentialManager(browserInterface) {
         const loadOptions = function () {
                         return browserInterface.getOptionsAsync().then(opts => {
                                 options = opts || {};
-                                client = new AzureKeyVaultClient({ url: options.vaultUrl, pat: options.vaultPat });
+                                client = new AzureKeyVaultClient({ url: options.vaultUrl, pat: options.vaultPat, token: options.vaultToken });
                         });
                 };
         this.getAccounts = function () {

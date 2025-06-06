@@ -3,15 +3,16 @@
   "version": "2.0.0",
   "scripts": {
     "lint": "eslint src test",
-    "pretest": "npm run lint && rm -rf testem/compiled",
+    "pretest": "npm run lint && rimraf testem/compiled",
     "test": "testem ci -R dot",
     "pretest-browser": "npm run pretest",
     "test-browser": "testem",
     "pretest-chrome": "npm run pretest",
     "test-chrome": "testem -l Chrome",
     "sourcemap": "sourcemap-lookup",
-    "prepack-extension": "rm -rf pack && cp -R template pack",
-    "pack-extension": "npm run prepack-extension && webpack --config webpack.config.js"
+    "install-deps": "node scripts/installDependencies.js",
+    "prepack-extension": "rimraf pack && copyfiles -u 1 \"template/**/*\" pack/",
+    "pack-extension": "npm run install-deps && npm run prepack-extension && webpack --config webpack.config.js"
   },
   "devDependencies": {
     "eslint": "^4.11.0",
@@ -22,6 +23,8 @@
     "sourcemap-lookup": "0.0.3",
     "testem": "^1.18.4",
     "webpack": "^3.8.1",
-    "webpack-dev-middleware": "^1.12.0"
+    "webpack-dev-middleware": "^1.12.0",
+    "rimraf": "^5.0.0",
+    "copyfiles": "^2.4.1"
   }
 }

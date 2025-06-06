@@ -8,14 +8,23 @@ const ContextMenu = require('../lib/context-menu'),
 	standardConfig = require('../../template/config.json'),
 	isFirefox = (typeof browser !== 'undefined'),
 	browserInterface = new ChromeBrowserInterface(chrome);
-new ContextMenu(
-	standardConfig,
-	browserInterface,
-	new ChromeMenuBuilder(chrome),
-	processMenuObject,
-	!isFirefox
-).init();
-new CredentialContextMenu(browserInterface).init();
+
+function initMenus() {
+	'use strict';
+	new ContextMenu(
+		standardConfig,
+		browserInterface,
+		new ChromeMenuBuilder(chrome),
+		processMenuObject,
+		!isFirefox
+	).init();
+	new CredentialContextMenu(browserInterface).init();
+}
+
+chrome.runtime.onInstalled.addListener(initMenus);
+chrome.runtime.onStartup.addListener(initMenus);
+
+initMenus();
 chrome.runtime.onMessage.addListener(function (request) {
 	'use strict';
 	if (request && request.type === 'updatePassword') {

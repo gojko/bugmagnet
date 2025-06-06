@@ -48,7 +48,7 @@ For instance `user_example@test.email.com` becomes `user---example--test-email-c
 Clone the repository and install dependencies:
 
 ```bash
-npm install
+npm run install-deps
 ```
 
 To build the extension files run:
@@ -57,7 +57,9 @@ To build the extension files run:
 npm run pack-extension
 ```
 
-This creates a `pack` directory containing the packaged extension. In Chrome open `chrome://extensions`, enable *Developer mode* and choose **Load unpacked** pointing to this directory.
+This command automatically installs any missing dependencies, copies static assets and bundles the code. It creates a `pack` directory containing the packaged extension, including the manifest and static assets. In Chrome open `chrome://extensions`, enable *Developer mode* and choose **Load unpacked** pointing to this directory.
+
+The extension now uses Manifest V3 with a background service worker. Older Chromium builds may not support this format.
 
 On Windows you can package the extension and produce a zip archive by running:
 

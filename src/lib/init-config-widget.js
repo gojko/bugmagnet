@@ -18,12 +18,12 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			link.textContent = url.replace(/.*\//g, '');
 			parent.appendChild(link);
 		},
-		saveOptions = function () {
-			browserInterface.saveOptions({
-				additionalMenus: additionalMenus,
-				skipStandard: skipStandard
-			});
-		},
+	        saveOptions = function () {
+	                return browserInterface.saveOptions({
+	                        additionalMenus: additionalMenus,
+	                        skipStandard: skipStandard
+	                }).catch(showErrorMsg);
+	        },
 		rebuildMenu = function () {
 			list.innerHTML = '';
 			if (additionalMenus && additionalMenus.length) {

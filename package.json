@@ -11,7 +11,7 @@
     "test-chrome": "testem -l Chrome",
     "sourcemap": "sourcemap-lookup",
     "prepack-extension": "rm -rf pack && cp -R template pack",
-    "pack-extension": "webpack --config webpack.config.js"
+    "pack-extension": "npm run prepack-extension && webpack --config webpack.config.js"
   },
   "devDependencies": {
     "eslint": "^4.11.0",

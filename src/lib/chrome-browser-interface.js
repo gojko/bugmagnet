@@ -2,7 +2,18 @@ module.exports = function ChromeBrowserInterface(chrome) {
 	'use strict';
 	const self = this;
 	self.saveOptions = function (options) {
-		chrome.storage.sync.set(options);
+	        return new Promise((resolve, reject) => {
+	                chrome.storage.sync.get(null, existing => {
+	                        const merged = Object.assign({}, existing, options);
+	                        chrome.storage.sync.set(merged, () => {
+	                                if (chrome.runtime.lastError) {
+	                                        reject(chrome.runtime.lastError);
+	                                } else {
+	                                        resolve();
+	                                }
+	                        });
+	                });
+	        });
 	};
 	self.getOptionsAsync = function () {
 		return new Promise((resolve) => {

@@ -1,0 +1,11 @@
+$ErrorActionPreference = 'Stop'
+
+npm install
+npm run pack-extension
+
+$zipPath = Join-Path $PSScriptRoot 'bugmagnet-extension.zip'
+if (Test-Path $zipPath) {
+    Remove-Item $zipPath
+}
+Compress-Archive -Path (Join-Path $PSScriptRoot 'pack' '*') -DestinationPath $zipPath
+Write-Host "Created $zipPath"

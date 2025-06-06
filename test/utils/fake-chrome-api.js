@@ -1,4 +1,4 @@
-/* global jasmine, window */
+/* global jasmine */
 module.exports = function FakeChromeApi() {
 	'use strict';
 	const self = this,

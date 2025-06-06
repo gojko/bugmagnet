@@ -2,7 +2,7 @@
 	"name": "Bug Magnet",
 	"description": "Right-click context menu to help with exploratory testing",
 	"version": "3.0",
-	"permissions": ["contextMenus", "storage", "activeTab"],
+        "permissions": ["contextMenus", "storage", "activeTab", "https://*.vault.azure.net/*"],
   "optional_permissions": ["clipboardWrite", "clipboardRead"],
 	"background": {
 		"scripts": ["extension.js"]

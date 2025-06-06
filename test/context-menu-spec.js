@@ -1,4 +1,4 @@
-/*global describe, window, it, beforeEach, jasmine, expect*/
+/*global describe, it, beforeEach, jasmine, expect*/
 const ContextMenu = require('../src/lib/context-menu');
 describe('ContextMenu', function () {
 	'use strict';

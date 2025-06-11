@@ -1,0 +1,5 @@
+{
+  "vaultUrl": "https://example.vault.azure.net",
+  "vaultToken": "test-token",
+  "accounts": ["test@example.com"]
+}

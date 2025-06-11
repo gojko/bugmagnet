@@ -3,7 +3,7 @@
 	"description": "Right-click context menu to help with exploratory testing",
 	"version": "3.0",
         "manifest_version": 3,
-        "permissions": ["contextMenus", "storage", "activeTab"],
+        "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
         "host_permissions": ["https://*.vault.azure.net/*"],
         "optional_permissions": ["clipboardWrite", "clipboardRead"],
         "background": {

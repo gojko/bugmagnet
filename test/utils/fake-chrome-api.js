@@ -11,8 +11,9 @@ module.exports = function FakeChromeApi() {
 	self.contextMenus = jasmine.createSpyObj('chrome.contextMenus', ['create', 'removeAll']);
 	self.contextMenus.onClicked = event('onClicked');
 	self.extension = jasmine.createSpyObj('chrome.extension', ['getURL']);
-	self.tabs = jasmine.createSpyObj('chrome.tabs', ['sendMessage', 'executeScript']);
-
+	self.tabs = jasmine.createSpyObj('chrome.tabs', ['sendMessage', 'executeScript', 'query']);
+	self.scripting = jasmine.createSpyObj('chrome.scripting', ['executeScript']);
+	
 	self.storage = {
 		onChanged: event('onChanged')
 	};

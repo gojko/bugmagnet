@@ -2,7 +2,21 @@
 
 BugMagnet uses WebPack for packaging, Jasmine for tests (executed via Testem) and ESLint for linting. All the main scripts are in `package.json`
 
-## Set up a local development environment
+## Set up a local development environment 
+
+1. (optional, if you want to run it in a sandbox) Run the command once to build a development docker VM
+
+```bash
+make init
+```
+
+2. (optional, if you want to run it in a sandbox) to start the development shell in docker, run
+
+```bash
+make shell
+```
+
+3. install dependencies
 
 ```bash
 npm i

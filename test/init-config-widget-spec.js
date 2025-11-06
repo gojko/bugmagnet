@@ -118,12 +118,15 @@ describe('initConfigWidget', () => {
 			expect(mainScreen.style.display).not.toBe('none');
 			expect(addScreen.style.display).toBe('none');
 		});
-		it('sets up the select-file-cover to re-dispatch a click on file selector', done => {
-			document.getElementById('fileSelector').addEventListener('click', e => {
-				expect(e.type).toEqual('click');
-				done();
+		it('sets up the select-file-cover to re-dispatch a click on file selector', async () => {
+			const promise = new Promise(resolve => {
+				document.getElementById('fileSelector').addEventListener('click', e => {
+					expect(e.type).toEqual('click');
+					resolve();
+				});
 			});
 			clickOn(document.getElementById('btnFileSelect'));
+			await promise;
 		});
 	});
 	describe('skipStandard', () => {
@@ -131,63 +134,64 @@ describe('initConfigWidget', () => {
 		beforeEach(() => {
 			skipStandardCheckbox = document.getElementById('skipStandardCheckbox');
 		});
-		it('checks the option-skipStandard box if the option is set', done => {
+		it('checks the option-skipStandard box if the option is set', async () => {
 			resolveLoadOptions({skipStandard: true});
-			asyncResult
-				.then(() => expect(skipStandardCheckbox.checked).toBeTruthy())
-				.then(done, done.fail);
+			await asyncResult;
+			expect(skipStandardCheckbox.checked).toBeTruthy();
 		});
-		it('unchecks the option-skipStandard box if the option is not set', done => {
+		it('unchecks the option-skipStandard box if the option is not set', async () => {
 			skipStandardCheckbox.checked = true;
 			resolveLoadOptions({});
-			asyncResult
-				.then(() => expect(skipStandardCheckbox.checked).toBeFalsy())
-				.then(done, done.fail);
+			await asyncResult;
+			expect(skipStandardCheckbox.checked).toBeFalsy();
 		});
-		it('saves the options if changed', done => {
+		it('saves the options if changed', async () => {
+			let callbackExecuted = false;
 			browserInterface.saveOptions.and.callFake(options => {
 				expect(options.skipStandard).toBeTruthy();
-				done();
+				callbackExecuted = true;
 			});
 			resolveLoadOptions({});
-			asyncResult
-				.then(() => clickOn(skipStandardCheckbox))
-				.then(() => expect(browserInterface.saveOptions).toHaveBeenCalledWith({additionalMenus: [], skipStandard: true}))
-				.then(done, done.fail);
+			await asyncResult;
+			clickOn(skipStandardCheckbox);
+			expect(browserInterface.saveOptions).toHaveBeenCalledWith({additionalMenus: [], skipStandard: true});
+			expect(callbackExecuted).toBe(true);
 		});
-		it('preserves other options when saving', done => {
+		it('preserves other options when saving', async () => {
 			resolveLoadOptions({
 				additionalMenus: [1, 2, 3]
 			});
-			asyncResult
-				.then(() => clickOn(skipStandardCheckbox))
-				.then(() => expect(browserInterface.saveOptions).toHaveBeenCalledWith({additionalMenus: [1, 2, 3], skipStandard: true}))
-				.then(done, done.fail);
+			await asyncResult;
+			clickOn(skipStandardCheckbox);
+			expect(browserInterface.saveOptions).toHaveBeenCalledWith({additionalMenus: [1, 2, 3], skipStandard: true});
 		});
 	});
 	describe('without any additional config sections', () => {
-		beforeEach(done => {
+		beforeEach(async () => {
 			resolveLoadOptions({});
-			asyncResult.then(done, done.fail);
+			await asyncResult;
 		});
 		it('hides the custom section', () => {
 			expect(sectionWithoutCustom.style.display).not.toBe('none');
 			expect(sectionForCustom.style.display).toBe('none');
 		});
-		it('shows the custom section after the first element is loaded', done => {
+		it('shows the custom section after the first element is loaded', async () => {
 			submenuName.value = 'abc';
 			browserInterface.readFile.and.returnValue(Promise.resolve(JSON.stringify({a: 'b'})));
+			let callbackExecuted = false;
 			browserInterface.saveOptions.and.callFake(() => {
 				expect(sectionWithoutCustom.style.display).toBe('none');
 				expect(sectionForCustom.style.display).not.toBe('none');
-				done();
+				callbackExecuted = true;
 			});
 			loadFile({name: 'filename.json'});
+			await new Promise(resolve => setTimeout(resolve, 50));
+			expect(callbackExecuted).toBe(true);
 		});
 
 	});
 	describe('with additional config sections', () => {
-		beforeEach(done => {
+		beforeEach(async () => {
 			resolveLoadOptions({
 				additionalMenus: [
 					{name: 'first', source: 'fi.json'},
@@ -196,7 +200,7 @@ describe('initConfigWidget', () => {
 				],
 				skipStandard: false
 			});
-			asyncResult.then(done, done.fail);
+			await asyncResult;
 		});
 		it('shows the custom section', () => {
 			expect(sectionWithoutCustom.style.display).toBe('none');
@@ -226,12 +230,12 @@ describe('initConfigWidget', () => {
 		});
 	});
 	describe('after initialisation', () => {
-		beforeEach(done => {
+		beforeEach(async () => {
 			resolveLoadOptions({
 				additionalMenus: [
 					{name: 'first', source: 'fi.json'}
 				]});
-			asyncResult.then(done, done.fail);
+			await asyncResult;
 		});
 
 		describe('when content is added via the custom config box', () => {
@@ -259,8 +263,9 @@ describe('initConfigWidget', () => {
 				expect(statusMessage.innerHTML).toMatch(/SyntaxError/);
 				expect(browserInterface.saveOptions).not.toHaveBeenCalled();
 			});
-			it('adds a menu when the file load resolves with a JSON content', done => {
+			it('adds a menu when the file load resolves with a JSON content', async () => {
 				submenuName.value = 'abc';
+				let callbackExecuted = false;
 				browserInterface.saveOptions.and.callFake(options => {
 					expect(configList.children.length).toEqual(2);
 					expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
@@ -270,9 +275,11 @@ describe('initConfigWidget', () => {
 						{name: 'first', source: 'fi.json'},
 						{name: 'abc', config: {a: 'b'}}
 					]);
-					done();
+					callbackExecuted = true;
 				});
 				loadCustomConfig('{"a": "b"}');
+				await new Promise(resolve => setTimeout(resolve, 50));
+				expect(callbackExecuted).toBe(true);
 			});
 
 		});
@@ -288,19 +295,23 @@ describe('initConfigWidget', () => {
 				expect(statusMessage.innerHTML).toEqual('Please provide submenu name!');
 				expect(browserInterface.saveOptions).not.toHaveBeenCalled();
 			});
-			it('loads the remote URL using the browser interface', done => {
+			it('loads the remote URL using the browser interface', async () => {
 				submenuName.value = 'abc';
+				let callbackExecuted = false;
 				browserInterface.getRemoteFile.and.callFake((url) => {
 					expect(url).toEqual('http://a/b.json');
 					expect(statusMessage.innerHTML).toEqual('');
-					done();
+					callbackExecuted = true;
 					return new Promise(() => false);
 				});
 				tryLoadingUrl('http://a/b.json');
+				await new Promise(resolve => setTimeout(resolve, 10));
+				expect(callbackExecuted).toBe(true);
 			});
-			it('adds a menu when the file load resolves with a JSON content', done => {
+			it('adds a menu when the file load resolves with a JSON content', async () => {
 				submenuName.value = 'abc';
 				browserInterface.getRemoteFile.and.returnValue(Promise.resolve(JSON.stringify({a: 'b'})));
+				let callbackExecuted = false;
 				browserInterface.saveOptions.and.callFake(options => {
 					expect(configList.children.length).toEqual(2);
 					expect(configList.children.item(1).querySelector('[role="name"]').innerHTML).toEqual('abc');
@@ -309,9 +320,11 @@ describe('initConfigWidget', () => {
 						{name: 'first', source: 'fi.json'},
 						{name: 'abc', remote: true, source: 'http://a/b.json', config: {a: 'b'}}
 					]);
-					done();
+					callbackExecuted = true;
 				});
 				tryLoadingUrl('http://a/b.json');
+				await new Promise(resolve => setTimeout(resolve, 50));
+				expect(callbackExecuted).toBe(true);
 			});
 		});
 
@@ -323,19 +336,23 @@ describe('initConfigWidget', () => {
 				expect(statusMessage.innerHTML).toEqual('Please provide submenu name!');
 				expect(browserInterface.saveOptions).not.toHaveBeenCalled();
 			});
-			it('loads the file using the browser interface', done => {
+			it('loads the file using the browser interface', async () => {
 				submenuName.value = 'abc';
+				let callbackExecuted = false;
 				browserInterface.readFile.and.callFake((fileInfo) => {
 					expect(fileInfo).toEqual({name: 'file.json'});
 					expect(statusMessage.innerHTML).toEqual('');
-					done();
+					callbackExecuted = true;
 					return new Promise(() => false);
 				});
 				loadFile({name: 'file.json'});
+				await new Promise(resolve => setTimeout(resolve, 10));
+				expect(callbackExecuted).toBe(true);
 			});
-			it('adds a menu when the file load resolves with a JSON content', done => {
+			it('adds a menu when the file load resolves with a JSON content', async () => {
 				submenuName.value = 'abc';
 				browserInterface.readFile.and.returnValue(Promise.resolve(JSON.stringify({a: 'b'})));
+				let callbackExecuted = false;
 				browserInterface.saveOptions.and.callFake(options => {
 
 					expect(configList.children.length).toEqual(2);
@@ -346,9 +363,11 @@ describe('initConfigWidget', () => {
 						{name: 'first', source: 'fi.json'},
 						{name: 'abc', source: 'filename.json', config: {a: 'b'}}
 					]);
-					done();
+					callbackExecuted = true;
 				});
 				loadFile({name: 'filename.json'});
+				await new Promise(resolve => setTimeout(resolve, 50));
+				expect(callbackExecuted).toBe(true);
 			});
 		});
 	});

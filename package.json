@@ -9,7 +9,7 @@
     "pretest": "npm run lint && rm -rf testem/compiled",
     "test": "testem ci -R dot",
     "pretest-browser": "npm run pretest",
-    "test-browser": "testem -P 7357",
+    "test-browser": "testem -p 7357",
     "pretest-chrome": "npm run pretest",
     "test-chrome": "testem -l Chrome",
     "sourcemap": "sourcemap-lookup",

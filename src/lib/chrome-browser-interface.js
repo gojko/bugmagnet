@@ -12,11 +12,11 @@ export function ChromeBrowserInterface(chrome) {
 		if (chrome.runtime.openOptionsPage) {
 			chrome.runtime.openOptionsPage();
 		} else {
-			window.open(chrome.runtime.getURL('options.html'));
+			chrome.tabs.create({ url: chrome.runtime.getURL('options.html') });
 		}
 	};
 	instance.openUrl = function (url) {
-		window.open(url);
+		chrome.tabs.create({ url: url });
 	};
 	instance.addStorageListener = function (listener) {
 		chrome.storage.onChanged.addListener((changes, areaName) => {
@@ -51,8 +51,9 @@ export function ChromeBrowserInterface(chrome) {
 		});
 	};
 	instance.executeScript = function (tabId, source) {
-		return new Promise((resolve) => {
-			return chrome.tabs.executeScript(tabId, {file: source}, resolve);
+		return chrome.scripting.executeScript({
+			target: { tabId: tabId },
+			files: [source]
 		});
 	};
 	instance.sendMessage = function (tabId, message) {
@@ -79,16 +80,36 @@ export function ChromeBrowserInterface(chrome) {
 		return new Promise((resolve) => chrome.permissions.remove({permissions: permissionsArray}, resolve));
 	};
 	instance.copyToClipboard = function (text) {
-		const handler = function (e) {
-			e.clipboardData.setData('text/plain', text);
-			e.preventDefault();
-		};
-		document.addEventListener('copy', handler);
-		document.execCommand('copy');
-		document.removeEventListener('copy', handler);
+		// In Manifest V3, we need to use navigator.clipboard in a content script context
+		// Since this is called from background, we inject into the active tab
+		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+			if (tabs[0]) {
+				chrome.scripting.executeScript({
+					target: { tabId: tabs[0].id },
+					func: (textToCopy) => {
+						const handler = function (e) {
+							e.clipboardData.setData('text/plain', textToCopy);
+							e.preventDefault();
+						};
+						document.addEventListener('copy', handler);
+						document.execCommand('copy');
+						document.removeEventListener('copy', handler);
+					},
+					args: [text]
+				});
+			}
+		});
 	};
 	instance.showMessage = function (text) {
-		chrome.tabs.executeScript(null, {code: `alert("${text}")`});
+		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+			if (tabs[0]) {
+				chrome.scripting.executeScript({
+					target: { tabId: tabs[0].id },
+					func: (message) => alert(message),
+					args: [text]
+				});
+			}
+		});
 	};
 };
 

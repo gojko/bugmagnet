@@ -156,7 +156,7 @@ describe('ContextMenu', () => {
 		it('executes the script when the message is valid', done => {
 			browserInterface.executeScript.and.callFake((tabId, url) => {
 				expect(tabId).toEqual(1);
-				expect(url).toEqual('/inject-value.js');
+				expect(url).toEqual('inject-value.js');
 				done();
 				return new Promise(() => false);
 			});

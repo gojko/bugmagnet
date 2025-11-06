@@ -36,18 +36,6 @@ This will create and copy the files in the `pack` dir. You can then zip that up 
 npm t
 ```
 
-### Run a subset of tests
-
-```bash
-npm t --bugmagnet:test_filter=<prefix of the test file name>
-```
-
-for example
-
-```bash
-npm t --bugmagnet:test_filter=execute-request
-```
-
 ### Find out the actual source code from a test failure report
 
 ```bash

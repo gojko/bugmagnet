@@ -7,7 +7,7 @@
         "src/**/*.js",
         "test/**/*.js"
   ],
-	"before_tests": "webpack --config webpack.testem.config.js",
+	"before_tests": "esbuild test/*-spec.js --bundle --outdir=testem/compiled --platform=browser --format=iife --target=es2015 --sourcemap",
 	"launch_in_dev": ["Chromium", "Firefox"],
 	"launch_in_ci": ["Chromium", "Firefox"],
 	"browser_args": {

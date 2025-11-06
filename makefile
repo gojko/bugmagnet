@@ -18,6 +18,7 @@ DOCKER_CMD=docker run --rm \
 
 shell: 
 	$(DOCKER_CMD) \
+	-p 7357:7357/tcp \
 	-u 0 \
 	-it $(DOCKER_IMAGE_NAME) 
 

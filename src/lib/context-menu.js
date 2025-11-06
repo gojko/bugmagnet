@@ -1,8 +1,8 @@
-'use strict';
-const injectValueRequestHandler = require('./inject-value-request-handler'),
-	pasteRequestHandler = require('./paste-request-handler'),
-	copyRequestHandler = require('./copy-request-handler');
-module.exports = function ContextMenu(standardConfig, browserInterface, menuBuilder, processMenuObject, pasteSupported) {
+import { injectValueRequestHandler } from './inject-value-request-handler.js';
+import { pasteRequestHandler } from './paste-request-handler.js';
+import { copyRequestHandler } from './copy-request-handler.js';
+
+export function ContextMenu(standardConfig, browserInterface, menuBuilder, processMenuObject, pasteSupported) {
 	let handlerType = 'injectValue';
 	const instance = this,
 		handlerMenus = {},

@@ -1,6 +1,5 @@
-/*global jasmine, beforeEach, it, expect, describe */
-'use strict';
-const processMenuObject = require('../src/lib/process-menu-object');
+import { processMenuObject } from '../src/lib/process-menu-object.js';
+
 describe('processMenuObject', () => {
 	let rootMenu, menuBuilder, onClick;
 	beforeEach(() => {

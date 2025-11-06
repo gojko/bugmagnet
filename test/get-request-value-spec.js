@@ -1,6 +1,5 @@
-/*global describe, it, expect, require */
-'use strict';
-const getRequestValue = require('../src/lib/get-request-value');
+import { getRequestValue } from '../src/lib/get-request-value.js';
+
 describe('getRequestValue', () => {
 	it('returns a literal value for _type=literal', () => {
 		expect(getRequestValue({_type: 'literal', value: 'abc'})).toEqual('abc');

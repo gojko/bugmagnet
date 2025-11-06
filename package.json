@@ -4,8 +4,8 @@
   "scripts": {
     "eslint": "eslint",
     "lint": "eslint src test",
-    "build": "esbuild src/main/*.js --bundle --outdir=pack --platform=browser --format=iife --target=es2015",
-    "build:test": "esbuild test/*-spec.js --bundle --outdir=testem/compiled --platform=browser --format=iife --target=es2015 --sourcemap",
+    "build": "esbuild src/main/*.js --bundle --outdir=pack --platform=browser --format=esm --target=es2020",
+    "build:test": "esbuild test/*-spec.js --bundle --outdir=testem/compiled --platform=browser --format=esm --target=es2020 --sourcemap",
     "pretest": "npm run lint && rm -rf testem/compiled",
     "test": "testem ci -R dot",
     "pretest-browser": "npm run pretest",
@@ -14,17 +14,18 @@
     "test-chrome": "testem -l Chrome",
     "sourcemap": "sourcemap-lookup",
     "prepack-extension": "rm -rf pack && cp -R template pack",
-    "pack-extension": "esbuild src/main/*.js --bundle --outdir=pack --platform=browser --format=iife --target=es2015"
+    "pack-extension": "esbuild src/main/*.js --bundle --outdir=pack --platform=browser --format=esm --target=es2020"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "esbuild": "^0.25.12",
     "eslint": "^9.39.1",
-    "eslint-config-crockford": "^2.0.0",
-    "eslint-config-defaults": "^9.0.0",
     "globals": "^16.5.0",
     "jasmine": "^5.12.0",
     "sourcemap-lookup": "0.0.3",
-    "testem": "^1.18.4"
+    "testem": "^3.16.0"
+  },
+  "overrides": {
+    "consolidate": "^1.0.4"
   }
 }

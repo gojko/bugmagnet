@@ -4,18 +4,18 @@ import globals from 'globals';
 export default [
 	js.configs.recommended,
 	{
-		files: ['**/*.js'],
+		files: ['src/**/*.js'],
 		languageOptions: {
-			ecmaVersion: 2020,
-			sourceType: 'script',
+			ecmaVersion: 2024,
+			sourceType: 'module',
 			globals: {
 				...globals.browser,
-				...globals.node
+				chrome: 'readonly',
+				browser: 'readonly'
 			}
 		},
 		rules: {
 			semi: ['error', 'always'],
-			strict: ['error', 'global'],
 			'no-unused-vars': ['error', {
 				caughtErrors: 'none'
 			}],
@@ -31,21 +31,38 @@ export default [
 			}],
 			'prefer-arrow-callback': 'error',
 			'no-shadow': ['error', {
-				builtinGlobals: true
+				builtinGlobals: false
 			}]
 		}
 	},
 	{
 		files: ['test/**/*.js'],
 		languageOptions: {
+			ecmaVersion: 2024,
+			sourceType: 'module',
 			globals: {
+				...globals.browser,
 				...globals.jasmine
 			}
 		},
 		rules: {
+			semi: ['error', 'always'],
+			'no-unused-vars': 'off',
+			indent: ['error', 'tab'],
+			'no-const-assign': 'error',
 			'one-var': 'off',
-			'no-redeclare': 'off',
-			'no-unused-vars': 'off'
+			'prefer-const': 'error',
+			'no-var': 'error',
+			'no-plusplus': ['off'],
+			quotes: ['error', 'single', {
+				avoidEscape: true,
+				allowTemplateLiterals: true
+			}],
+			'prefer-arrow-callback': 'error',
+			'no-shadow': ['error', {
+				builtinGlobals: false
+			}],
+			'no-redeclare': 'off'
 		}
 	}
 ];

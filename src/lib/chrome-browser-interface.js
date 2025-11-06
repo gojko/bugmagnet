@@ -1,5 +1,4 @@
-'use strict';
-module.exports = function ChromeBrowserInterface(chrome) {
+export function ChromeBrowserInterface(chrome) {
 	const instance = this;
 	instance.saveOptions = function (options) {
 		chrome.storage.sync.set(options);

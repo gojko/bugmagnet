@@ -1,6 +1,5 @@
-/*global describe, window, it, beforeEach, jasmine, expect*/
-'use strict';
-const ContextMenu = require('../src/lib/context-menu');
+import { ContextMenu } from '../src/lib/context-menu.js';
+
 describe('ContextMenu', () => {
 	let fakeRoot, standardConfig, browserInterface, underTest, processMenuObject, menuBuilder;
 	beforeEach(() => {

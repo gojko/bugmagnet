@@ -1,8 +1,8 @@
-'use strict';
-const getValue = require('./get-request-value'),
-	triggerEvents = require('./trigger-events');
-module.exports = function injectValueToActiveElement(request) {
-	const actualValue = getValue(request);
+import { getRequestValue } from './get-request-value.js';
+import { triggerEvents } from './trigger-events.js';
+
+export function injectValueToActiveElement(request) {
+	const actualValue = getRequestValue(request);
 	let domElement = document.activeElement;
 	if (!domElement || !actualValue) {
 		return;
@@ -16,4 +16,4 @@ module.exports = function injectValueToActiveElement(request) {
 	} else if (domElement.hasAttribute('contenteditable')) {
 		domElement.innerText = actualValue;
 	}
-};
+}

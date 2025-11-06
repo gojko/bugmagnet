@@ -1,5 +1,4 @@
-'use strict';
-module.exports = function ChromeMenuBuilder(chrome) {
+export function ChromeMenuBuilder(chrome) {
 	let itemValues = {},
 		itemHandlers = {};
 	const instance = this,

@@ -1,4 +1,3 @@
-'use strict';
 const type_flag = '_type',
 	generators = {
 		literal: function (request) {
@@ -13,7 +12,8 @@ const type_flag = '_type',
 			return value.substring(0, request.size);
 		}
 	};
-module.exports = function getRequestValue(request) {
+
+export function getRequestValue(request) {
 	if (!request) {
 		return false;
 	}
@@ -22,4 +22,4 @@ module.exports = function getRequestValue(request) {
 		return false;
 	}
 	return generator(request);
-};
+}

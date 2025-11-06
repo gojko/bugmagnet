@@ -1,7 +1,6 @@
-/*global chrome */
-'use strict';
-const ChromeConfigInterface = require('../lib/chrome-browser-interface'),
-	initConfigWidget = require('../lib/init-config-widget');
+import { ChromeBrowserInterface } from '../lib/chrome-browser-interface.js';
+import { initConfigWidget } from '../lib/init-config-widget.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-	initConfigWidget(document.getElementById('main'), new ChromeConfigInterface(chrome));
+	initConfigWidget(document.getElementById('main'), new ChromeBrowserInterface(chrome));
 });

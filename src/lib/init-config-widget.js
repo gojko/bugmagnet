@@ -1,5 +1,4 @@
-'use strict';
-module.exports = function initConfigWidget(domElement, browserInterface) {
+export function initConfigWidget(domElement, browserInterface) {
 	let template,
 		list,
 		skipStandard,

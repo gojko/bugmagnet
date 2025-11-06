@@ -1,6 +1,4 @@
-/* global jasmine, window */
-'use strict';
-module.exports = function FakeChromeApi() {
+export function FakeChromeApi() {
 	const instance = this,
 		createEvent = function (eventName) {
 			return jasmine.createSpyObj(eventName, ['addListener', 'removeListener']);

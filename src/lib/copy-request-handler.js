@@ -1,5 +1,5 @@
-'use strict';
-const getRequestValue = require('./get-request-value');
-module.exports = function pasteRequestHandler(browserInterface, tabId, request) {
+import { getRequestValue } from './get-request-value.js';
+
+export function copyRequestHandler(browserInterface, tabId, request) {
 	browserInterface.copyToClipboard(getRequestValue(request));
-};
+}

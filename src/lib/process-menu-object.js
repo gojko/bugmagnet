@@ -1,5 +1,4 @@
-'use strict';
-module.exports = function processMenuObject(configObject, menuBuilder, parentMenu, onClick) {
+export function processMenuObject(configObject, menuBuilder, parentMenu, onClick) {
 	const getTitle = function (key) {
 		if (configObject instanceof Array) {
 			return configObject[key];
@@ -20,5 +19,5 @@ module.exports = function processMenuObject(configObject, menuBuilder, parentMen
 			processMenuObject(value, menuBuilder, result, onClick);
 		}
 	});
-};
+}
 

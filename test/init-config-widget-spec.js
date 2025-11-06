@@ -1,6 +1,5 @@
-/*global describe, it, expect, beforeEach, afterEach, jasmine */
-'use strict';
-const initConfigWidget = require('../src/lib/init-config-widget');
+import { initConfigWidget } from '../src/lib/init-config-widget.js';
+
 describe('initConfigWidget', () => {
 	let underTest, browserInterface, mainScreen, addScreen, sectionForCustom, sectionWithoutCustom,
 		configList, statusMessage, submenuName, asyncResult, resolveLoadOptions;

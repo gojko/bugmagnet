@@ -1,10 +1,10 @@
+'use strict';
 const injectValueRequestHandler = require('./inject-value-request-handler'),
 	pasteRequestHandler = require('./paste-request-handler'),
 	copyRequestHandler = require('./copy-request-handler');
 module.exports = function ContextMenu(standardConfig, browserInterface, menuBuilder, processMenuObject, pasteSupported) {
-	'use strict';
 	let handlerType = 'injectValue';
-	const self = this,
+	const instance = this,
 		handlerMenus = {},
 		handlers = {
 			injectValue: injectValueRequestHandler,
@@ -15,11 +15,11 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 			const falsyButNotEmpty = function (v) {
 					return !v && typeof (v) !== 'string';
 				},
-				toValue = function (itemMenuValue) {
-					if (typeof (itemMenuValue) === 'string') {
-						return { '_type': 'literal', 'value': itemMenuValue};
+				toValue = function (value) {
+					if (typeof (value) === 'string') {
+						return { '_type': 'literal', 'value': value};
 					}
-					return itemMenuValue;
+					return value;
 				},
 				requestValue = toValue(itemMenuValue);
 			if (falsyButNotEmpty(requestValue)) {
@@ -44,7 +44,7 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 		},
 		loadAdditionalMenus = function (additionalMenus, rootMenu) {
 			if (additionalMenus && Array.isArray(additionalMenus) && additionalMenus.length) {
-				additionalMenus.forEach(function (configItem) {
+				additionalMenus.forEach((configItem) => {
 					const object = {};
 					object[configItem.name] = configItem.config;
 					processMenuObject(object, menuBuilder, rootMenu, onClick);
@@ -75,13 +75,13 @@ module.exports = function ContextMenu(standardConfig, browserInterface, menuBuil
 			addGenericMenus(rootMenu);
 		},
 		wireStorageListener = function () {
-			browserInterface.addStorageListener(function () {
+			browserInterface.addStorageListener(() => {
 				return menuBuilder.removeAll()
 					.then(browserInterface.getOptionsAsync)
 					.then(rebuildMenu);
 			});
 		};
-	self.init = function () {
+	instance.init = function () {
 		return browserInterface.getOptionsAsync()
 			.then(rebuildMenu)
 			.then(wireStorageListener);

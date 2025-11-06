@@ -1,4 +1,5 @@
 /*global chrome, browser*/
+'use strict';
 const ContextMenu = require('../lib/context-menu'),
 	ChromeMenuBuilder = require('../lib/chrome-menu-builder'),
 	ChromeBrowserInterface = require('../lib/chrome-browser-interface'),

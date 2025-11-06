@@ -1,22 +1,22 @@
+'use strict';
 module.exports = function initConfigWidget(domElement, browserInterface) {
-	'use strict';
 	let template,
 		list,
 		skipStandard,
 		additionalMenus = [];
 	const showErrorMsg = function (text) {
-			const status = domElement.querySelector('[role=status]');
-			status.textContent = text;
-			setTimeout(function () {
-				status.textContent = '';
+			const statusElement = domElement.querySelector('[role=status]');
+			statusElement.textContent = text;
+			setTimeout(() => {
+				statusElement.textContent = '';
 			}, 1500);
 		},
-		addLink = function (parent, url) {
+		addLink = function (parentElement, url) {
 			const link = document.createElement('a');
 			link.setAttribute('href', url);
 			link.setAttribute('target', '_blank');
 			link.textContent = url.replace(/.*\//g, '');
-			parent.appendChild(link);
+			parentElement.appendChild(link);
 		},
 		saveOptions = function () {
 			browserInterface.saveOptions({
@@ -27,7 +27,7 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 		rebuildMenu = function () {
 			list.innerHTML = '';
 			if (additionalMenus && additionalMenus.length) {
-				additionalMenus.forEach(function (configItem, index) {
+				additionalMenus.forEach((configItem, index) => {
 					const clone = template.cloneNode(true);
 					list.appendChild(clone);
 					clone.querySelector('[role=name]').textContent = configItem.name;
@@ -38,7 +38,7 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 					}
 
 
-					clone.querySelector('[role=remove]').addEventListener('click', function () {
+					clone.querySelector('[role=remove]').addEventListener('click', () => {
 						additionalMenus.splice(index, 1);
 						rebuildMenu();
 						saveOptions();
@@ -64,7 +64,7 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			saveOptions();
 		},
 		restoreOptions = function () {
-			return browserInterface.getOptionsAsync().then(function (opts) {
+			return browserInterface.getOptionsAsync().then((opts) => {
 				if (opts && Array.isArray(opts.additionalMenus)) {
 					additionalMenus = opts.additionalMenus;
 				}	else {
@@ -90,14 +90,14 @@ module.exports = function initConfigWidget(domElement, browserInterface) {
 			domElement.querySelector('[role=add]').addEventListener('click', showFileSelector);
 			Array.from(domElement.querySelectorAll('[role=back]')).map(el => el.addEventListener('click', showMainScreen));
 			domElement.querySelector('[role=select-file-cover]').addEventListener('click', () => {
-				const event = new MouseEvent('click', {
+				const clickEvent = new MouseEvent('click', {
 					view: window,
 					bubbles: true,
 					cancelable: true
 				});
-				domElement.querySelector('[role=file-selector]').dispatchEvent(event);
+				domElement.querySelector('[role=file-selector]').dispatchEvent(clickEvent);
 			});
-			skipStandardCheckbox.addEventListener('change', function () {
+			skipStandardCheckbox.addEventListener('change', () => {
 				skipStandard = !!skipStandardCheckbox.checked;
 				saveOptions();
 			});

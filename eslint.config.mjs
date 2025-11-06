@@ -6,7 +6,7 @@ export default [
 	{
 		files: ['**/*.js'],
 		languageOptions: {
-			ecmaVersion: 6,
+			ecmaVersion: 2020,
 			sourceType: 'script',
 			globals: {
 				...globals.browser,
@@ -15,8 +15,10 @@ export default [
 		},
 		rules: {
 			semi: ['error', 'always'],
-			strict: ['error', 'function'],
-			'no-unused-vars': 'error',
+			strict: ['error', 'global'],
+			'no-unused-vars': ['error', {
+				caughtErrors: 'none'
+			}],
 			indent: ['error', 'tab'],
 			'no-const-assign': 'error',
 			'one-var': 'error',
@@ -27,7 +29,10 @@ export default [
 				avoidEscape: true,
 				allowTemplateLiterals: true
 			}],
-			'no-prototype-builtins': 'off'
+			'prefer-arrow-callback': 'error',
+			'no-shadow': ['error', {
+				builtinGlobals: true
+			}]
 		}
 	},
 	{

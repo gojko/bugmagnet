@@ -1,20 +1,20 @@
 /* global jasmine, window */
+'use strict';
 module.exports = function FakeChromeApi() {
-	'use strict';
-	const self = this,
-		event = function (name) {
-			return jasmine.createSpyObj(name, ['addListener', 'removeListener']);
+	const instance = this,
+		createEvent = function (eventName) {
+			return jasmine.createSpyObj(eventName, ['addListener', 'removeListener']);
 		};
-	self.runtime = {
-		onMessage: event('onMessage')
+	instance.runtime = {
+		onMessage: createEvent('onMessage')
 	};
-	self.contextMenus = jasmine.createSpyObj('chrome.contextMenus', ['create', 'removeAll']);
-	self.contextMenus.onClicked = event('onClicked');
-	self.extension = jasmine.createSpyObj('chrome.extension', ['getURL']);
-	self.tabs = jasmine.createSpyObj('chrome.tabs', ['sendMessage', 'executeScript']);
+	instance.contextMenus = jasmine.createSpyObj('chrome.contextMenus', ['create', 'removeAll']);
+	instance.contextMenus.onClicked = createEvent('onClicked');
+	instance.extension = jasmine.createSpyObj('chrome.extension', ['getURL']);
+	instance.tabs = jasmine.createSpyObj('chrome.tabs', ['sendMessage', 'executeScript']);
 
-	self.storage = {
-		onChanged: event('onChanged')
+	instance.storage = {
+		onChanged: createEvent('onChanged')
 	};
-	self.storage.sync = jasmine.createSpyObj('chrome.storage.sync', ['get']);
+	instance.storage.sync = jasmine.createSpyObj('chrome.storage.sync', ['get']);
 };

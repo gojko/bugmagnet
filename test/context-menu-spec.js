@@ -1,9 +1,9 @@
 /*global describe, window, it, beforeEach, jasmine, expect*/
+'use strict';
 const ContextMenu = require('../src/lib/context-menu');
-describe('ContextMenu', function () {
-	'use strict';
+describe('ContextMenu', () => {
 	let fakeRoot, standardConfig, browserInterface, underTest, processMenuObject, menuBuilder;
-	beforeEach(function () {
+	beforeEach(() => {
 		standardConfig = {
 			name: 'value'
 		};
@@ -17,7 +17,7 @@ describe('ContextMenu', function () {
 		menuBuilder.removeAll.and.returnValue(Promise.resolve({}));
 		underTest = new ContextMenu(standardConfig, browserInterface, menuBuilder, processMenuObject);
 	});
-	describe('initial load', function () {
+	describe('initial load', () => {
 		it('sets up the basic menu when no local settings', done => {
 			browserInterface.getOptionsAsync.and.returnValue(Promise.resolve());
 			underTest.init().then(() => {
@@ -72,7 +72,7 @@ describe('ContextMenu', function () {
 			}).then(done, done.fail);
 		});
 	});
-	describe('sync storage listener', function () {
+	describe('sync storage listener', () => {
 		let listener, validChange, newRoot;
 		beforeEach(done => {
 			validChange = {additionalMenus: [{name: 'a', config: {'b': 'c'}}]};
@@ -87,7 +87,7 @@ describe('ContextMenu', function () {
 				menuBuilder.rootMenu.calls.reset();
 			}).then(done, done.fail);
 		});
-		it('clears all menu items', function (done) {
+		it('clears all menu items', (done) => {
 			listener(validChange).then(() => {
 				expect(menuBuilder.removeAll).toHaveBeenCalled();
 			}).then(done, done.fail);

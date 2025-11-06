@@ -1,43 +1,43 @@
+'use strict';
 module.exports = function ChromeBrowserInterface(chrome) {
-	'use strict';
-	const self = this;
-	self.saveOptions = function (options) {
+	const instance = this;
+	instance.saveOptions = function (options) {
 		chrome.storage.sync.set(options);
 	};
-	self.getOptionsAsync = function () {
+	instance.getOptionsAsync = function () {
 		return new Promise((resolve) => {
 			chrome.storage.sync.get(null, resolve);
 		});
 	};
-	self.openSettings = function () {
+	instance.openSettings = function () {
 		if (chrome.runtime.openOptionsPage) {
 			chrome.runtime.openOptionsPage();
 		} else {
 			window.open(chrome.runtime.getURL('options.html'));
 		}
 	};
-	self.openUrl = function (url) {
+	instance.openUrl = function (url) {
 		window.open(url);
 	};
-	self.addStorageListener = function (listener) {
-		chrome.storage.onChanged.addListener(function (changes, areaName) {
+	instance.addStorageListener = function (listener) {
+		chrome.storage.onChanged.addListener((changes, areaName) => {
 			if (areaName === 'sync') {
 				listener(changes);
 			};
 		});
 	};
-	self.getRemoteFile = function (url) {
-		return fetch(url, {mode: 'cors'}).then(function (response) {
+	instance.getRemoteFile = function (url) {
+		return fetch(url, {mode: 'cors'}).then((response) => {
 			if (response.ok) {
 				return response.text();
 			}
 			throw new Error('Network error reading the remote URL');
 		});
 	};
-	self.closeWindow = function () {
+	instance.closeWindow = function () {
 		window.close();
 	};
-	self.readFile = function (fileInfo) {
+	instance.readFile = function (fileInfo) {
 		return new Promise((resolve, reject) => {
 			const oFReader = new FileReader();
 			oFReader.onload = function (oFREvent) {
@@ -51,19 +51,19 @@ module.exports = function ChromeBrowserInterface(chrome) {
 			oFReader.readAsText(fileInfo, 'UTF-8');
 		});
 	};
-	self.executeScript = function (tabId, source) {
+	instance.executeScript = function (tabId, source) {
 		return new Promise((resolve) => {
 			return chrome.tabs.executeScript(tabId, {file: source}, resolve);
 		});
 	};
-	self.sendMessage = function (tabId, message) {
+	instance.sendMessage = function (tabId, message) {
 		return chrome.tabs.sendMessage(tabId, message);
 	};
 
-	self.requestPermissions = function (permissionsArray) {
+	instance.requestPermissions = function (permissionsArray) {
 		return new Promise((resolve, reject) => {
 			try {
-				chrome.permissions.request({permissions: permissionsArray}, function (granted) {
+				chrome.permissions.request({permissions: permissionsArray}, (granted) => {
 					if (granted) {
 						resolve();
 					} else {
@@ -76,10 +76,10 @@ module.exports = function ChromeBrowserInterface(chrome) {
 			}
 		});
 	};
-	self.removePermissions = function (permissionsArray) {
+	instance.removePermissions = function (permissionsArray) {
 		return new Promise((resolve) => chrome.permissions.remove({permissions: permissionsArray}, resolve));
 	};
-	self.copyToClipboard = function (text) {
+	instance.copyToClipboard = function (text) {
 		const handler = function (e) {
 			e.clipboardData.setData('text/plain', text);
 			e.preventDefault();
@@ -88,7 +88,7 @@ module.exports = function ChromeBrowserInterface(chrome) {
 		document.execCommand('copy');
 		document.removeEventListener('copy', handler);
 	};
-	self.showMessage = function (text) {
+	instance.showMessage = function (text) {
 		chrome.tabs.executeScript(null, {code: `alert("${text}")`});
 	};
 };

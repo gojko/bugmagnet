@@ -1,7 +1,7 @@
 /*global describe, it, expect, beforeEach, afterEach, jasmine */
+'use strict';
 const initConfigWidget = require('../src/lib/init-config-widget');
-describe('initConfigWidget', function () {
-	'use strict';
+describe('initConfigWidget', () => {
 	let underTest, browserInterface, mainScreen, addScreen, sectionForCustom, sectionWithoutCustom,
 		configList, statusMessage, submenuName, asyncResult, resolveLoadOptions;
 	const template = `
@@ -39,13 +39,13 @@ describe('initConfigWidget', function () {
 			</form>
 		</div>`,
 		clickOn = function (domElement) {
-			const event = new MouseEvent('click', {
+			const clickEvent = new MouseEvent('click', {
 				view: window,
 				bubbles: true,
 				cancelable: true
 			});
-			domElement.dispatchEvent(event);
-			return event;
+			domElement.dispatchEvent(clickEvent);
+			return clickEvent;
 		},
 		loadFile = function (fileId) {
 			const file = fileId, //new Blob([textContent], {contentType: 'application/json'}),
@@ -75,13 +75,13 @@ describe('initConfigWidget', function () {
 		jasmine.DEFAULT_TIMEOUT_INTERVAL = 200;
 	});
 	it('prevents form from submitting to allow firefox to handle the form', () => {
-		const event = new Event('submit', {
+		const submitEvent = new Event('submit', {
 			view: window,
 			bubbles: true,
 			cancelable: true
 		});
-		document.getElementById('form').dispatchEvent(event);
-		expect(event.defaultPrevented).toBeTruthy();
+		document.getElementById('form').dispatchEvent(submitEvent);
+		expect(submitEvent.defaultPrevented).toBeTruthy();
 	});
 	it('shows the main screen', () => {
 		expect(mainScreen.style.display).not.toBe('none');

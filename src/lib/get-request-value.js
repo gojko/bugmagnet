@@ -1,11 +1,10 @@
+'use strict';
 const type_flag = '_type',
 	generators = {
 		literal: function (request) {
-			'use strict';
 			return request.value;
 		},
 		size: function (request) {
-			'use strict';
 			const size = parseInt(request.size, 10);
 			let value = request.template;
 			while (value.length < size) {
@@ -15,7 +14,6 @@ const type_flag = '_type',
 		}
 	};
 module.exports = function getRequestValue(request) {
-	'use strict';
 	if (!request) {
 		return false;
 	}

@@ -2,6 +2,7 @@
   "name": "bugmagnet",
   "version": "2.0.0",
   "scripts": {
+    "eslint": "eslint",
     "lint": "eslint src test",
     "pretest": "npm run lint && rm -rf testem/compiled",
     "test": "testem ci -R dot",

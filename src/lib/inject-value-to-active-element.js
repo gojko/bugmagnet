@@ -1,7 +1,7 @@
+'use strict';
 const getValue = require('./get-request-value'),
 	triggerEvents = require('./trigger-events');
 module.exports = function injectValueToActiveElement(request) {
-	'use strict';
 	const actualValue = getValue(request);
 	let domElement = document.activeElement;
 	if (!domElement || !actualValue) {

@@ -1,5 +1,5 @@
+'use strict';
 module.exports = function processMenuObject(configObject, menuBuilder, parentMenu, onClick) {
-	'use strict';
 	const getTitle = function (key) {
 		if (configObject instanceof Array) {
 			return configObject[key];
@@ -9,11 +9,11 @@ module.exports = function processMenuObject(configObject, menuBuilder, parentMen
 	if (!configObject) {
 		return;
 	}
-	Object.keys(configObject).forEach(function (key) {
+	Object.keys(configObject).forEach((key) => {
 		const value = configObject[key],
 			title = getTitle(key);
 		let result;
-		if (typeof (value) === 'string' || (typeof (value) === 'object' && value.hasOwnProperty('_type'))) {
+		if (typeof (value) === 'string' || (typeof (value) === 'object' && Object.prototype.hasOwnProperty.call(value, '_type'))) {
 			menuBuilder.menuItem(title, parentMenu, onClick, value);
 		} else if (typeof (value) === 'object') {
 			result = menuBuilder.subMenu(title, parentMenu);

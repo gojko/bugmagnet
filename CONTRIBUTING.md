@@ -28,7 +28,7 @@ npm i
 npm run pack-extension
 ```
 
-This will create and copy the files in the `pack` dir. You can then zip that up and distribute as an extension, or just load into a browser as an unpacked extension. (check out how to do this in [Chrome](https://developer.chrome.com/extensions/getstarted#unpacked) or [Firefox](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Temporary_Installation_in_Firefox)).
+This will create and copy the files in the `pack` dir. You can then zip that up and distribute as an extension, or just load into a browser as an unpacked extension. (check out how to do this in [Chrome](https://developer.chrome.com/extensions/getstarted#unpacked) or [Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Temporary_Installation_in_Firefox)).
 
 ## Run dev tests
 
